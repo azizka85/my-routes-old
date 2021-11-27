@@ -7,6 +7,8 @@ import {
 
 import express from 'express';
 
+import 'handlebars';
+
 import defaultLayout from './templates/layouts/default-layout.hbs';
 import mainLayout from './templates/layouts/main-layout.hbs';
 

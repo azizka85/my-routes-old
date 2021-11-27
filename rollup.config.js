@@ -8,7 +8,7 @@ import handlebars from 'rollup-plugin-handlebars';
 import typescript from '@rollup/plugin-typescript';
 
 const mode = process.env.NODE_ENV || 'development';
-const dev = mode !== 'development';
+const dev = mode === 'development';
 
 function serve() {
 	let server;

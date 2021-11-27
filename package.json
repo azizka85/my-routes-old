@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rollup -c",
     "start": "node dist/main.js",
-    "postinstall": "npm run build"
+    "dev": "rollup -cw",
+    "dev:server": "nodemon dist/main.js"
   },
   "author": "Aziz Kudaikulov <aziz.kudaikulov@gmail.com>",
   "license": "MIT",
