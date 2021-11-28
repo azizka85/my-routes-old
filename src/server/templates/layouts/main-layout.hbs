@@ -1,3 +1,33 @@
 <div data-layout="main-layout">
-  {{> (lookup data 'content') data=data.contentData }}
+  <header class="mdc-top-app-bar mdc-top-app-bar--fixed toolbar">
+    <div class="mdc-top-app-bar__row">
+      <section 
+        class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start"
+        style="flex: none;"
+      >
+        <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button">
+          <span class="mdc-icon-button__ripple"></span>
+          menu
+        </button>
+      </section>
+      <section 
+        class="mdc-top-app-bar__section mdc-top-app-bar__title" 
+        style="justify-content: center;"
+      >
+        Hello
+      </section>
+      <section 
+        class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end"
+        style="flex: none;"
+      >
+        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button">
+          <span class="mdc-icon-button__ripple"></span>
+          filter_list
+        </button>
+      </section>
+    </div>
+  </header>
+  <main class="mdc-top-app-bar--fixed-adjust">
+    {{> (lookup data 'content') data=data.contentData }}
+  </main>  
 </div>

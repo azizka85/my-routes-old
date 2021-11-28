@@ -1,15 +1,19 @@
 <div data-page="signin-page">
-  Sign In page, time: {{ data.time }}
-  <button class="mdc-button mdc-button--raised">
+  <div>
+    <button class="mdc-button mdc-button--raised">
+      <span class="mdc-button__ripple"></span>
+      <span class="mdc-button__label">Sign In page</span>
+    </button>
+    <a class="mdc-button" href="{{ data.PAGE_ROOT }}">
     <span class="mdc-button__ripple"></span>
-    <span class="mdc-button__label">Sign In page</span>
-  </button>
-  <a class="mdc-button" href="{{ data.PAGE_ROOT }}">
-   <span class="mdc-button__ripple"></span>
-   <span class="mdc-button__label">Home page</span>
-  </a> 
-  <a class="mdc-button" href="{{ data.PAGE_ROOT }}signup">
-   <span class="mdc-button__ripple"></span>
-   <span class="mdc-button__label">Sign Up page</span>
-  </a> 
+    <span class="mdc-button__label">Home page</span>
+    </a> 
+    <a class="mdc-button" href="{{ data.PAGE_ROOT }}signup">
+    <span class="mdc-button__ripple"></span>
+    <span class="mdc-button__label">Sign Up page</span>
+    </a> 
+  </div>
+  <div>
+    Sign In page, time: {{ data.time }}
+  </div>
 </div>

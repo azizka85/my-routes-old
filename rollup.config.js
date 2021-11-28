@@ -44,7 +44,8 @@ export default [{
       'base-layout': ['./src/client/views/layouts/base-layout.ts'],
       'default-layout': ['./src/client/views/layouts/default/default-layout.ts'],
       'main-layout': ['./src/client/views/layouts/main/main-layout.ts'],
-      ripple: ['@material/ripple']
+      ripple: ['@material/ripple'],
+      'app-bar': ['@material/top-app-bar']
     }
   },
   plugins: [

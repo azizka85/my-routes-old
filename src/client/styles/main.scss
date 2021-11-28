@@ -1,6 +1,20 @@
 @use "@material/button/styles";
+@use "@material/icon-button/_icon-button";
+@use "@material/top-app-bar/mdc-top-app-bar";
+
+@include icon-button.core-styles;
 
 html, body {
   margin: 0;
   height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.toolbar {
+  transform: translate3d(0, 0, 0);
+  transition: transform linear 200ms;
+
+  &.hide {
+    transform: translate3d(0, -100%, 0);
+  }
 }
