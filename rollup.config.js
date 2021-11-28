@@ -56,6 +56,12 @@ export default [{
       outputStyle: dev ? null : 'compressed',
       sourceMap: dev
     }),
+    cleaner({
+      targets: [
+        `./public/dist/css/${version}`,
+        `./public/dist/js/${version}`
+      ]
+    }),
     typescript({
       sourceMap: dev
     }),
