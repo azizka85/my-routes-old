@@ -16,6 +16,8 @@ import homePageTpl from './templates/pages/home-page.hbs';
 import signInPageTpl from './templates/pages/signin-page.hbs';
 import signUpPageTpl from './templates/pages/signup-page.hbs';
 
+import { version } from '../../package.json';
+
 const defaultLayout = Handlebars.template(defaultLayoutTpl);
 const mainLayout = Handlebars.template(mainLayoutTpl);
 
@@ -64,7 +66,7 @@ app.get('/', (req, res) => {
         };
   
         data = {
-          requestTime: Date.now(),
+          version,
           content: 'mainLayout',
           contentData: data
         };
@@ -101,7 +103,7 @@ app.get('/signin', (req, res) => {
         partials = { signInPage };
   
         data = {
-          requestTime: Date.now(),
+          version,
           content: 'signInPage',
           contentData: data
         };
@@ -138,7 +140,7 @@ app.get('/signup', (req, res) => {
         partials = { signUpPage };
   
         data = {
-          requestTime: Date.now(),
+          version,
           content: 'signUpPage',
           contentData: data
         };

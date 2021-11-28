@@ -7,6 +7,7 @@ import scss from 'rollup-plugin-scss';
 import cleaner from 'rollup-plugin-cleaner';
 import typescript from '@rollup/plugin-typescript';
 import cleanup from 'rollup-plugin-cleanup';
+import { version } from './package.json';
 
 const mode = process.env.NODE_ENV || 'development';
 const dev = mode === 'development';
@@ -35,7 +36,7 @@ function serve() {
 export default [{
   input: 'src/client/main.ts',
   output: {
-    dir: 'public/dist/js',
+    dir: `public/dist/js/${version}`,
     format: 'es',
     sourcemap: dev,
     manualChunks: {
@@ -51,15 +52,9 @@ export default [{
     nodeResolve(),
     !dev && terser(),
     scss({
-      output: 'public/dist/css/main.css',
+      output: `public/dist/css/${version}/main.css`,
       outputStyle: dev ? null : 'compressed',
       sourceMap: dev
-    }),
-    cleaner({
-      targets: [
-        './public/dist/js',
-        './public/dist/css'
-      ]
     }),
     typescript({
       sourceMap: dev
