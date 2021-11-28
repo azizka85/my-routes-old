@@ -6,6 +6,7 @@ import scss from 'rollup-plugin-scss';
 import cleaner from 'rollup-plugin-cleaner';
 import { string } from 'rollup-plugin-string';
 import typescript from '@rollup/plugin-typescript';
+import cleanup from 'rollup-plugin-cleanup';
 
 const mode = process.env.NODE_ENV || 'development';
 const dev = mode === 'development';
@@ -62,6 +63,10 @@ export default [{
     }),
     typescript({
       sourceMap: dev
+    }),
+    cleanup({
+      extensions: ['js', 'ts'],
+      comments: 'none'
     })
   ]
 }, {
@@ -87,6 +92,10 @@ export default [{
     }),    
     typescript({
       sourceMap: dev
+    }),
+    cleanup({
+      extensions: ['js', 'ts'],
+      comments: 'none'
     })
   ]
 }];
