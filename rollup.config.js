@@ -1,10 +1,10 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
+import handlebars from './src/compiler/rollup-plugin-handlebars';
 import { terser } from "rollup-plugin-terser";
 import scss from 'rollup-plugin-scss';
 import cleaner from 'rollup-plugin-cleaner';
-import { string } from 'rollup-plugin-string';
 import typescript from '@rollup/plugin-typescript';
 import cleanup from 'rollup-plugin-cleanup';
 
@@ -77,9 +77,7 @@ export default [{
     sourcemap: dev
   },
   plugins: [
-    string({
-      include: "**/*.hbs"
-    }),    
+    handlebars(),    
     commonjs(),
     json(),
     nodeResolve(),

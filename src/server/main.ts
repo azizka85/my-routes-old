@@ -9,19 +9,19 @@ import express from 'express';
 
 import Handlebars from 'handlebars';
 
-import defaultLayoutTxt from './templates/layouts/default-layout.hbs';
-import mainLayoutTxt from './templates/layouts/main-layout.hbs';
+import defaultLayoutTpl from './templates/layouts/default-layout.hbs';
+import mainLayoutTpl from './templates/layouts/main-layout.hbs';
 
-import homePageTxt from './templates/pages/home-page.hbs';
-import signInPageTxt from './templates/pages/signin-page.hbs';
-import signUpPageTxt from './templates/pages/signup-page.hbs';
+import homePageTpl from './templates/pages/home-page.hbs';
+import signInPageTpl from './templates/pages/signin-page.hbs';
+import signUpPageTpl from './templates/pages/signup-page.hbs';
 
-const defaultLayout = Handlebars.compile(defaultLayoutTxt);
-const mainLayout = Handlebars.compile(mainLayoutTxt);
+const defaultLayout = Handlebars.template(defaultLayoutTpl);
+const mainLayout = Handlebars.template(mainLayoutTpl);
 
-const homePage = Handlebars.compile(homePageTxt);
-const signInPage = Handlebars.compile(signInPageTxt);
-const signUpPage = Handlebars.compile(signUpPageTxt);
+const homePage = Handlebars.template(homePageTpl);
+const signInPage = Handlebars.template(signInPageTpl);
+const signUpPage = Handlebars.template(signUpPageTpl);
 
 const app = express();
 const port = parseInt(process.env.PORT || '') || 10001;
