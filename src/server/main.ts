@@ -7,12 +7,21 @@ import {
 
 import express from 'express';
 
-import defaultLayout from './templates/layouts/default-layout.hbs';
-import mainLayout from './templates/layouts/main-layout.hbs';
+import Handlebars from 'handlebars';
 
-import homePage from './templates/pages/home-page.hbs';
-import signInPage from './templates/pages/signin-page.hbs';
-import signUpPage from './templates/pages/signup-page.hbs';
+import defaultLayoutTxt from './templates/layouts/default-layout.hbs';
+import mainLayoutTxt from './templates/layouts/main-layout.hbs';
+
+import homePageTxt from './templates/pages/home-page.hbs';
+import signInPageTxt from './templates/pages/signin-page.hbs';
+import signUpPageTxt from './templates/pages/signup-page.hbs';
+
+const defaultLayout = Handlebars.compile(defaultLayoutTxt);
+const mainLayout = Handlebars.compile(mainLayoutTxt);
+
+const homePage = Handlebars.compile(homePageTxt);
+const signInPage = Handlebars.compile(signInPageTxt);
+const signUpPage = Handlebars.compile(signUpPageTxt);
 
 const app = express();
 const port = parseInt(process.env.PORT || '') || 10001;

@@ -4,7 +4,7 @@ import json from '@rollup/plugin-json';
 import { terser } from "rollup-plugin-terser";
 import scss from 'rollup-plugin-scss';
 import cleaner from 'rollup-plugin-cleaner';
-import handlebars from 'rollup-plugin-handlebars';
+import { string } from 'rollup-plugin-string';
 import typescript from '@rollup/plugin-typescript';
 
 const mode = process.env.NODE_ENV || 'development';
@@ -69,9 +69,12 @@ export default [{
   output: {
     dir: 'dist',
     format: 'cjs',
-    sourcemap: dev    
+    sourcemap: dev
   },
   plugins: [
+    string({
+      include: "**/*.hbs"
+    }),    
     commonjs(),
     json(),
     nodeResolve(),
@@ -81,8 +84,7 @@ export default [{
       targets: [
         './dist'
       ]
-    }),
-    handlebars(),
+    }),    
     typescript({
       sourceMap: dev
     })
