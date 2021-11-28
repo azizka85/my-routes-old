@@ -1,6 +1,6 @@
 {
   "name": "my-routes",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "my-routes - application to add links to resources and comment it",
   "private": "true",
   "scripts": {
