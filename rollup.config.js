@@ -43,29 +43,30 @@ export default [{
       globals: ['./src/globals.ts'],    
       'base-layout': ['./src/client/views/layouts/base-layout.ts'],
       'default-layout': ['./src/client/views/layouts/default/default-layout.ts'],
-      'main-layout': ['./src/client/views/layouts/main/main-layout.ts'],
-      ripple: ['@material/ripple'],
-      'app-bar': ['@material/top-app-bar']
+      'main-layout': ['./src/client/views/layouts/main/main-layout.ts'],    
+      base: ['@material/base'],
+      dom: ['@material/dom'],
+      ripple: ['@material/ripple']
     }
   },
   plugins: [
-    commonjs(),
-    nodeResolve(),
-    !dev && terser(),
-    scss({
-      output: `public/dist/css/${version}/main.css`,
-      outputStyle: dev ? null : 'compressed',
-      sourceMap: dev
-    }),
     cleaner({
       targets: [
         `./public/dist/css/${version}`,
         `./public/dist/js/${version}`
       ]
     }),
+    commonjs(),
+    nodeResolve(),    
+    scss({
+      output: `public/dist/css/${version}/main.css`,
+      outputStyle: dev ? null : 'compressed',
+      sourceMap: dev
+    }),    
     typescript({
       sourceMap: dev
     }),
+    !dev && terser(),
     cleanup({
       extensions: ['js', 'ts'],
       comments: 'none'
@@ -76,26 +77,30 @@ export default [{
   output: {
     dir: 'dist',
     format: 'cjs',
-    sourcemap: dev
+    sourcemap: dev,
+    manualChunks: {
+      app: ['./src/server/app.ts']
+    },
+    chunkFileNames: '[name].js'
   },
   plugins: [
-    handlebars(),    
-    commonjs(),
-    json(),
-    nodeResolve(),
-    dev && serve(),
-    !dev && terser(),
     cleaner({
       targets: [
         './dist'
       ]
-    }),    
+    }), 
+    handlebars(),    
+    commonjs(),
+    json(),
+    nodeResolve(),    
     typescript({
       sourceMap: dev
     }),
+    !dev && terser(),       
     cleanup({
       extensions: ['js', 'ts'],
       comments: 'none'
-    })
+    }),
+    dev && serve()
   ]
 }];

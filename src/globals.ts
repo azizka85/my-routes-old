@@ -7,3 +7,5 @@ export const SIGN_IN_PAGE = 'signin-page';
 export const SIGN_UP_PAGE = 'signup-page';
 
 export const SCROLL_THRESHOLD = 5;
+
+export const APP_BAR_HIDE_CLASS = 'hide';

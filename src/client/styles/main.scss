@@ -1,20 +1,10 @@
-@use "@material/button/styles";
-@use "@material/icon-button/_icon-button";
-@use "@material/top-app-bar/mdc-top-app-bar";
+@use "@material/button/mdc-button";
+@use "@material/icon-button/mdc-icon-button";
 
-@include icon-button.core-styles;
+$drawer-min-width: 3.5rem;
 
-html, body {
+body {
   margin: 0;
-  height: 100%;
+  height: 100vh;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-.toolbar {
-  transform: translate3d(0, 0, 0);
-  transition: transform linear 200ms;
-
-  &.hide {
-    transform: translate3d(0, -100%, 0);
-  }
 }
