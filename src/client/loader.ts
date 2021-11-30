@@ -1,10 +1,5 @@
 import './types/window';
 
-import { 
-  MAIN_LAYOUT,
-  HOME_PAGE, SIGN_IN_PAGE, SIGN_UP_PAGE 
-} from '../globals';
-
 import { Page } from '@azizka/router';
 
 import * as view from './views/view';
@@ -24,27 +19,37 @@ export async function loadHomePage(page: Page, firstTime: boolean) {
 
   let parent: HTMLElement | null = null;
 
-  if(!(HOME_PAGE in pages)) {    
+  let homePageFirstLoad = false;
+  let mainLayoutFirstLoad = false;
+
+  if(!('home-page' in pages)) {    
     const module = await import('./views/pages/home/home-page');
     
-    pages[HOME_PAGE] = module.HomePage.instance;
-    parent = await pages[HOME_PAGE].init(parent, firstTime);
+    pages['home-page'] = module.HomePage.instance;
+    parent = await pages['home-page'].init(parent, firstTime);
+
+    homePageFirstLoad = true;
   } 
 
-  if(!(MAIN_LAYOUT in layouts)) {
+  if(!('main-layout' in layouts)) {
     const module = await import('./views/layouts/main/main-layout');
 
-    layouts[MAIN_LAYOUT] = module.MainLayout.instance;
-    parent = await layouts[MAIN_LAYOUT].init(parent, firstTime);
+    layouts['main-layout'] = module.MainLayout.instance;
+    parent = await layouts['main-layout'].init(parent, firstTime);
+
+    mainLayoutFirstLoad = true;
   } 
   
-  if(DefaultLayout.instance['content'] !== layouts[MAIN_LAYOUT]) {
-    DefaultLayout.instance.replaceContent(layouts[MAIN_LAYOUT]);  
+  if(DefaultLayout.instance['content'] !== layouts['main-layout']) {
+    DefaultLayout.instance.replaceContent(layouts['main-layout']);  
   }
   
-  if(layouts[MAIN_LAYOUT]['content'] !== pages[HOME_PAGE]) {
-    layouts[MAIN_LAYOUT].replaceContent(pages[HOME_PAGE]);
+  if(layouts['main-layout']['content'] !== pages['home-page']) {
+    layouts['main-layout'].replaceContent(pages['home-page']);
   }
+
+  layouts['main-layout']?.load?.(page, mainLayoutFirstLoad);
+  pages['home-page']?.load?.(page, homePageFirstLoad);
 }
 
 export async function loadSignInPage(page: Page, firstTime: boolean) {
@@ -52,16 +57,22 @@ export async function loadSignInPage(page: Page, firstTime: boolean) {
 
   let parent: HTMLElement | null = null;
 
-  if(!(SIGN_IN_PAGE in pages)) {
+  let signInPageFirstLoad = false;
+
+  if(!('signin-page' in pages)) {
     const module = await import('./views/pages/signin/signin-page');
 
-    pages[SIGN_IN_PAGE] = module.SignInPage.instance;
-    parent = await pages[SIGN_IN_PAGE].init(parent, firstTime);
+    pages['signin-page'] = module.SignInPage.instance;
+    parent = await pages['signin-page'].init(parent, firstTime);
+
+    signInPageFirstLoad = true;
   }
 
-  if(DefaultLayout.instance['content'] !== pages[SIGN_IN_PAGE]) {
-    DefaultLayout.instance.replaceContent(pages[SIGN_IN_PAGE]);
+  if(DefaultLayout.instance['content'] !== pages['signin-page']) {
+    DefaultLayout.instance.replaceContent(pages['signin-page']);
   }
+
+  pages['signin-page']?.load?.(page, signInPageFirstLoad);
 }
 
 export async function loadSignUpPage(page: Page, firstTime: boolean) {
@@ -69,16 +80,22 @@ export async function loadSignUpPage(page: Page, firstTime: boolean) {
 
   let parent: HTMLElement | null = null;
 
-  if(!(SIGN_UP_PAGE in pages)) {
+  let signUpPageFirstLoad = false;
+
+  if(!('signup-page' in pages)) {
     const module = await import('./views/pages/signup/signup-page');
 
-    pages[SIGN_UP_PAGE] = module.SignUpPage.instance;
-    parent = await pages[SIGN_UP_PAGE].init(parent, firstTime);
+    pages['signup-page'] = module.SignUpPage.instance;
+    parent = await pages['signup-page'].init(parent, firstTime);
+
+    signUpPageFirstLoad = true;
   }
 
-  if(DefaultLayout.instance['content'] !== pages[SIGN_UP_PAGE]) {
-    DefaultLayout.instance.replaceContent(pages[SIGN_UP_PAGE]);
+  if(DefaultLayout.instance['content'] !== pages['signup-page']) {
+    DefaultLayout.instance.replaceContent(pages['signup-page']);
   }
+
+  pages['signup-page']?.load?.(page, signUpPageFirstLoad);
 }
 
 window.pages = pages;

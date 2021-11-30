@@ -1,0 +1,15 @@
+@use '@material/theme/theme-color';
+@use '@material/theme/theme';
+
+@mixin ink-color($color) {
+  @include theme.property(color, $color);
+}
+
+@mixin fill-color($color) {
+  @include theme.property(background-color, $color);
+}
+
+@mixin fill-color-accessible($color) {
+  @include fill-color($color);
+  @include ink-color(theme-color.accessible-ink-color($color));
+}

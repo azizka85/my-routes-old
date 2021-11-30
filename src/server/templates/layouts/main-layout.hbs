@@ -1,3 +1,54 @@
 <div data-layout="main-layout">
-  {{> (lookup data 'content') data=data.contentData }}
+  <header class="app-bar">
+    <div class="app-bar__row">
+      <div class="app-bar__section app-bar__section--align-start">
+        <a 
+          data-button="navigation"
+          class="material-icons mdc-icon-button" 
+          href="?{{ toggleQueryParameter data.query 'main-layout-navigation' }}"
+        >
+          <span class="mdc-icon-button__ripple"></span>
+          menu
+        </a>
+      </div>
+      <div class="app-bar__section app-bar__section--fill">
+        <span class="app-bar__title">Hello</span>
+      </div>
+      <div class="app-bar__section app-bar__section--align-end">
+        <a 
+          data-button="search"
+          class="material-icons mdc-icon-button" 
+          href="?{{ toggleQueryParameter data.query 'main-layout-search' }}"
+        >
+          <span class="mdc-icon-button__ripple"></span>
+          filter_list
+        </a>
+      </div>
+    </div>
+  </header>
+  <aside class="drawer {{ condition data.navigation 'drawer--open' '' }}">
+    <div style="height: 4rem"></div>
+    <div class="mdc-drawer__content">
+      <div class="mdc-list">
+        <a class="mdc-list-item mdc-list-item--activated" href="#">
+          <span class="mdc-list-item__ripple"></span>
+          <i class="material-icons">inbox</i>
+          <span class="mdc-list-item__text">Inbox</span>
+        </a>
+        <a class="mdc-list-item" href="#">
+          <span class="mdc-list-item__ripple"></span>
+          <i class="material-icons">send</i>
+          <span class="mdc-list-item__text">Outgoing</span>
+        </a>
+        <a class="mdc-list-item" href="#">
+          <span class="mdc-list-item__ripple"></span>
+          <i class="material-icons">drafts</i>
+          <span class="mdc-list-item__text">Drafts</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+  <main class="main-content app-bar--fixed-adjust">
+    {{> (lookup data 'content') data=data.contentData }}
+  </main>
 </div>

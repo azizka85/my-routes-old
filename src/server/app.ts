@@ -1,13 +1,14 @@
 import './declarations';
 
 import { 
-  PAGE_ROOT,
-  MAIN_LAYOUT
+  PAGE_ROOT
 } from '../globals';
 
 import express from 'express';
 
 import Handlebars from 'handlebars';
+
+import { condition, toggleQueryParameter } from '../helpers';
 
 import defaultLayoutTpl from './templates/layouts/default-layout.hbs';
 import mainLayoutTpl from './templates/layouts/main-layout.hbs';
@@ -48,17 +49,25 @@ app.get('/', (req, res) => {
       res.send(data);
     } else {    
       let partials: any = {};
+      let helpers: any = {};
   
       let view = homePage;
       
       let layouts = req.query.layouts as string | undefined;
   
-      if(!req.query.ajax || layouts?.includes(MAIN_LAYOUT)) {
+      if(!req.query.ajax || layouts?.includes('main-layout')) {
         view = mainLayout;
   
         partials = { homePage };
+        helpers = { condition, toggleQueryParameter };
+
+        const navigation = req.query['main-layout-navigation'] === '1';
+        const search = req.query['main-layout-search'] === '1';
   
         data = {
+          navigation,
+          search,
+          query: req.query,
           content: 'homePage',
           contentData: data
         };
@@ -82,7 +91,8 @@ app.get('/', (req, res) => {
       res.send(view({ 
         data 
       }, {
-        partials
+        partials,
+        helpers
       }));
     }
   } finally {

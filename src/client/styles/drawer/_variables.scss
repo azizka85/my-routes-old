@@ -1,0 +1,15 @@
+@use '@material/theme/theme-color';
+
+// elevation
+$z-index: 1 !default;
+
+// width
+$width: 16rem !default;
+$min-width: 3.5rem !default;
+
+// opacity
+$divider-opacity: 0.12 !default;
+
+// color
+$divider-color: theme-color.prop-value(on-surface) !default;
+$surface-fill-color: surface !default;

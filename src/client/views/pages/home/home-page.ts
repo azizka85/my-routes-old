@@ -1,6 +1,5 @@
 import '../../../types/window';
 
-import { HOME_PAGE, MAIN_LAYOUT, PAGE_ROOT } from "../../../../globals";
 import { Page } from "../../view";
 
 import { MDCRipple } from '@material/ripple';
@@ -30,8 +29,8 @@ export class HomePage implements Page {
     } else {
       let path = window.location.pathname + '?ajax=1&init=1';
 
-      if(!(MAIN_LAYOUT in window.layouts)) {
-        path += `&layouts=${MAIN_LAYOUT}`;
+      if(!('main-layout' in window.layouts)) {
+        path += '&layouts=main-layout';
       }
 
       const html = await (await fetch(path)).text();
@@ -41,7 +40,7 @@ export class HomePage implements Page {
       content.innerHTML = html;
     }
 
-    this.node = content.querySelector(`[data-page="${HOME_PAGE}"]`) || null;
+    this.node = content.querySelector('[data-page="home-page"]') || null;
 
     if(this.node) {
       const buttons = this.node.querySelectorAll('.mdc-button');
@@ -63,10 +62,10 @@ export class HomePage implements Page {
   }
 
   async mount() {
-    console.log(HOME_PAGE, 'mounted');
+    console.log('home-page', 'mounted');
   }
 
   async unmount() {
-    console.log(HOME_PAGE, 'unmounted');
+    console.log('home-page', 'unmounted');
   }
 }

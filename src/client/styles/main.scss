@@ -1,10 +1,17 @@
 @use "@material/button/mdc-button";
 @use "@material/icon-button/mdc-icon-button";
 
-$drawer-min-width: 3.5rem;
+@use './app-bar/styles.scss' as app-bar-styles;
+@use './drawer/styles.scss' as drawer-styles;
+@use './list/styles.scss' as list-styles;
 
 body {
   margin: 0;
   height: 100vh;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+[data-layout] {
+  display: flex;
+  height: 100vh;
 }

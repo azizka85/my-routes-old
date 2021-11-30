@@ -1,0 +1,51 @@
+@use '@material/feature-targeting/feature-targeting';
+@use '@material/theme/theme';
+@use './mixins';
+
+@use '@material/animation/variables' as animation-variables;
+@use './variables';
+
+.drawer {
+  z-index: variables.$z-index;
+
+  @include mixins.border-color(variables.$divider-color);
+  @include theme.property(background-color, variables.$surface-fill-color);
+  
+  width: variables.$min-width;
+
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  height: 100%;
+  border-right-width: 1px;
+  border-right-style: solid;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: initial;    
+  
+  transition: width 250ms animation-variables.$standard-curve-timing-function;
+
+  &--open, &--hover {
+    width: variables.$width;
+  }
+
+  &__content {
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &--open ~ .main-content {
+    margin-left: variables.$width;
+  }
+}
+
+.main-content {
+  flex: auto;
+  overflow: auto;    
+  margin-left: variables.$min-width;
+  
+  transition: margin-left 250ms animation-variables.$standard-curve-timing-function;
+}

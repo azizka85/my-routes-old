@@ -1,6 +1,5 @@
 import '../../../types/window';
 
-import { PAGE_ROOT, SIGN_UP_PAGE } from '../../../../globals';
 import { Page } from '../../view';
 
 import { MDCRipple } from '@material/ripple';
@@ -37,7 +36,7 @@ export class SignUpPage implements Page {
       content.innerHTML = html;
     }
 
-    this.node = content.querySelector(`[data-page="${SIGN_UP_PAGE}"]`) || null;
+    this.node = content.querySelector('[data-page="signup-page"]') || null;
 
     if(this.node) {
       const buttons = this.node.querySelectorAll('.mdc-button');
@@ -59,10 +58,10 @@ export class SignUpPage implements Page {
   }
 
   async mount() {
-    console.log(SIGN_UP_PAGE, 'mounted');
+    console.log('signup-page', 'mounted');
   }
 
   async unmount() {
-    console.log(SIGN_UP_PAGE, 'unmounted');
+    console.log('signup-page', 'unmounted');
   }
 }

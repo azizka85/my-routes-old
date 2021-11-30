@@ -1,0 +1,17 @@
+@use "@material/list/evolution-mixins";
+
+@use './variables';
+
+@include evolution-mixins.core-styles;
+
+.mdc-list {
+  line-height: variables.$line-height;
+}
+
+.mdc-list-item {
+  align-items: center;
+
+  .material-icons {
+    margin-right: variables.$margin-right;
+  }
+}
