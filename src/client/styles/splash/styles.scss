@@ -1,0 +1,27 @@
+@use '@material/animation/variables' as animation-variables;
+@use '@material/theme/theme';
+
+@use './variables';
+
+.splash {
+  @include theme.property(background-color, variables.$surface-fill-color);
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: variables.$back-z-index;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  opacity: 0;
+  transition: 
+    z-index 250ms animation-variables.$standard-curve-timing-function,
+    opacity 250ms animation-variables.$standard-curve-timing-function;
+
+  &--open {
+    z-index: variables.$front-z-index;
+    opacity: 1;
+  }
+}

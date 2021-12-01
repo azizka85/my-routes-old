@@ -5,12 +5,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Routes</title>
+  <link rel='icon' type='image/png' href='/favicon.png'>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="dist/css/{{ data.version }}/main.css">
-  <script src="dist/js/{{ data.version }}/main.js" type="module"></script>
+  <link rel="stylesheet" href="/dist/css/{{ data.version }}/main.css">  
 </head>
 <body>
+  <div class="splash">
+    <div class="loader">
+      <img src="/favicon.png">
+    </div>
+  </div>
+  <script>
+    const splashElem = document.querySelector('.splash');
+
+    splashElem?.classList.add('splash--open');
+  </script>
   {{> (lookup data 'content') data=data.contentData }}
+  <script src="/dist/js/{{ data.version }}/main.js" type="module"></script>
 </body>
 </html>

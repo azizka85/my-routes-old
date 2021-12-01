@@ -1,6 +1,7 @@
 @use "@material/button/mdc-button";
 @use "@material/icon-button/mdc-icon-button";
 
+@use './splash/styles.scss' as splash-styles;
 @use './app-bar/styles.scss' as app-bar-styles;
 @use './drawer/styles.scss' as drawer-styles;
 @use './list/styles.scss' as list-styles;
