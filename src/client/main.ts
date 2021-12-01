@@ -66,5 +66,5 @@ window.addEventListener('DOMContentLoaded', () => {
     router.processUri();
     
     firstTime = false;         
-  }, 2000);  
+  }, 500);  
 });
