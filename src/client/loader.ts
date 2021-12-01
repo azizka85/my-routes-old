@@ -48,8 +48,8 @@ export async function loadHomePage(page: Page, firstTime: boolean) {
     layouts['main-layout'].replaceContent(pages['home-page']);
   }
 
-  layouts['main-layout']?.load?.(page, mainLayoutFirstLoad);
-  pages['home-page']?.load?.(page, homePageFirstLoad);
+  await layouts['main-layout']?.load?.(page, mainLayoutFirstLoad);
+  await pages['home-page']?.load?.(page, homePageFirstLoad);
 }
 
 export async function loadSignInPage(page: Page, firstTime: boolean) {
@@ -72,7 +72,7 @@ export async function loadSignInPage(page: Page, firstTime: boolean) {
     DefaultLayout.instance.replaceContent(pages['signin-page']);
   }
 
-  pages['signin-page']?.load?.(page, signInPageFirstLoad);
+  await pages['signin-page']?.load?.(page, signInPageFirstLoad);
 }
 
 export async function loadSignUpPage(page: Page, firstTime: boolean) {
@@ -95,7 +95,7 @@ export async function loadSignUpPage(page: Page, firstTime: boolean) {
     DefaultLayout.instance.replaceContent(pages['signup-page']);
   }
 
-  pages['signup-page']?.load?.(page, signUpPageFirstLoad);
+  await pages['signup-page']?.load?.(page, signUpPageFirstLoad);
 }
 
 window.pages = pages;
