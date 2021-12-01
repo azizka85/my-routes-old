@@ -23,37 +23,19 @@ window.addEventListener('DOMContentLoaded', () => {
       routes: [{
         rule: '',
         handler(page) {
-          loadHomePage(page, firstTime).then(
-            () => hideSplash(),
-            reason => {
-              console.error(reason);              
-              hideSplash();
-            }
-          );
+          loadHomePage(page, firstTime);
         },
         options: {}
       }, {
         rule: '/signin',
         handler(page) {
-          loadSignInPage(page, firstTime).then(
-            () => hideSplash(),
-            reason => {
-              console.error(reason);              
-              hideSplash();
-            }
-          );
+          loadSignInPage(page, firstTime);
         },
         options: {}
       }, {
         rule: '/signup',
         handler(page) {
-          loadSignUpPage(page, firstTime).then(
-            () => hideSplash(),
-            reason => {
-              console.error(reason);              
-              hideSplash();
-            }
-          );
+          loadSignUpPage(page, firstTime);
         }, 
         options: {}
       }]
@@ -63,7 +45,13 @@ window.addEventListener('DOMContentLoaded', () => {
     
     router.addUriListener();
     
-    router.processUri();
+    router.processUri().then(
+      () => hideSplash(),
+      reason => {
+        console.error(reason);              
+        hideSplash();
+      }
+    );
     
     firstTime = false;         
   }, 500);  
