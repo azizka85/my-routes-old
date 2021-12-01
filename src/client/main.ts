@@ -23,19 +23,19 @@ window.addEventListener('DOMContentLoaded', () => {
       routes: [{
         rule: '',
         async handler(page) {
-          loadHomePage(page, firstTime);
+          await loadHomePage(page, firstTime);
         },
         options: {}
       }, {
         rule: '/signin',
         async handler(page) {
-          loadSignInPage(page, firstTime);
+          await loadSignInPage(page, firstTime);
         },
         options: {}
       }, {
         rule: '/signup',
         async handler(page) {
-          loadSignUpPage(page, firstTime);
+          await loadSignUpPage(page, firstTime);
         }, 
         options: {}
       }]
