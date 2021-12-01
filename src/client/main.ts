@@ -22,19 +22,19 @@ window.addEventListener('DOMContentLoaded', () => {
       root: PAGE_ROOT,
       routes: [{
         rule: '',
-        handler(page) {
+        async handler(page) {
           loadHomePage(page, firstTime);
         },
         options: {}
       }, {
         rule: '/signin',
-        handler(page) {
+        async handler(page) {
           loadSignInPage(page, firstTime);
         },
         options: {}
       }, {
         rule: '/signup',
-        handler(page) {
+        async handler(page) {
           loadSignUpPage(page, firstTime);
         }, 
         options: {}
