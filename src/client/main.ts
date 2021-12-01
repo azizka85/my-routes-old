@@ -8,6 +8,12 @@ import { Router } from '@azizka/router';
 
 import { loadHomePage, loadSignInPage, loadSignUpPage } from './loader';
 
+function hideSplash() {
+  const splashElem = document.querySelector('.splash');
+
+  splashElem?.classList.remove('splash--open');   
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     let firstTime = true;
@@ -17,19 +23,37 @@ window.addEventListener('DOMContentLoaded', () => {
       routes: [{
         rule: '',
         handler(page) {
-          loadHomePage(page, firstTime);
+          loadHomePage(page, firstTime).then(
+            () => hideSplash(),
+            reason => {
+              console.error(reason);              
+              hideSplash();
+            }
+          );
         },
         options: {}
       }, {
         rule: '/signin',
         handler(page) {
-          loadSignInPage(page, firstTime);
+          loadSignInPage(page, firstTime).then(
+            () => hideSplash(),
+            reason => {
+              console.error(reason);              
+              hideSplash();
+            }
+          );
         },
         options: {}
       }, {
         rule: '/signup',
         handler(page) {
-          loadSignUpPage(page, firstTime);
+          loadSignUpPage(page, firstTime).then(
+            () => hideSplash(),
+            reason => {
+              console.error(reason);              
+              hideSplash();
+            }
+          );
         }, 
         options: {}
       }]
@@ -41,10 +65,6 @@ window.addEventListener('DOMContentLoaded', () => {
     
     router.processUri();
     
-    firstTime = false;    
-
-    const splashElem = document.querySelector('.splash');
-
-    splashElem?.classList.remove('splash--open');    
+    firstTime = false;         
   }, 2000);  
 });
