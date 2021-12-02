@@ -24,27 +24,35 @@ export async function loadHomePage(page: Page, firstTime: boolean) {
 
   if(!('home-page' in pages)) {    
     const module = await import('./views/pages/home/home-page');
-    
+        
+    parent = await module.HomePage.instance.init(parent, firstTime);
+
     pages['home-page'] = module.HomePage.instance;
-    parent = await pages['home-page'].init(parent, firstTime);
 
     homePageFirstLoad = true;
   } 
 
   if(!('main-layout' in layouts)) {
     const module = await import('./views/layouts/main/main-layout');
+    
+    parent = await module.MainLayout.instance.init(parent, firstTime);
 
     layouts['main-layout'] = module.MainLayout.instance;
-    parent = await layouts['main-layout'].init(parent, firstTime);
 
     mainLayoutFirstLoad = true;
   } 
   
-  if(DefaultLayout.instance['content'] !== layouts['main-layout']) {
+  if(
+    DefaultLayout.instance['content'] !== layouts['main-layout']
+    && page.fragment === ''
+  ) {
     DefaultLayout.instance.replaceContent(layouts['main-layout']);  
   }
   
-  if(layouts['main-layout']['content'] !== pages['home-page']) {
+  if(
+    layouts['main-layout']['content'] !== pages['home-page']
+    && page.fragment === ''
+  ) {
     layouts['main-layout'].replaceContent(pages['home-page']);
   }
 
@@ -61,14 +69,18 @@ export async function loadSignInPage(page: Page, firstTime: boolean) {
 
   if(!('signin-page' in pages)) {
     const module = await import('./views/pages/signin/signin-page');
+    
+    parent = await module.SignInPage.instance.init(parent, firstTime);
 
     pages['signin-page'] = module.SignInPage.instance;
-    parent = await pages['signin-page'].init(parent, firstTime);
 
     signInPageFirstLoad = true;
   }
 
-  if(DefaultLayout.instance['content'] !== pages['signin-page']) {
+  if(
+    DefaultLayout.instance['content'] !== pages['signin-page']
+    && page.fragment === 'signin'
+  ) {
     DefaultLayout.instance.replaceContent(pages['signin-page']);
   }
 
@@ -84,14 +96,18 @@ export async function loadSignUpPage(page: Page, firstTime: boolean) {
 
   if(!('signup-page' in pages)) {
     const module = await import('./views/pages/signup/signup-page');
+    
+    parent = await module.SignUpPage.instance.init(parent, firstTime);
 
     pages['signup-page'] = module.SignUpPage.instance;
-    parent = await pages['signup-page'].init(parent, firstTime);
 
     signUpPageFirstLoad = true;
   }
 
-  if(DefaultLayout.instance['content'] !== pages['signup-page']) {
+  if(
+    DefaultLayout.instance['content'] !== pages['signup-page']
+    && page.fragment === 'signup'
+  ) {
     DefaultLayout.instance.replaceContent(pages['signup-page']);
   }
 
