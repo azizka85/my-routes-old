@@ -44,14 +44,14 @@ export async function loadHomePage(page: Page, firstTime: boolean) {
   
   if(
     DefaultLayout.instance['content'] !== layouts['main-layout']
-    && page.fragment === ''
+    && window.page.fragment === ''
   ) {
     DefaultLayout.instance.replaceContent(layouts['main-layout']);  
   }
   
   if(
     layouts['main-layout']['content'] !== pages['home-page']
-    && page.fragment === ''
+    && window.page.fragment === ''
   ) {
     layouts['main-layout'].replaceContent(pages['home-page']);
   }
@@ -79,7 +79,7 @@ export async function loadSignInPage(page: Page, firstTime: boolean) {
 
   if(
     DefaultLayout.instance['content'] !== pages['signin-page']
-    && page.fragment === 'signin'
+    && window.page.fragment === 'signin'
   ) {
     DefaultLayout.instance.replaceContent(pages['signin-page']);
   }
@@ -106,7 +106,7 @@ export async function loadSignUpPage(page: Page, firstTime: boolean) {
 
   if(
     DefaultLayout.instance['content'] !== pages['signup-page']
-    && page.fragment === 'signup'
+    && window.page.fragment === 'signup'
   ) {
     DefaultLayout.instance.replaceContent(pages['signup-page']);
   }
