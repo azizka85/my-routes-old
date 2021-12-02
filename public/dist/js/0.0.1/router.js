@@ -1,1 +1,174 @@
-var e=class{routes=[];root="/";before;page404;constructor(e){e?.root&&(this.root="/"===e.root?"/":"/"+this.trimSlashes(e.root)+"/"),"function"==typeof e?.before&&(this.before=e.before),"function"==typeof e?.page404&&(this.page404=e.page404),e?.routes?.length>0&&e.routes.forEach((e=>{this.add(e.rule,e.handler,e.options)}))}get fragment(){let e=decodeURI(location.pathname);return"/"!==this.root&&(e=e.replace(this.root,"")),this.trimSlashes(e)}get query(){return this.parseQuery(location.search)}add(e,t,r){return this.routes.push({rule:this.parseRouteRule(e),handler:t,options:r}),this}remove(e){return"string"==typeof e&&(e=this.parseRouteRule(e)),this.routes.some(((t,r)=>(t.handler===e||t.rule===e)&&(this.routes.splice(r,1),!0))),this}async redirectTo(e,t){return e=this.trimSlashes(e),history.replaceState(t,null,this.root+e),await this.processUri(),this}async navigateTo(e,t){return e=this.trimSlashes(e),history.pushState(t,null,this.root+e),await this.processUri(),this}refresh(){return this.redirectTo(this.fragment+location.search,history.state)}trimSlashes(e){return"string"!=typeof e?"":e.replace(/\/$/,"").replace(/^\//,"")}parseRouteRule(e){if("string"!=typeof e)return e;let t=this.trimSlashes(e).replace(/([\\\/\-\_\.])/g,"\\$1").replace(/\{[a-zA-Z]+\}/g,"(:any)").replace(/\:any/g,"[\\w\\-\\_\\.]+").replace(/\:word/g,"[a-zA-Z]+").replace(/\:num/g,"\\d+");return new RegExp("^"+t+"$","i")}parseQuery(e){let t={};return"string"!=typeof e||("?"===e[0]&&(e=e.substr(1)),e.split("&").forEach((e=>{let r=e.split("=");""!==r[0]&&(void 0===r[1]&&(r[1]=!0),t[decodeURIComponent(r[0])]=r[1])}))),t}async findRoute(){let e=this.fragment,t=!1;for(let r of this.routes){let s=e.match(r.rule);if(s){s.shift();let o={fragment:e,query:this.query,match:s,options:r.options},i=this.before?.(o);i||await(r.handler?.(o)),t=!0;break}}return t}async processUri(){let e=this.fragment;await this.findRoute()||this.page404?.(e)}addUriListener(){window.onpopstate=this.processUri.bind(this)}removeUriListener(){window.onpopstate=null}};export{e as R};
+class Router {
+  routes = [];
+  root = '/';
+  before;
+  page404;
+  constructor(options) {
+    if(options?.root) {
+      this.root = options.root === '/' ? '/' : '/' + this.trimSlashes(options.root) + '/';
+    }
+    if(typeof options?.before === 'function') {
+      this.before = options.before;
+    }
+    if(typeof options?.page404 === 'function') {
+      this.page404 = options.page404;
+    }
+    if(options?.routes?.length > 0) {
+      options.routes.forEach(route => {
+        this.add(route.rule, route.handler, route.options);
+      });
+    }
+  }
+  get fragment() {
+    let value = decodeURI(location.pathname);
+    if(this.root !== '/') {
+      value = value.replace(this.root, "");
+    }
+    return this.trimSlashes(value);
+  }
+  get query() {
+    return this.parseQuery(location.search);
+  }
+  add(rule, handler, options) {
+    this.routes.push({
+      rule: this.parseRouteRule(rule),
+      handler,
+      options
+    });
+    return this;
+  }
+  remove(param) {
+    if(typeof param === 'string') {
+      param = this.parseRouteRule(param);
+    }
+    this.routes.some((route, i) => {
+      if(route.handler === param || route.rule === param) {
+        this.routes.splice(i, 1);
+        return true;
+      }
+      return false;
+    });
+    return this;
+  }
+  async redirectTo(url, state) {
+    const newUrl = this.transformURL(url);
+    history.replaceState(state, null, this.root + newUrl);
+    await this.processUri();
+    return this;
+  }
+  async navigateTo(url, state) {
+    const newUrl = this.transformURL(url);
+    history.pushState(state, null, this.root + newUrl);
+    await this.processUri();
+    return this;
+  }
+  refresh() {
+    return this.redirectTo(this.fragment + location.search, history.state);
+  }
+  transformURL(url) {
+    if(typeof url !== 'string') {
+      return '';
+    }
+    const newUrl = url.trim();
+    const splits = newUrl.split('?');
+    let path = '';
+    let query = '';
+    if(splits.length === 1) {
+      path = splits[0];
+    } else {
+      path = splits[0].trim();
+      query = splits[1].trim();
+    }
+    if(!path) {
+      path = this.fragment;
+    } else {
+      if(this.root !== '/') {
+        path = path.replace(this.root, "");
+      }
+      path = this.trimSlashes(path);
+    }
+    if(!query) {
+      return path;
+    }
+    return `${path}?${query}`;
+  }
+  trimSlashes(path) {
+    if(typeof path !== 'string') {
+      return '';
+    }
+    return path.replace(/\/$/, '').replace(/^\//, '');
+  }
+  parseRouteRule(route) {
+    if(typeof route !== "string") {
+      return route;
+    }
+    let uri = this.trimSlashes(route);
+    let rule = uri
+      .replace(/([\\\/\-\_\.])/g, "\\$1")
+      .replace(/\{[a-zA-Z]+\}/g, "(:any)")
+      .replace(/\:any/g, "[\\w\\-\\_\\.]+")
+      .replace(/\:word/g, "[a-zA-Z]+")
+      .replace(/\:num/g, "\\d+");
+    return new RegExp("^" + rule + "$", "i");
+  }
+  parseQuery(query) {
+    let data = {};
+    if(typeof query !== "string") {
+      return data;
+    }
+    if(query[0] === '?') {
+      query = query.substr(1);
+    }
+    query.split('&').forEach(row => {
+      let parts = row.split('=');
+      if(parts[0] !== '') {
+        if(parts[1] === undefined) {
+          parts[1] = true;
+        }
+        data[decodeURIComponent(parts[0])] = parts[1];
+      }
+    });
+    return data;
+  }
+  async findRoute() {
+    let fragment = this.fragment;
+    let found = false;
+    for(let route of this.routes) {
+      let match = fragment.match(route.rule);
+      if(match) {
+        match.shift();
+        let query = this.query;
+        let page = {
+          fragment,
+          query,
+          match,
+          options: route.options
+        };
+        let doBreak = this.before?.(page);
+        if(!doBreak) {
+          await route.handler?.(page);
+        }
+        found = true;
+        break;
+      }
+    }
+    return found;
+  }
+  async processUri() {
+    let fragment = this.fragment;
+    let found = await this.findRoute();
+    if(!found) {
+      this.page404?.(fragment);
+    }
+  }
+  addUriListener() {
+    window.onpopstate = this.processUri.bind(this);
+  }
+  removeUriListener() {
+    window.onpopstate = null;
+  }
+}
+var Router_1 = Router;
+
+export { Router_1 as R };
+//# sourceMappingURL=router.js.map

@@ -1,8 +1,8 @@
-import '../../../types/window';
-
 import { Page } from '../../view';
 
 import { MDCRipple } from '@material/ripple';
+
+import { loadContent, navigateHandler } from '../../../helpers';
 
 export class SignInPage implements Page {
   protected static page: SignInPage | null = null;
@@ -22,19 +22,7 @@ export class SignInPage implements Page {
   }
 
   async init(parent: HTMLElement | null, firstTime: boolean) {
-    let content: HTMLElement;
-
-    if(firstTime || parent) {
-      content = parent || document.body;
-    } else {
-      let path = window.location.pathname + '?ajax=1&init=1';
-
-      const html = await (await fetch(path)).text();
-      
-      content = document.createElement('div');
-
-      content.innerHTML = html;
-    }
+    let content = await loadContent(parent, firstTime, []);    
 
     this.node = content.querySelector('[data-page="signin-page"]') || null;
 
@@ -42,14 +30,10 @@ export class SignInPage implements Page {
       const buttons = this.node.querySelectorAll('.mdc-button');
 
       for(let button of buttons) {
-        new MDCRipple(button);
+        const ripple = new MDCRipple(button);
 
         if(button.hasAttribute('href')) {
-          button.addEventListener('click', event => {
-            event.preventDefault();
-
-            window.router.navigateTo(button.getAttribute('href') || '');
-          });
+          ripple.listen('click', event => navigateHandler(event, ripple.root as HTMLElement));
         }
       }
     }

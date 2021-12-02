@@ -1,1 +1,5 @@
-const s="/",a=5;export{s as P,a as S};
+const PAGE_ROOT = '/';
+const SCROLL_THRESHOLD = 5;
+
+export { PAGE_ROOT as P, SCROLL_THRESHOLD as S };
+//# sourceMappingURL=globals.js.map

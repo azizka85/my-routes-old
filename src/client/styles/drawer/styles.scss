@@ -3,23 +3,23 @@
 @use './mixins';
 
 @use '@material/animation/variables' as animation-variables;
+@use '../app-bar/variables' as app-bar-variables;
+@use '../variables' as global-variables;
 @use './variables';
 
 .drawer {
-  z-index: variables.$z-index;
+  z-index: (app-bar-variables.$z-index + 1);  
 
   @include mixins.border-color(variables.$divider-color);
   @include theme.property(background-color, variables.$surface-fill-color);
   
-  width: variables.$min-width;
+  width: 0;
 
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   box-sizing: border-box;
   height: 100%;
-  border-right-width: 1px;
-  border-right-style: solid;
   overflow: hidden;
   position: absolute;
   left: 0;
@@ -27,25 +27,51 @@
   
   transition: width 250ms animation-variables.$standard-curve-timing-function;
 
-  &--open, &--hover {
-    width: variables.$width;
+  &--open {
+    border-right-width: 1px;
+    border-right-style: solid;  
+    width: 100%;
   }
 
   &__content {
     height: 100%;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-  }
+  }  
 
-  &--open ~ .main-content {
-    margin-left: variables.$width;
+  &__header {
+    height: app-bar-variables.$row-height;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 }
 
 .main-content {
   flex: auto;
-  overflow: auto;    
-  margin-left: variables.$min-width;
+  overflow: auto;      
+}
+
+// laptop
+@media screen and (min-width: (global-variables.$breakpoint-xs + 1px)) {
+  .drawer {
+    z-index: variables.$z-index;
+    width: variables.$min-width;
+    border-right-width: 1px;
+    border-right-style: solid;  
+
+    &--open, &--hover {
+      width: variables.$width;
+    }
+
+    &--open ~ .main-content {
+      margin-left: variables.$width;
+    }
+  }
+
+  .main-content {
+    margin-left: variables.$min-width;
   
-  transition: margin-left 250ms animation-variables.$standard-curve-timing-function;
+    transition: margin-left 250ms animation-variables.$standard-curve-timing-function;
+  }
 }

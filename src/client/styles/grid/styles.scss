@@ -1,0 +1,50 @@
+@use './mixins';
+
+@use './variables';
+@use '../variables' as global-variables;
+
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;  
+
+  &.reverse {
+    flex-direction: row-reverse;
+  }
+}
+
+// extra small - mobile
+.col,
+[class*=" col-"],
+[class^='col-'] {
+  margin: calc(variables.$gutter/2);
+  flex: 0 1 100%;
+  max-width: 100%;
+}
+
+@include mixins.loop-cols(12);
+
+// small - tablet
+@media screen and (min-width: (global-variables.$breakpoint-xs + 1px)) and (max-width: global-variables.$breakpoint-sm) {
+  @include mixins.loop-cols(12, '-sm');
+}
+
+// medium - laptop
+@media screen and (min-width: (global-variables.$breakpoint-sm + 1px)) and (max-width: global-variables.$breakpoint-md) {
+  @include mixins.loop-cols(12, '-md');
+}
+
+// large - desktop
+@media screen and (min-width: (global-variables.$breakpoint-md + 1px)) and (max-width: global-variables.$breakpoint-lg) {
+  @include mixins.loop-cols(12, '-lg');
+}
+
+// 2k <= desktop <= 4k
+@media screen and (min-width: (global-variables.$breakpoint-lg + 1px)) and (max-width: global-variables.$breakpoint-xl) {
+  @include mixins.loop-cols(12, '-xl');
+}
+
+// desktop > 4k
+@media screen and (min-width: (global-variables.$breakpoint-xl + 1px)) {
+  @include mixins.loop-cols(12, '-xxl');
+}

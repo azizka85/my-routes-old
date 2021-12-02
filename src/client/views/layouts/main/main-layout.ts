@@ -8,6 +8,7 @@ import { MDCRipple } from '@material/ripple';
 import { MDCList } from '@material/list';
 
 import { toggleQueryParameter } from "../../../../helpers";
+import { navigateHandler } from '../../../helpers';
 
 export class MainLayout extends BaseLayout implements Page {
   protected static layout: MainLayout | null = null;    
@@ -21,6 +22,9 @@ export class MainLayout extends BaseLayout implements Page {
 
   protected navIcon: MDCRipple | null = null;
   protected searchIcon: MDCRipple | null = null;
+
+  protected headerIconElem: HTMLElement | null = null;
+  protected headerIconBtn: MDCRipple | null = null;
 
   protected list: MDCList | null = null;
 
@@ -74,7 +78,7 @@ export class MainLayout extends BaseLayout implements Page {
         this.navIcon = new MDCRipple(navIconElem);
         this.navIcon.unbounded = true;
 
-        this.navIcon.listen('click', (event) => this.navigateHandler(event));
+        this.navIcon.listen('click', event => navigateHandler(event, this.navIcon?.root as HTMLElement));
       }
 
       const searchIconElem = this.appBarElem?.querySelector('[data-button="search"]');
@@ -83,7 +87,18 @@ export class MainLayout extends BaseLayout implements Page {
         this.searchIcon = new MDCRipple(searchIconElem);
         this.searchIcon.unbounded = true;
 
-        this.searchIcon.listen('click', (event) => this.navigateHandler(event));
+        this.searchIcon.listen('click', event => navigateHandler(event, this.searchIcon?.root as HTMLElement));
+      }
+
+      const headerIconBtnElem = this.node.querySelector('[data-button="header-navigation"]');
+
+      if(headerIconBtnElem) {
+        this.headerIconElem = headerIconBtnElem.querySelector('.mdc-icon-button__ripple');
+
+        this.headerIconBtn = new MDCRipple(headerIconBtnElem);
+        this.headerIconBtn.unbounded = true;
+
+        this.headerIconBtn.listen('click', event => navigateHandler(event, this.headerIconBtn?.root as HTMLElement));
       }
 
       const listElem = this.node.querySelector('.mdc-list');
@@ -119,35 +134,38 @@ export class MainLayout extends BaseLayout implements Page {
   } 
 
   async load(page: router.Page, firstLoad: boolean) {    
-    const navigation = page.query['main-layout-navigation'];
-    const search = page.query['main-layout-search'];
+    const navigation = page.query['main-layout-navigation'];    
 
     if(this.navIcon) {      
-      const path = `${window.location.pathname}?${toggleQueryParameter(page.query, 'main-layout-navigation')}`;
+      const path = `?${toggleQueryParameter(page.query, 'main-layout-navigation')}`;
 
       this.navIcon.root.setAttribute('href', path);
     }
 
+    if(this.headerIconBtn) {
+      const path = `?${toggleQueryParameter(page.query, 'main-layout-navigation')}`;
+
+      this.headerIconBtn.root.setAttribute('href', path);
+    }
+
     if(this.searchIcon) {    
-      const path = `${window.location.pathname}?${toggleQueryParameter(page.query, 'main-layout-search')}`;
+      const path = `?${toggleQueryParameter(page.query, 'main-layout-search')}`;
 
       this.searchIcon.root.setAttribute('href', path);
     }
 
     if(navigation) {
+      if(this.headerIconElem) {
+        this.headerIconElem.innerHTML = 'arrow_circle_left';
+      }
+
       this.drawerElem?.classList.add('drawer--open');
     } else {
+      if(this.headerIconElem) {
+        this.headerIconElem.innerHTML = 'arrow_circle_right';
+      }
+
       this.drawerElem?.classList.remove('drawer--open');
-    }
-  }
-
-  protected navigateHandler(event: Event) {
-    event.preventDefault();
-
-    const path = (event.target as HTMLElement)?.getAttribute?.('href');
-
-    if(path) {
-      window.router.navigateTo(path);
     }
   }
 }

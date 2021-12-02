@@ -27,8 +27,18 @@
     </div>
   </header>
   <aside class="drawer {{ condition data.navigation 'drawer--open' '' }}">
-    <div style="height: 4rem"></div>
-    <div class="mdc-drawer__content">
+    <div class="drawer__header">
+      <a 
+        data-button="header-navigation"
+        class="material-icons mdc-icon-button" 
+        href="?{{ toggleQueryParameter data.query 'main-layout-navigation' }}"
+      >
+        <span class="mdc-icon-button__ripple">
+          {{ condition data.navigation 'arrow_circle_left' 'arrow_circle_right' }}
+        </span>        
+      </a>
+    </div>
+    <div class="drawer__content">
       <div class="mdc-list">
         <a class="mdc-list-item mdc-list-item--activated" href="#">
           <span class="mdc-list-item__ripple"></span>

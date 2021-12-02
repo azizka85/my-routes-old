@@ -24,6 +24,7 @@ export default [{
       router: ['@azizka/router'],
       globals: ['./src/globals.ts'],   
       helpers: ['./src/helpers.ts'], 
+      'client-helpers': ['./src/client/helpers.ts'],
       'base-layout': ['./src/client/views/layouts/base-layout.ts'],
       'default-layout': ['./src/client/views/layouts/default/default-layout.ts'],
       'main-layout': ['./src/client/views/layouts/main/main-layout.ts'],    

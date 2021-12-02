@@ -1,1 +1,41 @@
-import{M as e}from"./ripple.js";import"./base.js";import"./dom.js";class t{static page=null;node=null;static get instance(){return t.page||(t.page=new t),t.page}get elem(){return this.node}async init(t,n){let o;if(n||t)o=t||document.body;else{let e=window.location.pathname+"?ajax=1&init=1";const t=await(await fetch(e)).text();o=document.createElement("div"),o.innerHTML=t}if(this.node=o.querySelector('[data-page="signup-page"]')||null,this.node){const t=this.node.querySelectorAll(".mdc-button");for(let n of t)new e(n),n.hasAttribute("href")&&n.addEventListener("click",(e=>{e.preventDefault(),window.router.navigateTo(n.getAttribute("href")||"")}))}return o}async mount(){console.log("signup-page","mounted")}async unmount(){console.log("signup-page","unmounted")}}export{t as SignUpPage};
+import { l as loadContent, n as navigateHandler } from './client-helpers.js';
+import { M as MDCRipple } from './ripple.js';
+import './base.js';
+import './dom.js';
+
+class SignUpPage {
+    static page = null;
+    node = null;
+    static get instance() {
+        if (!SignUpPage.page) {
+            SignUpPage.page = new SignUpPage();
+        }
+        return SignUpPage.page;
+    }
+    get elem() {
+        return this.node;
+    }
+    async init(parent, firstTime) {
+        let content = await loadContent(parent, firstTime, []);
+        this.node = content.querySelector('[data-page="signup-page"]') || null;
+        if (this.node) {
+            const buttons = this.node.querySelectorAll('.mdc-button');
+            for (let button of buttons) {
+                const ripple = new MDCRipple(button);
+                if (button.hasAttribute('href')) {
+                    ripple.listen('click', event => navigateHandler(event, ripple.root));
+                }
+            }
+        }
+        return content;
+    }
+    async mount() {
+        console.log('signup-page', 'mounted');
+    }
+    async unmount() {
+        console.log('signup-page', 'unmounted');
+    }
+}
+
+export { SignUpPage };
+//# sourceMappingURL=signup-page.js.map

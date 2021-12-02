@@ -1,0 +1,10 @@
+@use './variables';
+
+@mixin loop-cols($count, $suffix: '') {
+  @for $i from 1 through $count {
+    .col-#{$i}#{$suffix} {
+      flex: 0 0 calc((100% / (#{$count}/#{$i})) - #{variables.$gutter});
+      max-width: calc((100% / (#{$count}/#{$i})) - #{variables.$gutter});
+    }
+  }
+}
