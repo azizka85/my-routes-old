@@ -1,6 +1,7 @@
 @use "@material/button/mdc-button";
 @use "@material/icon-button/mdc-icon-button";
 @use "@material/linear-progress/mdc-linear-progress";
+@use "@material/fab/mdc-fab";
 
 
 @use './list/styles.scss' as list-styles;
@@ -19,4 +20,18 @@ body {
 [data-layout] {
   display: flex;
   height: 100vh;
+}
+
+.main-content {
+  scroll-behavior: smooth;
+
+  &--no-smooth {
+    scroll-behavior: unset;
+  }
+}
+
+[data-button="scroll-top"] {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
 }

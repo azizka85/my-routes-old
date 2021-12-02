@@ -10,6 +10,8 @@ import { MDCList } from '@material/list';
 import { toggleQueryParameter } from "../../../../helpers";
 import { navigateHandler } from '../../../helpers';
 
+import { ScrollActionTo, ScrollActionTop, ScrollEventData, ScrollEventType } from '../../../types/scroll';
+
 export class MainLayout extends BaseLayout implements Page {
   protected static layout: MainLayout | null = null;    
 
@@ -68,6 +70,13 @@ export class MainLayout extends BaseLayout implements Page {
         } else {
           this.appBarElem?.classList.add('app-bar--scrolled');
         }
+
+        this.node?.dispatchEvent(new CustomEvent<ScrollEventData>(ScrollEventType, {
+          detail: {
+            currScroll,
+            prevScroll
+          }
+        }));
         
         prevScroll = currScroll;
       });
@@ -166,6 +175,34 @@ export class MainLayout extends BaseLayout implements Page {
       }
 
       this.drawerElem?.classList.remove('drawer--open');
+    }
+  }
+
+  listen(type: string, listener: EventListenerOrEventListenerObject) {
+    this.node?.addEventListener(type, listener);
+  }
+
+  doAction(type: string, data: any) {
+    switch(type) {
+      case ScrollActionTop:
+        this.mainContentElem?.scrollTo({
+          top: 0
+        });
+        break;
+      case ScrollActionTo: 
+        if(data?.noSmooth) {
+          this.mainContentElem?.classList.add('main-content--no-smooth');
+        } 
+
+        this.mainContentElem?.scrollTo({
+          top: data?.top
+        });
+        
+        if(data?.noSmooth) {
+          this.mainContentElem?.classList.remove('main-content--no-smooth');
+        }
+
+        break;
     }
   }
 }

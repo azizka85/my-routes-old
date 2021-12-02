@@ -1,14 +1,1 @@
-import { B as BaseLayout } from './base-layout.js';
-
-class DefaultLayout extends BaseLayout {
-    static layout = null;
-    static get instance() {
-        if (!DefaultLayout.layout) {
-            DefaultLayout.layout = new DefaultLayout();
-        }
-        return DefaultLayout.layout;
-    }
-}
-
-export { DefaultLayout as D };
-//# sourceMappingURL=default-layout.js.map
+import{B as t}from"./base-layout.js";class a extends t{static layout=null;static get instance(){return a.layout||(a.layout=new a),a.layout}}export{a as D};

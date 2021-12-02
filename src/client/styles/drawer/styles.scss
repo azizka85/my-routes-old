@@ -53,7 +53,7 @@
 }
 
 // laptop
-@media screen and (min-width: (global-variables.$breakpoint-xs + 1px)) {
+@media screen and (min-width: (global-variables.$breakpoint-sm + 1px)) {
   .drawer {
     z-index: variables.$z-index;
     width: variables.$min-width;

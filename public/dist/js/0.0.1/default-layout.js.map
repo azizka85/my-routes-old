@@ -1,1 +1,0 @@
-{"version":3,"file":"default-layout.js","sources":["../../../../src/client/views/layouts/default/default-layout.ts"],"sourcesContent":[null],"names":[],"mappings":";;MAEa,aAAc,SAAQ,UAAU;IACjC,OAAO,MAAM,GAAyB,IAAI,CAAC;IAErD,WAAW,QAAQ;QACjB,IAAG,CAAC,aAAa,CAAC,MAAM,EAAE;YACxB,aAAa,CAAC,MAAM,GAAG,IAAI,aAAa,EAAE,CAAC;SAC5C;QAED,OAAO,aAAa,CAAC,MAAM,CAAC;KAC7B;;;;;"}

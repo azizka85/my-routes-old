@@ -14,6 +14,7 @@
   "devDependencies": {
     "@azizka/router": "^1.0.0",
     "@material/button": "^13.0.0",
+    "@material/fab": "^13.0.0",
     "@material/icon-button": "^13.0.0",
     "@material/linear-progress": "^13.0.0",
     "@material/list": "^13.0.0",
