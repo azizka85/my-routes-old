@@ -8,7 +8,7 @@
 @use './variables';
 
 .drawer {
-  z-index: (app-bar-variables.$z-index + 1);  
+  z-index: (app-bar-variables.$z-index + 2);  
 
   @include mixins.border-color(variables.$divider-color);
   @include theme.property(background-color, variables.$surface-fill-color);

@@ -1,37 +1,52 @@
 @use '@material/theme/theme-color';
 
 @use './variables';
+@use '../app-bar/variables' as app-bar-variables;
 
 .search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   color: inherit;
-  position: relative;
-  width: 100%;
-  max-width: 45rem;
+  position: absolute;
+  top: variables.$top;
+  height: variables.$height;
+  width: calc(100% - variables.$margin-max);
+  max-width: variables.$max-width;
+  padding: variables.$padding;
   margin: auto;
   border-radius: variables.$border-radius;  
   background-color: rgba(variables.$surface-fill-color, variables.$background-opacity);
-  display: flex;
-  justify-content: space-between;
-  transition: color 200ms linear, background-color 200ms linear;  
+  transition: color 200ms linear, background-color 200ms linear, width 200ms linear;  
 
   &:focus-within {
     color: theme-color.accessible-ink-color(variables.$surface-fill-color);
-    background-color: variables.$surface-fill-color; 
+    background-color: variables.$surface-fill-color;   
+    width: calc(100% - variables.$margin-min);
+    z-index: app-bar-variables.$z-index + 1;
+
+    .search__icon-left, .search__icon-right {
+      display: block;
+    }
   }
 
   &__input {
+    flex: 1;
     color: inherit;
     background-color: rgba(#000000, 0);
     border: none;
     outline: none;
-    flex: 1;
   }
 
-  &__icon-left {
+  &__icon-left {    
+    order: -1;
     color: inherit;
-  }
+    display: none;
+  }  
 
   &__icon-right {
+    order: 1;
     color: inherit;
-  }
+    display: none;
+  }  
 }

@@ -58,17 +58,6 @@
       justify-content: center;
       flex: 1 1 auto;          
     }
-
-    &--fill:focus-within ~ &--align-start, &--fill:focus-within ~ &--align-end {
-      display: none;
-    }    
-
-    // small - tablet
-    @media screen and (min-width: (global-variables.$breakpoint-xs + 1px)) {
-      &--fill:focus-within ~ &--align-start, &--fill:focus-within ~ &--align-end {
-        display: block;
-      } 
-    }
   }
 
   &__title {
