@@ -2,5 +2,5 @@
 $surface-fill-color: surface !default;
 
 // z-index
-$back-z-index: -10;
-$front-z-index: 250;
+$back-z-index: -10 !default;
+$front-z-index: 250 !default;

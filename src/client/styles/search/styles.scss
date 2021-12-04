@@ -1,0 +1,37 @@
+@use '@material/theme/theme-color';
+
+@use './variables';
+
+.search {
+  color: inherit;
+  position: relative;
+  width: 100%;
+  max-width: 45rem;
+  margin: auto;
+  border-radius: variables.$border-radius;  
+  background-color: rgba(variables.$surface-fill-color, variables.$background-opacity);
+  display: flex;
+  justify-content: space-between;
+  transition: color 200ms linear, background-color 200ms linear;  
+
+  &:focus-within {
+    color: theme-color.accessible-ink-color(variables.$surface-fill-color);
+    background-color: variables.$surface-fill-color; 
+  }
+
+  &__input {
+    color: inherit;
+    background-color: rgba(#000000, 0);
+    border: none;
+    outline: none;
+    flex: 1;
+  }
+
+  &__icon-left {
+    color: inherit;
+  }
+
+  &__icon-right {
+    color: inherit;
+  }
+}

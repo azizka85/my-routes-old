@@ -1,8 +1,9 @@
 @use '@material/elevation/mixins' as elevation-mixins;
 @use '@material/typography/typography';
-@use './mixins';
+@use '../mixins';
 
 @use './variables';
+@use '../variables' as global-variables;
 
 .app-bar {
   @include mixins.fill-color-accessible(primary);
@@ -33,8 +34,8 @@
     position: relative;
     box-sizing: border-box;
     width: 100%;
-    height: variables.$row-height;
-  }
+    height: variables.$row-height;        
+  }  
 
   &__section {
     display: inline-flex;
@@ -55,7 +56,18 @@
 
     &--fill {
       justify-content: center;
-      flex: 1 1 auto;
+      flex: 1 1 auto;          
+    }
+
+    &--fill:focus-within ~ &--align-start, &--fill:focus-within ~ &--align-end {
+      display: none;
+    }    
+
+    // small - tablet
+    @media screen and (min-width: (global-variables.$breakpoint-xs + 1px)) {
+      &--fill:focus-within ~ &--align-start, &--fill:focus-within ~ &--align-end {
+        display: block;
+      } 
     }
   }
 

@@ -1,6 +1,25 @@
 <div data-layout="main-layout">
   <header class="app-bar">
-    <div class="app-bar__row">
+    <div class="app-bar__row">      
+      <div class="app-bar__section app-bar__section--fill">
+        <form class="search">
+          <button
+            type="submit" 
+            class="material-icons mdc-icon-button search__icon-left"           
+          >
+            <span class="mdc-icon-button__ripple"></span>
+            search
+          </button>
+          <input type="text" class="search__input app-bar__title">
+          <button
+            type="reset" 
+            class="material-icons mdc-icon-button search__icon-right"           
+          >
+            <span class="mdc-icon-button__ripple"></span>
+            cancel
+          </button>
+        </form>        
+      </div>
       <div class="app-bar__section app-bar__section--align-start">
         <a 
           data-button="navigation"
@@ -10,9 +29,6 @@
           <span class="mdc-icon-button__ripple"></span>
           menu
         </a>
-      </div>
-      <div class="app-bar__section app-bar__section--fill">
-        <span class="app-bar__title">Hello</span>
       </div>
       <div class="app-bar__section app-bar__section--align-end">
         <a 

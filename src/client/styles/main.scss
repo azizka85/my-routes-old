@@ -2,7 +2,7 @@
 @use "@material/icon-button/mdc-icon-button";
 @use "@material/linear-progress/mdc-linear-progress";
 @use "@material/fab/mdc-fab";
-
+@use './mixins';
 
 @use './list/styles.scss' as list-styles;
 @use './splash/styles.scss' as splash-styles;
@@ -10,6 +10,7 @@
 @use './grid/styles.scss' as grid-styles;
 @use './app-bar/styles.scss' as app-bar-styles;
 @use './drawer/styles.scss' as drawer-styles;
+@use './search/styles.scss' as search-styles;
 
 body {
   margin: 0;
@@ -24,6 +25,10 @@ body {
 
 .main-content {
   scroll-behavior: smooth;
+
+  *::selection {
+    @include mixins.fill-color-accessible(primary);
+  }
 
   &--no-smooth {
     scroll-behavior: unset;

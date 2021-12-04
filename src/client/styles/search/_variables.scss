@@ -1,0 +1,10 @@
+@use '@material/theme/theme-color';
+
+// radius
+$border-radius: 0.5rem !default;
+
+// color
+$surface-fill-color: theme-color.prop-value(surface) !default;
+
+// opacity
+$background-opacity: 0.3 !default;
