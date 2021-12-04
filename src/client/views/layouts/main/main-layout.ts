@@ -30,6 +30,8 @@ export class MainLayout extends BaseLayout implements Page {
 
   protected list: MDCList | null = null;
 
+  protected searchForm: HTMLFormElement | null = null;
+
   static get instance(): MainLayout {
     if(!MainLayout.layout) {
       MainLayout.layout = new MainLayout();
@@ -128,6 +130,23 @@ export class MainLayout extends BaseLayout implements Page {
           'mouseleave', 
           () => this.drawerElem?.classList.remove('drawer--hover')
         );
+      }
+
+      this.searchForm = this.node.querySelector('form.search');
+
+      if(this.searchForm) {
+        const buttons = this.searchForm.querySelectorAll('.mdc-icon-button');
+
+        for(let button of buttons) {
+          const ripple = new MDCRipple(button);
+          ripple.unbounded = true;
+        }
+
+        this.searchForm.addEventListener('submit', event => {
+          event.preventDefault();
+
+          console.log('form submited');          
+        });
       }
     }
 
