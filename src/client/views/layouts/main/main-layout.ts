@@ -145,7 +145,11 @@ export class MainLayout extends BaseLayout implements Page {
         this.searchForm.addEventListener('submit', event => {
           event.preventDefault();
 
-          console.log('form submited');          
+          const data = new FormData(this.searchForm as HTMLFormElement);
+
+          console.log('form submited', data);          
+
+          this.searchForm?.reset();
         });
       }
     }
