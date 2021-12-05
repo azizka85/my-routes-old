@@ -1,4 +1,5 @@
 @use '@material/theme/theme-color';
+@use '@material/icon-button/icon-button-theme';
 
 @use './variables';
 @use '../app-bar/variables' as app-bar-variables;
@@ -7,10 +8,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: inherit;
   position: absolute;
   top: variables.$top;
-  height: variables.$height;
   width: calc(100% - variables.$margin-max);
   max-width: variables.$max-width;
   padding: variables.$padding;
@@ -38,7 +37,7 @@
     outline: none;
   }
 
-  &__icon-left {    
+  &__icon-left {       
     order: -1;
     color: inherit;
     display: none;
@@ -49,4 +48,8 @@
     color: inherit;
     display: none;
   }  
+
+  &__icon-left, &__icon-right {
+    @include icon-button-theme.density(-5);
+  }
 }
