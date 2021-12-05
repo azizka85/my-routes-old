@@ -4,10 +4,9 @@
 @use './variables';
 @use '../app-bar/variables' as app-bar-variables;
 
-.search {
+.search { 
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   position: absolute;
   top: variables.$top;
   width: calc(100% - variables.$margin-max);
@@ -16,7 +15,7 @@
   margin: auto;
   border-radius: variables.$border-radius;  
   background-color: rgba(variables.$surface-fill-color, variables.$background-opacity);
-  transition: color 200ms linear, background-color 200ms linear, width 200ms linear;  
+  transition: color 200ms linear, background-color 200ms linear, width 200ms linear;    
 
   &:focus-within {
     color: theme-color.accessible-ink-color(variables.$surface-fill-color);
@@ -27,6 +26,17 @@
     .search__icon-left, .search__icon-right {
       display: block;
     }
+
+    .search__list {
+      max-height: 100vh;
+      overflow-y: auto;
+    }
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;    
   }
 
   &__input {
@@ -51,5 +61,10 @@
 
   &__icon-left, &__icon-right {
     @include icon-button-theme.density(-5);
+  }
+
+  &__list {
+    max-height: 0;
+    transition: max-height 200ms linear;
   }
 }

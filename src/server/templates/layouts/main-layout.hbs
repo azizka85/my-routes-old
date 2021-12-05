@@ -2,29 +2,34 @@
   <header class="app-bar">
     <div class="app-bar__row">      
       <div class="app-bar__section app-bar__section--fill">
-        <form class="search">          
-          <input 
-            type="text" 
-            name="search" 
-            id="search" 
-            class="search__input app-bar__title"
-            autocomplete="off"
-          >
-          <label  
-            for="main-content"
-            class="material-icons mdc-icon-button search__icon-left"           
-          >
-            <span class="mdc-icon-button__ripple"></span>
-            arrow_back
-          </label>
-          <button
-            type="reset" 
-            class="material-icons mdc-icon-button search__icon-right"           
-          >
-            <span class="mdc-icon-button__ripple"></span>
-            cancel
-          </button>
-        </form>        
+        <div class="search">
+          <form>          
+            <input 
+              type="text" 
+              name="search" 
+              id="search" 
+              class="search__input app-bar__title"
+              autocomplete="off"
+            >
+            <label  
+              for="main-content"
+              class="material-icons mdc-icon-button search__icon-left"           
+            >
+              <span class="mdc-icon-button__ripple"></span>
+              arrow_back
+            </label>
+            <button
+              type="reset" 
+              class="material-icons mdc-icon-button search__icon-right"   
+            >
+              <span class="mdc-icon-button__ripple"></span>
+              cancel
+            </button>          
+          </form>    
+          <div class="search__list">
+            <div style="height: 20rem;"></div>
+          </div>    
+        </div>
       </div>
       <div class="app-bar__section app-bar__section--align-start">
         <a 
