@@ -1,5 +1,6 @@
 @use '@material/feature-targeting/feature-targeting';
 @use '@material/theme/theme';
+@use '@material/theme/theme-color';
 @use './mixins';
 
 @use '@material/animation/variables' as animation-variables;
@@ -10,20 +11,19 @@
 .drawer {
   z-index: (app-bar-variables.$z-index + 2);  
 
-  @include mixins.border-color(variables.$divider-color);
   @include theme.property(background-color, variables.$surface-fill-color);
   
+  position: fixed;
+  top: 0;
+  left: 0; 
   width: 0;
-
+  border-color: rgba(theme-color.prop-value(variables.$divider-color), variables.$divider-opacity);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   box-sizing: border-box;
   height: 100vh;
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;   
+  overflow: hidden;  
   
   transition: width 250ms animation-variables.$standard-curve-timing-function;
 
@@ -45,11 +45,6 @@
     align-items: center;
     justify-content: flex-end;
   }
-}
-
-.main-content {
-  flex: auto;
-  overflow: auto;      
 }
 
 // laptop

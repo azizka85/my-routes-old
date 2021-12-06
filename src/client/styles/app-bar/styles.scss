@@ -8,9 +8,9 @@
 .app-bar {
   @include mixins.fill-color-accessible(primary);
 
+  width: 100%;
   position: fixed;
   box-sizing: border-box;
-  width: 100%;  
   z-index: variables.$z-index;
   transform: translateY(0);
   transition: transform 200ms linear, box-shadow 200ms linear;
@@ -34,18 +34,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
-    box-sizing: border-box;
-    width: 100%;
     height: variables.$row-height;        
   }  
 
   &__section {
     display: inline-flex;
     align-items: center;
-    min-width: 0;
-    padding: variables.$section-vertical-padding
-      variables.$section-horizontal-padding;
 
     &--align-start {
       justify-content: flex-start;
@@ -69,6 +63,5 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    z-index: 1;
   }
 }
