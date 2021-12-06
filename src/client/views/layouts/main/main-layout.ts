@@ -20,8 +20,6 @@ export class MainLayout extends BaseLayout implements Page {
   protected appBarElem: HTMLElement | null = null;
   protected drawerElem: HTMLElement | null = null;  
 
-  protected mainContentElem: HTMLElement | null = null;
-
   protected navIcon: MDCRipple | null = null;
   protected searchIcon: MDCRipple | null = null;
 
@@ -31,6 +29,40 @@ export class MainLayout extends BaseLayout implements Page {
   protected list: MDCList | null = null;
 
   protected searchForm: HTMLFormElement | null = null;
+
+  protected prevScroll = 0;
+  protected scrollHandler: () => void;
+
+  constructor() {
+    super();
+
+    this.scrollHandler = () => {      
+      const currScroll = window.scrollY || 0;
+
+      if(Math.abs(currScroll - this.prevScroll) > SCROLL_THRESHOLD) {
+        if(this.prevScroll >= currScroll) {
+          this.appBarElem?.classList.remove('app-bar--hide');            
+        } else {
+          this.appBarElem?.classList.add('app-bar--hide');
+        }
+      }      
+
+      if(currScroll <= 0) {
+        this.appBarElem?.classList.remove('app-bar--scrolled');
+      } else {
+        this.appBarElem?.classList.add('app-bar--scrolled');
+      }
+
+      this.node?.dispatchEvent(new CustomEvent<ScrollEventData>(ScrollEventType, {
+        detail: {
+          currScroll,
+          prevScroll: this.prevScroll
+        }
+      }));
+      
+      this.prevScroll = currScroll;
+    }
+  }
 
   static get instance(): MainLayout {
     if(!MainLayout.layout) {
@@ -51,37 +83,7 @@ export class MainLayout extends BaseLayout implements Page {
 
     if(this.node) {
       this.appBarElem = this.node.querySelector('.app-bar'); 
-      this.drawerElem = this.node.querySelector('.drawer');
-
-      let prevScroll = 0;
-
-      this.mainContentElem = this.node.querySelector('.main-content');     
-      this.mainContentElem?.addEventListener('scroll', () => {      
-        const currScroll = this.mainContentElem?.scrollTop || 0;
-  
-        if(Math.abs(currScroll - prevScroll) > SCROLL_THRESHOLD) {
-          if(prevScroll >= currScroll) {
-            this.appBarElem?.classList.remove('app-bar--hide');            
-          } else {
-            this.appBarElem?.classList.add('app-bar--hide');
-          }
-        }      
-  
-        if(currScroll <= 0) {
-          this.appBarElem?.classList.remove('app-bar--scrolled');
-        } else {
-          this.appBarElem?.classList.add('app-bar--scrolled');
-        }
-
-        this.node?.dispatchEvent(new CustomEvent<ScrollEventData>(ScrollEventType, {
-          detail: {
-            currScroll,
-            prevScroll
-          }
-        }));
-        
-        prevScroll = currScroll;
-      });
+      this.drawerElem = this.node.querySelector('.drawer');      
 
       const navIconElem = this.appBarElem?.querySelector('[data-button="navigation"]');
 
@@ -158,11 +160,11 @@ export class MainLayout extends BaseLayout implements Page {
   }
 
   async mount() {
-    console.log('main-layout', 'mounted');       
+    window.addEventListener('scroll', this.scrollHandler);    
   }
 
   async unmount() {
-    console.log('main-layout', 'unmounted');    
+    window.removeEventListener('scroll', this.scrollHandler);
   } 
 
   async load(page: router.Page, firstLoad: boolean) {    
@@ -208,23 +210,16 @@ export class MainLayout extends BaseLayout implements Page {
   doAction(type: string, data: any) {
     switch(type) {
       case ScrollActionTop:
-        this.mainContentElem?.scrollTo({
-          top: 0
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
         });
         break;
       case ScrollActionTo: 
-        if(data?.noSmooth) {
-          this.mainContentElem?.classList.add('main-content--no-smooth');
-        } 
-
-        this.mainContentElem?.scrollTo({
-          top: data?.top
-        });
-        
-        if(data?.noSmooth) {
-          this.mainContentElem?.classList.remove('main-content--no-smooth');
-        }
-
+        window.scrollTo({
+          top: data?.top,
+          behavior: data?.noSmooth ? 'auto' : 'smooth'
+        });                
         break;
     }
   }

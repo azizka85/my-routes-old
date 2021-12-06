@@ -24,7 +24,10 @@
   }
 
   &--fixed-adjust {
-    padding: (variables.$row-height + variables.$row-padding) variables.$row-padding variables.$row-padding variables.$row-padding;
+    padding: (variables.$row-height + variables.$row-padding) 
+      variables.$row-padding 
+      variables.$row-padding 
+      variables.$row-padding;
   }
 
   &__row {

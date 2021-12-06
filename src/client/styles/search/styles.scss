@@ -17,22 +17,6 @@
   background-color: rgba(variables.$surface-fill-color, variables.$background-opacity);
   transition: color 200ms linear, background-color 200ms linear, width 200ms linear;    
 
-  &:focus-within {
-    color: theme-color.accessible-ink-color(variables.$surface-fill-color);
-    background-color: variables.$surface-fill-color;   
-    width: calc(100% - variables.$margin-min);
-    z-index: app-bar-variables.$z-index + 1;
-
-    .search__icon-left, .search__icon-right {
-      display: block;
-    }
-
-    .search__list {
-      max-height: 100vh;
-      overflow-y: auto;
-    }
-  }
-
   form {
     display: flex;
     align-items: center;
@@ -67,5 +51,21 @@
     max-height: 0;
     overflow-y: hidden;
     transition: max-height 200ms linear;
+  }
+
+  &:focus-within {
+    color: theme-color.accessible-ink-color(variables.$surface-fill-color);
+    background-color: variables.$surface-fill-color;   
+    width: calc(100% - variables.$margin-min);
+    z-index: app-bar-variables.$z-index + 1;
+
+    .search__icon-left, .search__icon-right {
+      display: block;
+    }
+
+    .search__list {
+      max-height: 100vh;
+      overflow-y: auto;
+    }
   }
 }

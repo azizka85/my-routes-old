@@ -20,18 +20,11 @@ body {
 
 [data-layout] {
   display: flex;
-  height: 100vh;
 }
 
 .main-content {
-  scroll-behavior: smooth;
-
   *::selection {
     @include mixins.fill-color-accessible(primary);
-  }
-
-  &--no-smooth {
-    scroll-behavior: unset;
   }
 }
 
