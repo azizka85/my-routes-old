@@ -20,11 +20,11 @@ export class MainLayout extends BaseLayout implements Page {
   protected appBarElem: HTMLElement | null = null;
   protected drawerElem: HTMLElement | null = null;  
 
-  protected navIcon: MDCRipple | null = null;
-  protected searchIcon: MDCRipple | null = null;
+  protected navIcon: HTMLElement | null = null;
+  protected searchIcon: HTMLElement | null = null;
 
   protected headerIconElem: HTMLElement | null = null;
-  protected headerIconBtn: MDCRipple | null = null;
+  protected headerIconBtn: HTMLElement | null = null;
 
   protected list: MDCList | null = null;
 
@@ -85,33 +85,18 @@ export class MainLayout extends BaseLayout implements Page {
       this.appBarElem = this.node.querySelector('.app-bar'); 
       this.drawerElem = this.node.querySelector('.drawer');      
 
-      const navIconElem = this.appBarElem?.querySelector('[data-button="navigation"]');
+      this.navIcon = this.appBarElem?.querySelector('[data-button="navigation"]') || null;
+      this.navIcon?.addEventListener('click', event => navigateHandler(event, this.navIcon as HTMLElement));
 
-      if(navIconElem) {
-        this.navIcon = new MDCRipple(navIconElem);
-        this.navIcon.unbounded = true;
+      this.searchIcon = this.appBarElem?.querySelector('[data-button="search"]') || null;
+      this.searchIcon?.addEventListener('click', event => navigateHandler(event, this.searchIcon as HTMLElement));      
 
-        this.navIcon.listen('click', event => navigateHandler(event, this.navIcon?.root as HTMLElement));
-      }
+      this.headerIconBtn = this.node.querySelector('[data-button="header-navigation"]');
 
-      const searchIconElem = this.appBarElem?.querySelector('[data-button="search"]');
+      if(this.headerIconBtn) {
+        this.headerIconElem = this.headerIconBtn.querySelector('.mdc-icon-button__ripple');
 
-      if(searchIconElem) {
-        this.searchIcon = new MDCRipple(searchIconElem);
-        this.searchIcon.unbounded = true;
-
-        this.searchIcon.listen('click', event => navigateHandler(event, this.searchIcon?.root as HTMLElement));
-      }
-
-      const headerIconBtnElem = this.node.querySelector('[data-button="header-navigation"]');
-
-      if(headerIconBtnElem) {
-        this.headerIconElem = headerIconBtnElem.querySelector('.mdc-icon-button__ripple');
-
-        this.headerIconBtn = new MDCRipple(headerIconBtnElem);
-        this.headerIconBtn.unbounded = true;
-
-        this.headerIconBtn.listen('click', event => navigateHandler(event, this.headerIconBtn?.root as HTMLElement));
+        this.headerIconBtn.addEventListener('click', event => navigateHandler(event, this.headerIconBtn as HTMLElement));
       }
 
       const listElem = this.node.querySelector('.mdc-list');
@@ -134,26 +119,19 @@ export class MainLayout extends BaseLayout implements Page {
         );
       }
 
-      this.searchForm = this.node.querySelector('form.search');
+      this.searchForm = this.appBarElem?.querySelector('.search form') || null;
 
-      if(this.searchForm) {
-        const buttons = this.searchForm.querySelectorAll('.mdc-icon-button');
+      this.searchForm?.addEventListener('submit', event => {
+        event.preventDefault();
 
-        for(let button of buttons) {
-          const ripple = new MDCRipple(button);
-          ripple.unbounded = true;
+        const data = new FormData(this.searchForm as HTMLFormElement);
+
+        console.log('Form submited: ');          
+
+        for(let item of data.entries()) {
+          console.log(item[0] + ':', item[1]);          
         }
-
-        this.searchForm.addEventListener('submit', event => {
-          event.preventDefault();
-
-          const data = new FormData(this.searchForm as HTMLFormElement);
-
-          console.log('form submited', data);          
-
-          this.searchForm?.reset();
-        });
-      }
+      });
     }
 
     return content;
@@ -173,19 +151,19 @@ export class MainLayout extends BaseLayout implements Page {
     if(this.navIcon) {      
       const path = `?${toggleQueryParameter(page.query, 'main-layout-navigation')}`;
 
-      this.navIcon.root.setAttribute('href', path);
+      this.navIcon.setAttribute('href', path);
     }
 
     if(this.headerIconBtn) {
       const path = `?${toggleQueryParameter(page.query, 'main-layout-navigation')}`;
 
-      this.headerIconBtn.root.setAttribute('href', path);
+      this.headerIconBtn.setAttribute('href', path);
     }
 
     if(this.searchIcon) {    
       const path = `?${toggleQueryParameter(page.query, 'main-layout-search')}`;
 
-      this.searchIcon.root.setAttribute('href', path);
+      this.searchIcon.setAttribute('href', path);
     }
 
     if(navigation) {
