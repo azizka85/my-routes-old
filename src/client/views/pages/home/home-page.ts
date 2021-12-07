@@ -1,3 +1,5 @@
+import '../../../types/window';
+
 import * as router from '@azizka/router';
 
 import { Page } from "../../view";
@@ -6,7 +8,6 @@ import { MDCRipple } from '@material/ripple';
 
 import { loadContent, navigateHandler } from '../../../helpers';
 
-import '../../../types/window';
 import { ScrollActionTo, ScrollActionTop, ScrollEventData, ScrollEventType } from '../../../types/scroll';
 
 export class HomePage implements Page {

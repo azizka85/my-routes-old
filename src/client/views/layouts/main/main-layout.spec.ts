@@ -331,6 +331,15 @@ describe('MainLayout test', () => {
     expect(instance['appBarElem']?.classList.contains('app-bar--hide')).toBeFalsy();
     expect(instance['appBarElem']?.classList.contains('app-bar--scrolled')).toBeFalsy();
 
+    await instance.unmount();
+
+    objWindow.scrollY = 100;
+
+    window.dispatchEvent(new Event('scroll'));
+
+    expect(instance['appBarElem']?.classList.contains('app-bar--hide')).toBeFalsy();
+    expect(instance['appBarElem']?.classList.contains('app-bar--scrolled')).toBeFalsy();
+
     expect(instance['drawerElem']?.classList.contains('drawer--open')).toBeTruthy();
     expect(instance['drawerElem']?.classList.contains('drawer--hover')).toBeFalsy();
 
