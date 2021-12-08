@@ -5,7 +5,7 @@ import { JSDOM } from "jsdom";
 import { HistoryMock } from "./mocks/history-mock";
 import { LocationMock } from "./mocks/location-mock";
 
-import { navigateHandler } from "./helpers";
+import { loadContent, navigateHandler } from "./helpers";
 
 describe('Client helper functions test', () => {
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe('Client helper functions test', () => {
     window.router = new Router();
   });
 
-  test('Should navigateHandler work correctly', () => {
+  test('Should navigateHandler work correctly', async () => {
     expect(location.pathname).toEqual('/');
     expect(location.search).toEqual('?test=123');
 
@@ -34,12 +34,35 @@ describe('Client helper functions test', () => {
 
     link.href = '/search?test=234';
 
-    navigateHandler(new MouseEvent('click'), link);
+    await navigateHandler(new MouseEvent('click'), link);
 
     expect(location.pathname).toEqual('/search');
     expect(location.search).toEqual('?test=234');
   });
 
-  test('Should loadContent work correctly', () => {
+  test('Should loadContent work correctly', async () => {
+    document.body.innerHTML = `
+      <div data-layout="main-layout">
+        <div data-page="home-page">            
+          <div>
+            Home page, time: {{ data.time }}
+          </div>
+          <button class="mdc-fab mdc-fab--exited" data-button="scroll-top">
+            <div class="mdc-fab__ripple"></div>
+            <span class="mdc-fab__icon material-icons">keyboard_arrow_up</span>
+          </button>    
+        </div>
+      </div>
+    `;
+
+    let content = await loadContent(null, true, []);
+
+    expect(content).toBe(document.body);
+
+    content = document.body.children[0] as HTMLElement;
+
+    content = await loadContent(content, false, []);
+
+    expect(content).toBe(document.body.children[0]);    
   });
 });

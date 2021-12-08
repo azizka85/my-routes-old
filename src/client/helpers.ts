@@ -1,12 +1,12 @@
 import './types/window';
 
-export function navigateHandler(event: Event, elem: HTMLElement) {
+export async function navigateHandler(event: Event, elem: HTMLElement) {
   event.preventDefault();
 
   const path = elem.getAttribute?.('href');
 
   if(path) {
-    window.router.navigateTo(path);
+    await window.router.navigateTo(path);
   }
 }
 
@@ -20,7 +20,7 @@ export async function loadContent(
   if(firstTime || parent) {
     content = parent || document.body;
   } else {
-    let path = window.location.pathname + '?ajax=1&init=1';
+    let path = location.pathname + '?ajax=1&init=1';
 
     const layoutsToLoad = [];
 
