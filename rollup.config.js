@@ -64,12 +64,7 @@ export default [{
   output: {
     dir: 'dist',
     format: 'cjs',
-    sourcemap: dev,
-    manualChunks: {
-      app: ['./src/server/app.ts'],
-      helpers: ['./src/helpers.ts']
-    },
-    chunkFileNames: '[name].js'
+    sourcemap: dev
   },
   plugins: [
     cleaner({

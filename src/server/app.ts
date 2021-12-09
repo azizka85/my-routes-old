@@ -8,10 +8,7 @@ import express from 'express';
 
 import Handlebars from 'handlebars';
 
-import { condition, toggleQueryParameter } from '../helpers';
-
-import defaultLayoutTpl from './templates/layouts/default-layout.hbs';
-import mainLayoutTpl from './templates/layouts/main-layout.hbs';
+import { getLayoutHandlers, renderPage, stringToArray } from './helpers/layout-helpers';
 
 import homePageTpl from './templates/pages/home-page.hbs';
 import signInPageTpl from './templates/pages/signin-page.hbs';
@@ -21,9 +18,6 @@ import { version } from '../../package.json';
 
 const mode = process.env.NODE_ENV || 'development';
 const dev = mode === 'development';
-
-const defaultLayout = Handlebars.template(defaultLayoutTpl);
-const mainLayout = Handlebars.template(mainLayoutTpl);
 
 const homePage = Handlebars.template(homePageTpl);
 const signInPage = Handlebars.template(signInPageTpl);
@@ -47,53 +41,23 @@ app.get('/', (req, res) => {
   
     if(req.query.ajax && !req.query.init) {
       res.send(data);
-    } else {    
-      let partials: any = {};
-      let helpers: any = {};
+    } else {             
+      const layouts = !req.query.ajax 
+        ? ['main-layout'] 
+        : stringToArray(req.query.layouts as string);
   
-      let view = homePage;
-      
-      let layouts = req.query.layouts as string | undefined;
+      const layoutHandlers = getLayoutHandlers(layouts);
   
-      if(!req.query.ajax || layouts?.includes('main-layout')) {
-        view = mainLayout;
-  
-        partials = { homePage };
-        helpers = { condition, toggleQueryParameter };
-
-        const navigation = req.query['main-layout-navigation'] === '1';
-        const search = req.query['main-layout-search'] === '1';
-  
-        data = {
-          navigation,
-          search,
-          query: req.query,
-          content: 'homePage',
-          contentData: data
-        };
-      }
-  
-      if(!req.query.ajax) {
-        view = defaultLayout;
-  
-        partials = {
-          ...partials,
-          mainLayout
-        };
-  
-        data = {
+      res.send(
+        renderPage(
           version,
-          content: 'mainLayout',
-          contentData: data
-        };
-      }
-  
-      res.send(view({ 
-        data 
-      }, {
-        partials,
-        helpers
-      }));
+          req,
+          'home-page',
+          homePage,
+          data,
+          layoutHandlers
+        )
+      );
     }
   } finally {
     res.end();
@@ -109,28 +73,16 @@ app.get('/signin', (req, res) => {
   
     if(req.query.ajax && !req.query.init) {
       res.send(data);
-    } else {    
-      let partials: any = {};
-  
-      let view = signInPage;
-  
-      if(!req.query.ajax) {
-        view = defaultLayout;
-  
-        partials = { signInPage };
-  
-        data = {
+    } else {          
+      res.send(
+        renderPage(
           version,
-          content: 'signInPage',
-          contentData: data
-        };
-      }
-  
-      res.send(view({ 
-        data 
-      }, {
-        partials
-      }));
+          req,
+          'signin-page',
+          signInPage,
+          data
+        )
+      );
     }
   } finally {
     res.end();
@@ -146,28 +98,16 @@ app.get('/signup', (req, res) => {
   
     if(req.query.ajax && !req.query.init) {
       res.send(data);
-    } else {    
-      let partials: any = {};
-  
-      let view = signUpPage;
-  
-      if(!req.query.ajax) {
-        view = defaultLayout;
-  
-        partials = { signUpPage };
-  
-        data = {
+    } else {          
+      res.send(
+        renderPage(
           version,
-          content: 'signUpPage',
-          contentData: data
-        };
-      }
-  
-      res.send(view({ 
-        data 
-      }, {
-        partials
-      }));
+          req,
+          'signup-page',
+          signUpPage,
+          data
+        )
+      );
     }
   } finally {
     res.end();
