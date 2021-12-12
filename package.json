@@ -2,7 +2,6 @@
   "name": "my-routes",
   "version": "0.0.1",
   "description": "my-routes - application to add links to resources and comment it",
-  "private": "true",
   "scripts": {
     "build": "rollup -c",
     "start": "node dist/main.js",

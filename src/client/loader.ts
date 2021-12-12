@@ -14,13 +14,28 @@ const layouts: {
   [key: string]: BaseLayout & view.Page
 } = {};
 
+async function initMainLayout(parent: HTMLElement | null, firstTime: boolean) {
+  let firstLoad = false;
+
+  if(!('main-layout' in layouts)) {
+    const module = await import('./views/layouts/main/main-layout');
+    
+    parent = await module.MainLayout.instance.init(parent, firstTime);
+
+    layouts['main-layout'] = module.MainLayout.instance;
+
+    firstLoad = true;
+  } 
+  
+  return firstLoad;
+}
+
 export async function loadHomePage(page: Page, firstTime: boolean) {
   window.page = page;
 
   let parent: HTMLElement | null = null;
 
-  let homePageFirstLoad = false;
-  let mainLayoutFirstLoad = false;
+  let homePageFirstLoad = false;  
 
   if(!('home-page' in pages)) {    
     const module = await import('./views/pages/home/home-page');
@@ -32,32 +47,20 @@ export async function loadHomePage(page: Page, firstTime: boolean) {
     homePageFirstLoad = true;
   } 
 
-  if(!('main-layout' in layouts)) {
-    const module = await import('./views/layouts/main/main-layout');
-    
-    parent = await module.MainLayout.instance.init(parent, firstTime);
+  const mainLayoutFirstLoad = await initMainLayout(parent, firstTime);
 
-    layouts['main-layout'] = module.MainLayout.instance;
+  if(window.page.fragment === page.fragment) {
+    if(DefaultLayout.instance['content'] !== layouts['main-layout']) {
+      await DefaultLayout.instance.replaceContent(layouts['main-layout']);  
+    }
 
-    mainLayoutFirstLoad = true;
-  } 
-  
-  if(
-    DefaultLayout.instance['content'] !== layouts['main-layout']
-    && window.page.fragment === ''
-  ) {
-    await DefaultLayout.instance.replaceContent(layouts['main-layout']);  
-  }
-  
-  if(
-    layouts['main-layout']['content'] !== pages['home-page']
-    && window.page.fragment === ''
-  ) {
-    await layouts['main-layout'].replaceContent(pages['home-page']);
-  }
+    if(layouts['main-layout']['content'] !== pages['home-page']) {
+      await layouts['main-layout'].replaceContent(pages['home-page']);
+    }
 
-  await layouts['main-layout']?.load?.(page, mainLayoutFirstLoad);
-  await pages['home-page']?.load?.(page, homePageFirstLoad);
+    await layouts['main-layout']?.load?.(page, mainLayoutFirstLoad);
+    await pages['home-page']?.load?.(page, homePageFirstLoad);
+  }    
 }
 
 export async function loadSignInPage(page: Page, firstTime: boolean) {
@@ -77,14 +80,13 @@ export async function loadSignInPage(page: Page, firstTime: boolean) {
     signInPageFirstLoad = true;
   }
 
-  if(
-    DefaultLayout.instance['content'] !== pages['signin-page']
-    && window.page.fragment === 'signin'
-  ) {
-    await DefaultLayout.instance.replaceContent(pages['signin-page']);
+  if(window.page.fragment === page.fragment) {
+    if(DefaultLayout.instance['content'] !== pages['signin-page']) {
+      await DefaultLayout.instance.replaceContent(pages['signin-page']);
+    }
+  
+    await pages['signin-page']?.load?.(page, signInPageFirstLoad);
   }
-
-  await pages['signin-page']?.load?.(page, signInPageFirstLoad);
 }
 
 export async function loadSignUpPage(page: Page, firstTime: boolean) {
@@ -104,14 +106,13 @@ export async function loadSignUpPage(page: Page, firstTime: boolean) {
     signUpPageFirstLoad = true;
   }
 
-  if(
-    DefaultLayout.instance['content'] !== pages['signup-page']
-    && window.page.fragment === 'signup'
-  ) {
-    await DefaultLayout.instance.replaceContent(pages['signup-page']);
+  if(window.page.fragment === page.fragment) {
+    if(DefaultLayout.instance['content'] !== pages['signup-page']) {
+      await DefaultLayout.instance.replaceContent(pages['signup-page']);
+    }
+  
+    await pages['signup-page']?.load?.(page, signUpPageFirstLoad);
   }
-
-  await pages['signup-page']?.load?.(page, signUpPageFirstLoad);
 }
 
 window.pages = pages;
