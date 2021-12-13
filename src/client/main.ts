@@ -4,17 +4,15 @@ import { PAGE_ROOT } from '../globals';
 
 import { Router } from '@azizka/router';
 
+import { LoaderPage } from './views/pages/loader-page';
+
 import { loadPage } from './loader';
-
-function hideSplash() {
-  const splashElem = document.querySelector('.splash');
-
-  splashElem?.classList.remove('splash--open');   
-}
 
 window.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
-    let firstTime = true;
+    let firstTime = true;    
+
+    LoaderPage.instance.init(null, firstTime);
   
     const router = new Router({
       root: PAGE_ROOT,
@@ -31,13 +29,23 @@ window.addEventListener('DOMContentLoaded', () => {
       }, {
         rule: '/sign-in',
         async handler(page) {
-          await loadPage(page, 'sign-in-page', [], firstTime);
+          await loadPage(
+            page, 
+            'sign-in-page', 
+            [], 
+            firstTime
+          );
         },
         options: {}
       }, {
         rule: '/sign-up',
         async handler(page) {
-          await loadPage(page, 'sign-up-page', [], firstTime);
+          await loadPage(
+            page, 
+            'sign-up-page', 
+            [], 
+            firstTime
+          );
         }, 
         options: {}
       }]
@@ -49,14 +57,11 @@ window.addEventListener('DOMContentLoaded', () => {
     
     router.addUriListener();
     
-    router.processUri().then(
-      () => hideSplash(),
-      reason => {
-        console.error(reason);              
-        hideSplash();
-      }
-    );
-    
-    firstTime = false;         
+    router
+      .processUri()
+      .catch(
+        reason => console.error(reason)      
+      )
+      .finally(() => firstTime = false);
   }, 500);  
 });

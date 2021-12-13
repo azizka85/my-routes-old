@@ -2,6 +2,7 @@
 @use "@material/icon-button/mdc-icon-button";
 @use "@material/linear-progress/mdc-linear-progress";
 @use "@material/fab/mdc-fab";
+@use '@material/animation/variables' as animation-variables;
 @use './mixins';
 
 @use './list/styles.scss' as list-styles;
@@ -20,6 +21,15 @@ body {
 
 [data-layout] {
   display: flex;
+}
+
+[data-layout], [data-page] {
+  opacity: 1;
+  transition: opacity 250ms animation-variables.$standard-curve-timing-function;
+
+  &.page--unmount {
+    opacity: 0;
+  }
 }
 
 .main-content {

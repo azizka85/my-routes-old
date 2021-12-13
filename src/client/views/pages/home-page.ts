@@ -6,7 +6,7 @@ import { Page } from "../view";
 
 import { MDCRipple } from '@material/ripple';
 
-import { loadContent, navigateHandler } from '../../helpers';
+import { loadContent, mount, navigateHandler, unmount } from '../../helpers';
 
 import { ScrollActionTo, ScrollActionTop, ScrollEventData, ScrollEventType } from '../../types/scroll';
 
@@ -62,11 +62,11 @@ export class HomePage implements Page {
   }
 
   async mount() {
-    console.log('home-page', 'mounted');
+    await mount(this.node);
   }
 
   async unmount() {
-    console.log('home-page', 'unmounted');
+    await unmount(this.node);
   }
 
   async load(page: router.Page, firstLoad: boolean) {

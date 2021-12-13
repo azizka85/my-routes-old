@@ -8,7 +8,7 @@ import { MDCRipple } from '@material/ripple';
 import { MDCList } from '@material/list';
 
 import { toggleQueryParameter } from "../../../helpers";
-import { navigateHandler } from '../../helpers';
+import { mount, navigateHandler, unmount } from '../../helpers';
 
 import { ScrollActionTo, ScrollActionTop, ScrollEventData, ScrollEventType } from '../../types/scroll';
 
@@ -133,11 +133,11 @@ export class MainLayout extends BaseLayout implements Page {
   }
 
   async mount() {
-    console.log('MainLayout mounted');        
+    await mount(this.node);      
   }
 
   async unmount() {
-    console.log('MainLayout unmounted');    
+    await unmount(this.node);    
   } 
 
   async load(page: router.Page, firstLoad: boolean) {    

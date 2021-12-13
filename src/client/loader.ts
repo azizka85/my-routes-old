@@ -5,7 +5,39 @@ import { Page } from '@azizka/router';
 import { BaseLayout } from './views/layouts/base-layout';
 import { DefaultLayout } from './views/layouts/default-layout';
 
+import { LoaderPage } from './views/pages/loader-page';
+
 import { toCamel } from '../helpers';
+
+export function hideSplash() {
+  const splashElem = document.querySelector('.splash');
+
+  splashElem?.classList.remove('splash--open');   
+}
+
+export function getRootLayout(layouts: string[]) {
+  let layout: BaseLayout = DefaultLayout.instance;
+
+  if(layouts.length > 0 && window.layouts[layouts[0]]) {
+    layout = window.layouts[layouts[0]];
+  }
+
+  return layout;
+}
+
+export function getExistingLayout(layouts: string[]) {
+  let layout: BaseLayout = DefaultLayout.instance;
+
+  for(const layoutName of layouts) {
+    if(window.layouts[layoutName]) {
+      layout = window.layouts[layoutName];
+
+      break;
+    }
+  }
+
+  return layout;
+}
 
 export async function initLayouts(layouts: string[], parent: HTMLElement | null, firstTime: boolean) {
   const firstLoad: {
@@ -62,6 +94,14 @@ export async function loadPage(
   let pageFirstLoad = false;
 
   if(!(name in window.pages)) {
+    if(!firstTime) {
+      const layout = getExistingLayout(layouts);
+
+      if(layout['content'] !== LoaderPage.instance) {
+        await layout.replaceContent(LoaderPage.instance);
+      }
+    }    
+
     const module = await import(`./views/pages/${name}.js?time=${Date.now()}`) as any;
 
     parent = await module[toCamel(name)]?.instance?.init?.(parent, firstTime);
@@ -76,12 +116,16 @@ export async function loadPage(
   if(window.page.fragment === page.fragment) {
     await loadLayouts(page, layouts, firstLoad);
 
-    const layout: BaseLayout = layouts.length > 0 ? window.layouts[layouts[0]] : DefaultLayout.instance;
+    const layout: BaseLayout = getRootLayout(layouts);
 
-    if(layout && layout['content'] !== window.pages[name]) {
+    if(layout['content'] !== window.pages[name]) {
       await layout.replaceContent(window.pages[name]);
     }
 
     await window.pages[name].load?.(page, pageFirstLoad);
+  }
+
+  if(firstTime) {
+    hideSplash();
   }
 }

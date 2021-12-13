@@ -2,7 +2,7 @@ import { Page } from '../view';
 
 import { MDCRipple } from '@material/ripple';
 
-import { loadContent, navigateHandler } from '../../helpers';
+import { loadContent, mount, navigateHandler, unmount } from '../../helpers';
 
 export class SignInPage implements Page {
   protected static page: SignInPage | null = null;
@@ -42,10 +42,10 @@ export class SignInPage implements Page {
   }
 
   async mount() {
-    console.log('signin-page', 'mounted');
+    await mount(this.node);
   }
 
   async unmount() {
-    console.log('signin-page', 'unmounted');
+    await unmount(this.node);
   }
 }
