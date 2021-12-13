@@ -2,118 +2,86 @@ import './types/window';
 
 import { Page } from '@azizka/router';
 
-import * as view from './views/view';
-import { DefaultLayout } from './views/layouts/default/default-layout';
 import { BaseLayout } from './views/layouts/base-layout';
+import { DefaultLayout } from './views/layouts/default-layout';
 
-const pages: {
-  [key: string]: view.Page
-} = {};
+import { toCamel } from '../helpers';
 
-const layouts: {
-  [key: string]: BaseLayout & view.Page
-} = {};
+export async function initLayouts(layouts: string[], parent: HTMLElement | null, firstTime: boolean) {
+  const firstLoad: {
+    [key: string]: boolean
+  } = {};
 
-async function initMainLayout(parent: HTMLElement | null, firstTime: boolean) {
-  let firstLoad = false;
+  for(const layout of layouts) {
+    if(!(layout in window.layouts)) {
+      const module = await import(`./views/layouts/${layout}.js?time=${Date.now()}`) as any;
 
-  if(!('main-layout' in layouts)) {
-    const module = await import('./views/layouts/main/main-layout');
-    
-    parent = await module.MainLayout.instance.init(parent, firstTime);
+      parent = await module[toCamel(layout)]?.instance?.init?.(parent, firstTime);
 
-    layouts['main-layout'] = module.MainLayout.instance;
+      window.layouts[layout] = module[toCamel(layout)]?.instance;
 
-    firstLoad = true;
-  } 
-  
+      firstLoad[layout] = true;
+    }
+  }
+
   return firstLoad;
 }
 
-export async function loadHomePage(page: Page, firstTime: boolean) {
-  window.page = page;
-
-  let parent: HTMLElement | null = null;
-
-  let homePageFirstLoad = false;  
-
-  if(!('home-page' in pages)) {    
-    const module = await import('./views/pages/home/home-page');
-        
-    parent = await module.HomePage.instance.init(parent, firstTime);
-
-    pages['home-page'] = module.HomePage.instance;
-
-    homePageFirstLoad = true;
-  } 
-
-  const mainLayoutFirstLoad = await initMainLayout(parent, firstTime);
-
-  if(window.page.fragment === page.fragment) {
-    if(DefaultLayout.instance['content'] !== layouts['main-layout']) {
-      await DefaultLayout.instance.replaceContent(layouts['main-layout']);  
-    }
-
-    if(layouts['main-layout']['content'] !== pages['home-page']) {
-      await layouts['main-layout'].replaceContent(pages['home-page']);
-    }
-
-    await layouts['main-layout']?.load?.(page, mainLayoutFirstLoad);
-    await pages['home-page']?.load?.(page, homePageFirstLoad);
-  }    
-}
-
-export async function loadSignInPage(page: Page, firstTime: boolean) {
-  window.page = page;
-
-  let parent: HTMLElement | null = null;
-
-  let signInPageFirstLoad = false;
-
-  if(!('signin-page' in pages)) {
-    const module = await import('./views/pages/signin/signin-page');
-    
-    parent = await module.SignInPage.instance.init(parent, firstTime);
-
-    pages['signin-page'] = module.SignInPage.instance;
-
-    signInPageFirstLoad = true;
+export async function loadLayouts(
+  page: Page,
+  layouts: string[], 
+  firstLoad: {
+    [key: string]: boolean
   }
+) {
+  const reverseLayouts = [...layouts].reverse();
 
-  if(window.page.fragment === page.fragment) {
-    if(DefaultLayout.instance['content'] !== pages['signin-page']) {
-      await DefaultLayout.instance.replaceContent(pages['signin-page']);
-    }
+  let parentLayout = DefaultLayout.instance;
   
-    await pages['signin-page']?.load?.(page, signInPageFirstLoad);
-  }
+  for(const layout of reverseLayouts) {
+    if(parentLayout['content'] !== window.layouts[layout]) {
+      await parentLayout.replaceContent(window.layouts[layout]);
+    }
+
+    await window.layouts[layout].load?.(page, firstLoad[layout] ?? false);
+
+    parentLayout = window.layouts[layout];
+  }  
 }
 
-export async function loadSignUpPage(page: Page, firstTime: boolean) {
+export async function loadPage(
+  page: Page, 
+  name: string, 
+  layouts: string[], 
+  firstTime: boolean
+) {
   window.page = page;
 
   let parent: HTMLElement | null = null;
 
-  let signUpPageFirstLoad = false;
+  let pageFirstLoad = false;
 
-  if(!('signup-page' in pages)) {
-    const module = await import('./views/pages/signup/signup-page');
-    
-    parent = await module.SignUpPage.instance.init(parent, firstTime);
+  if(!(name in window.pages)) {
+    const module = await import(`./views/pages/${name}.js?time=${Date.now()}`) as any;
 
-    pages['signup-page'] = module.SignUpPage.instance;
+    parent = await module[toCamel(name)]?.instance?.init?.(parent, firstTime);
 
-    signUpPageFirstLoad = true;
+    window.pages[name] = module[toCamel(name)]?.instance;
+
+    pageFirstLoad = true;
   }
+
+  const firstLoad = await initLayouts(layouts, parent, firstTime);
 
   if(window.page.fragment === page.fragment) {
-    if(DefaultLayout.instance['content'] !== pages['signup-page']) {
-      await DefaultLayout.instance.replaceContent(pages['signup-page']);
+    await loadLayouts(page, layouts, firstLoad);
+
+    const layout: BaseLayout = layouts.length > 0 ? window.layouts[layouts[0]] : DefaultLayout.instance;
+
+    if(layout && layout['content'] !== window.pages[name]) {
+      await layout.replaceContent(window.pages[name]);
     }
-  
-    await pages['signup-page']?.load?.(page, signUpPageFirstLoad);
+
+    await window.pages[name].load?.(page, pageFirstLoad);
   }
 }
-
-window.pages = pages;
-window.layouts = layouts;

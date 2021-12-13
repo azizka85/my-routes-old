@@ -1,16 +1,18 @@
 import '../declarations';
 
+import express from 'express';
+
+import Handlebars from 'handlebars';
+
 import { 
   PAGE_ROOT
 } from '../../globals';
 
-import express from 'express';
-
-import { getLayoutHandlers, renderPage, stringToArray } from '../helpers/layout-helpers';
-
-import homePage from '../templates/pages/home-page';
+import { renderPage } from '../helpers/layout-helpers';
 
 import { version } from '../../../package.json';
+
+import signUpPage from '../templates/pages/sign-up-page';
 
 const router = express.Router();
 
@@ -23,21 +25,14 @@ router.get('', (req, res) => {
   
     if(req.query.ajax && !req.query.init) {
       res.send(data);
-    } else {             
-      const layouts = !req.query.ajax 
-        ? ['main-layout'] 
-        : stringToArray(req.query.layouts as string);
-  
-      const layoutHandlers = getLayoutHandlers(layouts);
-  
+    } else {          
       res.send(
         renderPage(
           version,
           req,
-          'home-page',
-          homePage,
-          data,
-          layoutHandlers
+          'sign-up-page',
+          signUpPage,
+          data
         )
       );
     }

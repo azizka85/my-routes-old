@@ -1,12 +1,10 @@
-import './styles/main.scss';
-
 import './types/window';
 
 import { PAGE_ROOT } from '../globals';
 
 import { Router } from '@azizka/router';
 
-import { loadHomePage, loadSignInPage, loadSignUpPage } from './loader';
+import { loadPage } from './loader';
 
 function hideSplash() {
   const splashElem = document.querySelector('.splash');
@@ -23,24 +21,30 @@ window.addEventListener('DOMContentLoaded', () => {
       routes: [{
         rule: '',
         async handler(page) {
-          await loadHomePage(page, firstTime);
+          await loadPage(
+            page, 'home-page', 
+            ['main-layout'],
+            firstTime
+          );
         },
         options: {}
       }, {
-        rule: '/signin',
+        rule: '/sign-in',
         async handler(page) {
-          await loadSignInPage(page, firstTime);
+          await loadPage(page, 'sign-in-page', [], firstTime);
         },
         options: {}
       }, {
-        rule: '/signup',
+        rule: '/sign-up',
         async handler(page) {
-          await loadSignUpPage(page, firstTime);
+          await loadPage(page, 'sign-up-page', [], firstTime);
         }, 
         options: {}
       }]
     });
     
+    window.pages = {};
+    window.layouts = {};
     window.router = router;
     
     router.addUriListener();

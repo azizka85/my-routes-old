@@ -1,6 +1,4 @@
 declare module "*.hbs" {
-  import 'handlebars';
-
-  const content: TemplateSpecification;
+  const content: string;
   export default content;
 }

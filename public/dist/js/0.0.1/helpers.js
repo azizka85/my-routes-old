@@ -1,1 +1,0 @@
-function n(n){const t=[];for(let e of Object.keys(n))t.push(`${e}=${n[e]}`);return t.join("&")}function t(t,e){const o={...t};return e in o?(delete o[e],n(o)):function(t,e,o){const r={...t};return r[e]=o,n(r)}(o,e,"1")}export{t};

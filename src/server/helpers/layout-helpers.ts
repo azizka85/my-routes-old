@@ -2,13 +2,8 @@ import { Request } from "express";
 
 import { condition, toggleQueryParameter } from '../../helpers';
 
-import Handlebars from 'handlebars';
-
-import defaultLayoutTpl from '../templates/layouts/default-layout.hbs';
-import mainLayoutTpl from '../templates/layouts/main-layout.hbs';
-
-export const defaultLayout = Handlebars.template(defaultLayoutTpl);
-export const mainLayout = Handlebars.template(mainLayoutTpl);
+import defaultLayout from "../templates/layouts/default-layout";
+import mainLayout from "../templates/layouts/main-layout";
 
 export const layoutHandlersMap: LayoutHandlers = {
   'main-layout': mainLayoutHandler
