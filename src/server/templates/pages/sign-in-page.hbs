@@ -1,44 +1,84 @@
 <div data-page="signin-page">
-  <div>
-    <button class="mdc-button mdc-button--raised">
-      <span class="mdc-button__ripple"></span>
-      <span class="mdc-button__label">Sign In page</span>
-    </button>
-    <a class="mdc-button" href="{{ data.PAGE_ROOT }}">
-      <span class="mdc-button__ripple"></span>
-      <span class="mdc-button__label">Home page</span>
-    </a> 
-    <a class="mdc-button" href="{{ data.PAGE_ROOT }}sign-up">
-      <span class="mdc-button__ripple"></span>
-      <span class="mdc-button__label">Sign Up page</span>
-    </a> 
-  </div>
-  <br>
-  <div>
-    Sign In page, time: {{ data.time }}
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-12 col-6-sm col-6-md col-4-lg col-3-xl">
-      <div class="card is-center">.col-12.col-6-sm.col-6-md.col-4-lg.col-3-xl</div>
+  <div class="main-card mdc-card">
+    <div class="mdc-card__content">
+      <h6 class="main-card__title main-card--justify mdc-typography--headline6">Sign In</h6>
+      <form method="post">
+        <label class="main-card__text-field mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+          <input 
+            required 
+            placeholder="Email" 
+            type="email" 
+            name="email" 
+            class="mdc-text-field__input" 
+            aria-labelledby="email-label"
+            aria-controls="email-helper"
+            aria-describedby="email-helper"
+          >
+          <span class="mdc-notched-outline">
+            <span class="mdc-notched-outline__leading"></span>
+            <span class="mdc-notched-outline__notch">
+              <span class="mdc-floating-label" id="email-label">Email</span>
+            </span>
+            <span class="mdc-notched-outline__trailing"></span>
+          </span>          
+        </label>
+        <div class="mdc-text-field-helper-line main-card--justify">
+          <div 
+            class="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg" 
+            id="email-helper" 
+            aria-hidden="true"
+          >
+            Email required
+          </div>
+        </div>
+        <label class="main-card__text-field mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+          <input 
+            required 
+            placeholder="Password" 
+            type="password" 
+            name="password" 
+            class="mdc-text-field__input" 
+            aria-labelledby="password-label"
+            aria-controls="password-helper"
+            aria-describedby="password-helper"
+          >
+          <span class="mdc-notched-outline">
+            <span class="mdc-notched-outline__leading"></span>
+            <span class="mdc-notched-outline__notch">
+              <span class="mdc-floating-label" id="password-label">Password</span>
+            </span>
+            <span class="mdc-notched-outline__trailing"></span>
+          </span>          
+        </label>
+        <div class="mdc-text-field-helper-line">
+          <div 
+            class="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg" 
+            id="password-helper" 
+            aria-hidden="true"
+          >
+            Password required
+          </div>
+        </div>
+        <div class="main-card--justify" style="text-align: right;">
+          <a class="mdc-button" href="{{ data.PAGE_ROOT }}sign-up">
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">Sign Up</span>
+          </a>
+        </div>
+        <div class="main-card--justify" style="text-align: right;">
+          <button type="submit" class="approve-button mdc-button mdc-button--raised">
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">Sign In</span>
+          </button>
+          <a class="cancel-button mdc-button mdc-button--raised" href="{{ data.PAGE_ROOT }}">
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">Cancel</span>
+          </a>
+        </div>
+      </form>
+      {{#each data.components}}
+        {{> (lookup this 'content') data=this.contentData }}
+      {{/each}}
     </div>
-    <div class="col-6 col-6-sm col-3-md col-4-lg col-3-xl">
-      <div class="card is-center">.col-6.col-6-sm.col-3-md.col-4-lg.col-3-xl</div>
-    </div>
-    <div class="col-6 col-6-sm col-3-md col-4-lg col-3-xl">
-      <div class="card is-center">.col-6.col-6-sm.col-3-md.col-4-lg.col-3-xl</div>
-    </div>
-    <div class="col col-6-sm col-6-lg col-3-xl">
-      <div class="card is-center">.col.col-6-sm.col-6-lg.col-3-xl</div>
-    </div>
-    <div class="col col-6-sm col-3-lg col-6-xl">
-      <div class="card is-center">.col.col-6-sm.col-3-lg.col-6-xl</div>
-    </div>
-    <div class="col col-6-sm col-3-lg col-6-xl">
-      <div class="card is-center">.col.col-6-sm.col-3-lg.col-6-xl</div>
-    </div>    
-  </div>  
-  <div>
-    Hello
   </div>
 </div>

@@ -49,9 +49,9 @@ export async function loadContent(
 }
 
 export async function mount(elem: HTMLElement | null) {
-  elem?.classList.remove('page--unmount');
+  await sleep(10);
 
-  await sleep(250);
+  elem?.classList.remove('page--unmount');
 }
 
 export async function unmount(elem: HTMLElement | null) {

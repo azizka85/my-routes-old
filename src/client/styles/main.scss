@@ -1,9 +1,12 @@
+@use './mixins';
+@use '@material/animation/variables' as animation-variables;
+@use '@material/typography/mdc-typography';
 @use "@material/button/mdc-button";
 @use "@material/icon-button/mdc-icon-button";
 @use "@material/linear-progress/mdc-linear-progress";
 @use "@material/fab/mdc-fab";
-@use '@material/animation/variables' as animation-variables;
-@use './mixins';
+@use '@material/card/mdc-card';
+@use '@material/textfield/mdc-text-field';
 
 @use './list/styles.scss' as list-styles;
 @use './splash/styles.scss' as splash-styles;
@@ -35,6 +38,47 @@ body {
 .main-content {
   *::selection {
     @include mixins.fill-color-accessible(primary);
+  }
+}
+
+.main-card {
+  max-width: 23rem;
+  margin: auto;
+  margin-top: 1rem;
+
+  & .mdc-card__content {
+    margin: 1rem;
+  }
+
+  &--justify {
+    margin: 0 0 1rem;
+  }
+
+  &__title {
+    text-transform: uppercase;    
+    @include mixins.ink-color(primary);
+  }
+
+  &__text-field {    
+    width: 100%;            
+  }
+
+  .mdc-button + .mdc-button {
+    margin-left: 0.25rem;
+  }
+
+  .cancel-button {
+    @include mixins.fill-color-accessible(error);
+  }
+
+  .approve-button {
+    @include mixins.fill-color-accessible(secondary);
+  }
+}
+
+.mdc-text-field--no-label {
+  .mdc-notched-outline__notch {
+    display: none;
   }
 }
 

@@ -14,6 +14,8 @@ import { version } from '../../../package.json';
 
 import signUpPage from '../templates/pages/sign-up-page';
 
+import authServiceComponent from '../templates/components/auth-service-component';
+
 const router = express.Router();
 
 router.get('', (req, res) => {
@@ -31,8 +33,18 @@ router.get('', (req, res) => {
           version,
           req,
           'sign-up-page',
-          signUpPage,
-          data
+          signUpPage, {
+            ...data,
+            components: [{
+              content: 'auth-service-component',
+              contentData: {
+                text: 'Hello World!'
+              }
+            }]
+          },
+          undefined, {
+            'auth-service-component': authServiceComponent
+          }
         )
       );
     }

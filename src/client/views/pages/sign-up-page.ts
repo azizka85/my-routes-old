@@ -1,6 +1,7 @@
 import { Page } from '../view';
 
 import { MDCRipple } from '@material/ripple';
+import { MDCTextField } from '@material/textfield';
 
 import { loadContent, mount, navigateHandler, unmount } from '../../helpers';
 
@@ -36,6 +37,28 @@ export class SignUpPage implements Page {
           ripple.listen('click', event => navigateHandler(event, ripple.root as HTMLElement));
         }
       }
+
+      const textFields = this.node.querySelectorAll('.main-card__text-field');
+
+      for(const textField of textFields) {
+        textField.classList.remove('mdc-text-field--no-label');
+
+        new MDCTextField(textField);
+      }
+
+      const form = this.node.querySelector('.main-card form');
+
+      form?.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const data = new FormData(form as HTMLFormElement);
+
+        console.log('Form submited: ');          
+
+        for(let item of data.entries()) {
+          console.log(item[0] + ':', item[1]);          
+        }
+      });
     }
 
     return content;

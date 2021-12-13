@@ -59,11 +59,17 @@ export function renderPage(
   req: Request, 
   pageName: string,
   page: HandlebarsTemplateDelegate, 
-  data: any, 
-  layoutHandlers?: LayoutHandlerInfo[]
+  data: any,   
+  layoutHandlers?: LayoutHandlerInfo[],
+  partials?: any,
+  helpers?: any,
 ) {
-  let partials: any = {};
-  let helpers: any = {};
+  partials = {
+    ...partials
+  };
+  helpers = {
+    ...helpers
+  };
 
   let viewName = pageName;
   let view = page;
