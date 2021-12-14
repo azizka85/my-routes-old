@@ -33,15 +33,8 @@ router.get('', (req, res) => {
           version,
           req,
           'sign-up-page',
-          signUpPage, {
-            ...data,
-            components: [{
-              content: 'auth-service-component',
-              contentData: {
-                text: 'Hello World!'
-              }
-            }]
-          },
+          signUpPage, 
+          data,
           undefined, {
             'auth-service-component': authServiceComponent
           }

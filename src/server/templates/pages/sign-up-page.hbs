@@ -104,9 +104,7 @@
           </a>
         </div>
       </form>
-      {{#each data.components}}
-        {{> (lookup this 'content') data=this.contentData }}
-      {{/each}}
+      {{> auth-service-component data=data }}
     </div>
   </div>
 </div>

@@ -6,7 +6,7 @@
     "test": "jest",
     "build": "node build.mjs",
     "start": "node dist/main.js",
-    "dev": "nodemon --config nodemon.json serve.mjs"
+    "dev": "nodemon serve.mjs"
   },
   "author": "Aziz Kudaikulov <aziz.kudaikulov@gmail.com>",
   "license": "MIT",
