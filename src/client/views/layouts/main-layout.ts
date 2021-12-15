@@ -91,11 +91,13 @@ export class MainLayout extends BaseLayout implements Page {
       
       const input = this.searchForm?.querySelector('.search__input') as HTMLInputElement;
 
-      input?.addEventListener('focus', () => {        
+      input?.addEventListener('focus', () => {              
         searchPanel?.classList.add('search--focus');
       });
 
       this.searchForm?.querySelector('.search__icon-right')?.addEventListener('click', () => {        
+        alert((this.appBarElem?.querySelector('.app-bar__row') as any).clientHeight);
+        alert((this.appBarElem?.querySelector('.app-bar__row') as any).offsetHeight);
         if(input) {
           input.value = '';
           input.focus();
