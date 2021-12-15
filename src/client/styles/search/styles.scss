@@ -34,13 +34,13 @@
   &__icon-left {       
     order: -1;
     color: inherit;
-    opacity: 0;
+    display: none;
   }  
 
   &__icon-right {
     order: 1;
     color: inherit;
-    opacity: 0;
+    display: none;
   }  
 
   &__icon-left, &__icon-right {
@@ -53,14 +53,14 @@
     transition: max-height 200ms linear;
   }
 
-  &:focus-within {
+  &--focus {
     color: theme-color.accessible-ink-color(variables.$surface-fill-color);
     background-color: variables.$surface-fill-color;   
     width: calc(100% - variables.$margin-min);
     z-index: app-bar-variables.$z-index + 1;
 
     .search__icon-left, .search__icon-right {
-      opacity: 1;
+      display: block;
     }
 
     .search__list {

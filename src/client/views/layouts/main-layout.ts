@@ -85,7 +85,26 @@ export class MainLayout extends BaseLayout implements Page {
         );
       }
 
-      this.searchForm = this.appBarElem?.querySelector('.search form') || null;
+      const searchPanel = this.appBarElem?.querySelector('.search');
+
+      this.searchForm = searchPanel?.querySelector('form') || null;     
+
+      this.searchForm?.querySelector('.search__input')?.addEventListener('focus', () => {        
+        searchPanel?.classList.add('search--focus');
+      });
+
+      this.searchForm?.querySelector('.search__icon-right')?.addEventListener('click', () => {
+        const input = this.searchForm?.querySelector('.search__input') as HTMLInputElement;
+
+        if(input) {
+          input.value = '';
+          input.focus();
+        }
+      });
+
+      this.searchForm?.querySelector('.search__icon-left')?.addEventListener('click', () => {
+        searchPanel?.classList.remove('search--focus');
+      });
 
       this.searchForm?.addEventListener('submit', event => {
         event.preventDefault();
