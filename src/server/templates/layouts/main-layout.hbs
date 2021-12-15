@@ -2,34 +2,28 @@
   <header class="app-bar">
     <div class="app-bar__row">      
       <div class="app-bar__section app-bar__section--fill">
-        <div class="search">
-          <form method="post" class="form-focus">
-            <button type="button">
-              <label 
-                for="blur-focus"
-                class="material-icons mdc-icon-button__ripple"
-                style="cursor: pointer;"
-              >
-                arrow_back
-              </label>
-            </button>
-            <input type="text" id="input-focus" name="input-focus">
-            <button type="reset">
-              <label 
-                for="input-focus"
-                class="material-icons mdc-icon-button__ripple"
-                style="cursor: pointer;"
-              >
-                cancel
-              </label>
-            </button>      
-          </form>    
-          <input type="text" id="blur-focus" name="blur-focus">    
-          <div class="search__list">
-            <div style="height: 20rem;"></div>
-          </div>    
-        </div>
-        <input id="app-bar-search-blur" class="search__input--blur">
+        <form method="post" class="form-focus">
+          <button type="button">
+            <label 
+              for="blur-focus"
+              class="material-icons mdc-icon-button__ripple"
+              style="cursor: pointer;"
+            >
+              arrow_back
+            </label>
+          </button>
+          <input type="text" id="input-focus" name="input-focus">
+          <button type="reset">
+            <label 
+              for="input-focus"
+              class="material-icons mdc-icon-button__ripple"
+              style="cursor: pointer;"
+            >
+              cancel
+            </label>
+          </button>      
+        </form>    
+        <input type="text" id="blur-focus" name="blur-focus">
       </div>
       <div class="app-bar__section app-bar__section--align-start">
         <a 
