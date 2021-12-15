@@ -6,7 +6,8 @@
           <form method="post">          
             <input 
               type="text" 
-              name="search" 
+              id="app-bar-search"
+              name="app-bar-search" 
               class="search__input app-bar__title"
               autocomplete="off"
             >
@@ -19,10 +20,16 @@
             </label>
             <button
               type="reset" 
-              class="material-icons mdc-icon-button search__icon-right"   
+              class="mdc-icon-button search__icon-right"   
             >
               <span class="mdc-icon-button__ripple"></span>
-              cancel
+              <label 
+                for="app-bar-search" 
+                class="material-icons" 
+                style="cursor: pointer;"
+              >
+                cancel
+              </label>
             </button>          
           </form>    
           <div class="search__list">
