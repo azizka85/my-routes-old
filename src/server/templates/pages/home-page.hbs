@@ -1,4 +1,8 @@
-<div data-page="home-page">    
+<div data-page="home-page"> 
+  <button class="mdc-fab mdc-fab--exited" data-button="scroll-top">
+    <div class="mdc-fab__ripple"></div>
+    <span class="mdc-fab__icon material-icons">keyboard_arrow_up</span>
+  </button>   
   <div>
     <button class="mdc-button mdc-button--raised">
       <span class="mdc-button__ripple"></span>
@@ -17,11 +21,14 @@
   <div>
     Home page, time: {{ data.time }}
   </div>
+  <br>  
+  <div>
+    <form method="post">
+      <input type="text" id="input-focus" name="input-focus">
+      <button type="reset">Reset</button>
+    </form>
+  </div>
   <br>
-  <button class="mdc-fab mdc-fab--exited" data-button="scroll-top">
-    <div class="mdc-fab__ripple"></div>
-    <span class="mdc-fab__icon material-icons">keyboard_arrow_up</span>
-  </button>
   <div>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. 
     Repudiandae necessitatibus blanditiis quidem aperiam veritatis 
