@@ -9,6 +9,7 @@
   flex-direction: column;
   position: absolute;
   top: variables.$top;
+  height: variables.$height;
   width: calc(100% - variables.$margin-max);
   max-width: variables.$max-width;
   padding: variables.$padding;
@@ -56,6 +57,7 @@
   &--focus {
     color: theme-color.accessible-ink-color(variables.$surface-fill-color);
     background-color: variables.$surface-fill-color;   
+    height: unset;
     width: calc(100% - variables.$margin-min);
     z-index: app-bar-variables.$z-index + 1;
 

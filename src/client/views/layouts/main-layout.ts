@@ -96,8 +96,6 @@ export class MainLayout extends BaseLayout implements Page {
       });
 
       this.searchForm?.querySelector('.search__icon-right')?.addEventListener('click', () => {        
-        alert((this.appBarElem?.querySelector('.app-bar__row') as any).clientHeight);
-        alert((this.appBarElem?.querySelector('.app-bar__row') as any).offsetHeight);
         if(input) {
           input.value = '';
           input.focus();
