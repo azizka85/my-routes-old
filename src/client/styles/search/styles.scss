@@ -19,6 +19,7 @@
   transition: color 200ms linear, background-color 200ms linear, width 200ms linear;    
 
   form {
+    height: variables.$height;
     display: flex;
     align-items: center;
     justify-content: space-between;    
