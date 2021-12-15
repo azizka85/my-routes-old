@@ -28,7 +28,9 @@ export class MainLayout extends BaseLayout implements Page {
 
   protected list: MDCList | null = null;
 
+  protected searchPanel: HTMLElement | null = null;
   protected searchForm: HTMLFormElement | null = null;  
+  protected searchInput: HTMLInputElement | null = null;
 
   static get instance(): MainLayout {
     if(!MainLayout.layout) {
@@ -85,37 +87,31 @@ export class MainLayout extends BaseLayout implements Page {
         );
       }
 
-      const searchPanel = this.appBarElem?.querySelector('.search');
+      this.searchPanel = this.appBarElem?.querySelector('.search') || null;
 
-      this.searchForm = searchPanel?.querySelector('form') || null; 
+      this.searchForm = this.searchPanel?.querySelector('form') || null; 
       
-      const input = this.searchForm?.querySelector('.search__input') as HTMLInputElement;
+      this.searchInput = this.searchForm?.querySelector('.search__input') || null;
 
-      input?.addEventListener('focus', () => {              
-        searchPanel?.classList.add('search--focus');
+      this.searchInput?.addEventListener('focus', () => {              
+        this.searchPanel?.classList.add('search--focus');
       });
 
       this.searchForm?.querySelector('.search__icon-right')?.addEventListener('click', () => {        
-        if(input) {
-          input.value = '';
-          input.focus();
+        if(this.searchInput) {
+          this.searchInput.value = '';
+          this.searchInput.focus();
         }
       });
 
       this.searchForm?.querySelector('.search__icon-left')?.addEventListener('click', () => {
-        searchPanel?.classList.remove('search--focus');
+        this.searchPanel?.classList.remove('search--focus');
       });
 
       this.searchForm?.addEventListener('submit', event => {
-        event.preventDefault();
+        event.preventDefault();        
 
-        const data = new FormData(this.searchForm as HTMLFormElement);
-
-        console.log('Form submited: ');          
-
-        for(let item of data.entries()) {
-          console.log(item[0] + ':', item[1]);          
-        }
+        console.log('Form submited:', this.searchInput?.value);          
       });
 
       let prevScroll = 0;

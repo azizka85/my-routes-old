@@ -30,6 +30,7 @@ describe('MainLayout test', () => {
 
     global.Event = (document.defaultView as Window & typeof globalThis).Event;
     global.MouseEvent = (document.defaultView as Window & typeof globalThis).MouseEvent;
+    global.FocusEvent = (document.defaultView as Window & typeof globalThis).FocusEvent;
     global.CustomEvent = (document.defaultView as Window & typeof globalThis).CustomEvent;
 
     window.router = new Router();
@@ -211,34 +212,33 @@ describe('MainLayout test', () => {
         <header class="app-bar">
           <div class="app-bar__row">      
             <div class="app-bar__section app-bar__section--fill">
-              <div class="search">
-                <form method="post">          
-                  <input 
-                    type="text" 
-                    name="search" 
-                    id="search" 
-                    class="search__input app-bar__title"
-                    autocomplete="off"
-                  >
-                  <label  
-                    for="main-content"
-                    class="material-icons mdc-icon-button search__icon-left"           
-                  >
-                    <span class="mdc-icon-button__ripple"></span>
-                    arrow_back
-                  </label>
-                  <button
-                    type="reset" 
-                    class="material-icons mdc-icon-button search__icon-right"   
-                  >
-                    <span class="mdc-icon-button__ripple"></span>
-                    cancel
-                  </button>          
-                </form>    
-                <div class="search__list">
-                  <div style="height: 20rem;"></div>
-                </div>    
-              </div>
+            <div class="search">
+              <form method="post">          
+                <input               
+                  type="text" 
+                  name="search" 
+                  class="search__input app-bar__title"
+                  autocomplete="off"
+                >
+                <button  
+                  type="button"
+                  class="material-icons mdc-icon-button search__icon-left"           
+                >
+                  <span class="mdc-icon-button__ripple"></span>
+                  arrow_back
+                </button>
+                <button
+                  type="reset" 
+                  class="material-icons mdc-icon-button search__icon-right"   
+                >
+                  <span class="mdc-icon-button__ripple"></span>
+                  cancel
+                </button>          
+              </form>    
+              <div class="search__list">
+                <div style="height: 20rem;"></div>
+              </div>    
+            </div>
             </div>
             <div class="app-bar__section app-bar__section--align-start">
               <a 
@@ -374,5 +374,20 @@ describe('MainLayout test', () => {
     instance['drawerElem']?.dispatchEvent(new MouseEvent('mouseleave'));
 
     expect(instance['drawerElem']?.classList.contains('drawer--hover')).toBeFalsy();
+
+    instance['searchInput']?.dispatchEvent(new FocusEvent('focus'));
+
+    expect(instance['searchPanel']?.classList.contains('search--focus')).toBeTruthy();
+
+    (instance['searchInput'] as HTMLInputElement).value = 'Hello World!';
+
+    instance['searchForm']?.querySelector('.search__icon-right')?.dispatchEvent(new MouseEvent('click'));
+
+    expect(instance['searchPanel']?.classList.contains('search--focus')).toBeTruthy();
+    expect(instance['searchInput']?.value).toBeFalsy();
+
+    instance['searchForm']?.querySelector('.search__icon-left')?.dispatchEvent(new MouseEvent('click'));
+
+    expect(instance['searchPanel']?.classList.contains('search--focus')).toBeFalsy();
   });
 });
