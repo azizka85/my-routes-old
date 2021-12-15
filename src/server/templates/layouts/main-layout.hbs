@@ -11,20 +11,25 @@
               class="search__input app-bar__title"
               autocomplete="off"
             >
-            <label  
-              for="main-content"
-              class="material-icons mdc-icon-button search__icon-left"           
+            <button
+              type="button"
+              class="mdc-icon-button search__icon-left"
             >
-              <span class="mdc-icon-button__ripple"></span>
-              arrow_back
-            </label>
+              <label  
+                for="app-bar-search-blur"
+                class="material-icons"           
+                style="cursor: pointer;"
+              >
+                arrow_back
+              </label>
+            </button>
             <button
               type="reset" 
               class="mdc-icon-button search__icon-right"   
             >
               <label 
                 for="app-bar-search" 
-                class="material-icons mdc-icon-button__ripple" 
+                class="material-icons" 
                 style="cursor: pointer;"
               >
                 cancel
@@ -35,6 +40,7 @@
             <div style="height: 20rem;"></div>
           </div>    
         </div>
+        <input id="app-bar-search-blur" class="search__input--blur">
       </div>
       <div class="app-bar__section app-bar__section--align-start">
         <a 
