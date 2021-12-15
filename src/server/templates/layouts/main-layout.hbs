@@ -3,14 +3,13 @@
     <div class="app-bar__row">      
       <div class="app-bar__section app-bar__section--fill">
         <form method="post" class="form-focus">
-          <button type="button">
-            <label 
-              class="material-icons"
-              style="cursor: pointer;"
-            >
-              arrow_back
-            </label>
-          </button>
+          <label 
+            for="inbox-link"
+            class="material-icons"
+            style="cursor: pointer;"
+          >
+            arrow_back
+          </label>
           <input type="text" id="input-focus" name="input-focus">
           <button type="reset">
             <label 
@@ -59,6 +58,7 @@
     </div>
     <div class="drawer__content">
       <div class="mdc-list">
+        <output id="inbox-link" onfocus="alert('Nuna')">Nuna</output>
         <a class="mdc-list-item mdc-list-item--activated" href="#">
           <span class="mdc-list-item__ripple"></span>
           <i class="material-icons">inbox</i>
