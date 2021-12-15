@@ -23,10 +23,18 @@
   </div>
   <br>  
   <div>
-    <form method="post">
-      <input type="text" id="input-focus" name="input-focus">
-      <button type="reset">
-        <label for="input-focus">Reset</label>
+    <form method="post" style="display: flex; justify-content: flex-start;">
+      <input type="text" id="input-focus" name="input-focus" style="margin-right: 0.5rem;">
+      <button 
+        type="reset" 
+        style="border-radius: 0.75rem; width: 1.5rem; height: 1.5rem; display: flex; align-items: center; justify-content: center;">
+        <label 
+          for="input-focus"
+          class="material-icons mdc-icon-button__ripple"
+          style="cursor: pointer;"
+        >
+          cancel
+        </label>
       </button>
     </form>
   </div>
