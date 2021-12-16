@@ -12,6 +12,9 @@
   "license": "MIT",
   "devDependencies": {
     "@azizka/router": "^1.0.0",
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/preset-typescript": "^7.16.5",
     "@material/button": "^13.0.0",
     "@material/card": "^13.0.0",
     "@material/fab": "^13.0.0",
@@ -23,6 +26,7 @@
     "@types/jest": "^27.0.3",
     "@types/jsdom": "^16.2.13",
     "@types/supertest": "^2.0.11",
+    "babel-jest": "^27.4.5",
     "esbuild": "^0.14.2",
     "express": "^4.17.1",
     "handlebars": "^4.7.7",
