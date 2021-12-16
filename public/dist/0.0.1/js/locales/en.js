@@ -1,0 +1,1 @@
+import"../chunk-2W6XHV3X.js";var r={"My Routes":"My Routes","Sign In":"Sign In","Sign Up":"Sign Up","Email required":"Email required",Name:"Name","Name required":"Name required",Password:"Password","Password required":"Password required",Cancel:"Cancel","Or use the service":"Or use the service"},i={values:r};export{i as default,r as values};

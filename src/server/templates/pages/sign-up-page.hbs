@@ -1,12 +1,17 @@
 <div data-page="signup-page">
   <div class="main-card mdc-card">
     <div class="mdc-card__content">
-      <h6 class="main-card__title main-card--justify mdc-typography--headline6">Sign Up</h6>
+      <h6 
+        data-title="main"
+        class="main-card__title main-card--justify mdc-typography--headline6"
+      >
+        {{ tr 'Sign Up' }}
+      </h6>
       <form method="post">
         <label class="main-card__text-field mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
           <input 
             required 
-            placeholder="Name" 
+            placeholder="{{ tr 'Name' }}" 
             type="text" 
             name="name" 
             class="mdc-text-field__input" 
@@ -17,7 +22,7 @@
           <span class="mdc-notched-outline">
             <span class="mdc-notched-outline__leading"></span>
             <span class="mdc-notched-outline__notch">
-              <span class="mdc-floating-label" id="name-label">Name</span>
+              <span class="mdc-floating-label" id="name-label">{{ tr 'Name' }}</span>
             </span>
             <span class="mdc-notched-outline__trailing"></span>
           </span>          
@@ -28,7 +33,7 @@
             id="name-helper" 
             aria-hidden="true"
           >
-            Name required
+            {{ tr 'Name required' }}
           </div>
         </div>
         <label class="main-card__text-field mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
@@ -56,13 +61,13 @@
             id="email-helper" 
             aria-hidden="true"
           >
-            Email required
+            {{ tr 'Email required' }}
           </div>
         </div>
         <label class="main-card__text-field mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
           <input 
             required 
-            placeholder="Password" 
+            placeholder="{{ tr 'Password' }}" 
             type="password" 
             name="password" 
             class="mdc-text-field__input" 
@@ -73,7 +78,7 @@
           <span class="mdc-notched-outline">
             <span class="mdc-notched-outline__leading"></span>
             <span class="mdc-notched-outline__notch">
-              <span class="mdc-floating-label" id="password-label">Password</span>
+              <span class="mdc-floating-label" id="password-label">{{ tr 'Password' }}</span>
             </span>
             <span class="mdc-notched-outline__trailing"></span>
           </span>          
@@ -84,23 +89,23 @@
             id="password-helper" 
             aria-hidden="true"
           >
-            Password required
+            {{ tr 'Password required' }}
           </div>
         </div>
         <div class="main-card--justify" style="text-align: right;">
-          <a class="mdc-button" href="{{ data.PAGE_ROOT }}sign-in">
+          <a class="mdc-button" href="{{ data.rootLink }}sign-in" data-button="sign-in">
             <span class="mdc-button__ripple"></span>
-            <span class="mdc-button__label">Sign In</span>
+            <span class="mdc-button__label">{{ tr 'Sign In' }}</span>
           </a>
         </div>
         <div class="main-card--justify" style="text-align: right;">
-          <button type="submit" class="approve-button mdc-button mdc-button--raised">
+          <button type="submit" class="approve-button mdc-button mdc-button--raised" data-button="sign-up">
             <span class="mdc-button__ripple"></span>
-            <span class="mdc-button__label">Sign Up</span>
+            <span class="mdc-button__label">{{ tr 'Sign Up' }}</span>
           </button>
-          <a class="cancel-button mdc-button mdc-button--raised" href="{{ data.PAGE_ROOT }}">
+          <a class="cancel-button mdc-button mdc-button--raised" href="{{ data.rootLink }}" data-button="cancel">
             <span class="mdc-button__ripple"></span>
-            <span class="mdc-button__label">Cancel</span>
+            <span class="mdc-button__label">{{ tr 'Cancel' }}</span>
           </a>
         </div>
       </form>

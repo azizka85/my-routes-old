@@ -13,6 +13,8 @@ import { HistoryMock } from '../../mocks/history-mock';
 
 import { toggleQueryParameter, condition } from "../../../helpers";
 
+import { DEFAULT_LANGUAGE } from '../../../globals';
+
 describe('MainLayout test', () => {
   beforeEach(() => {
     const dom = new JSDOM();
@@ -328,7 +330,7 @@ describe('MainLayout test', () => {
 
     instance['navIcon']?.dispatchEvent(new MouseEvent('click'));
     
-    await instance.load({
+    await instance.load(DEFAULT_LANGUAGE, {
       fragment: window.router.fragment,
       query: window.router.query,
       match: [],
@@ -342,7 +344,7 @@ describe('MainLayout test', () => {
 
     instance['searchIcon']?.dispatchEvent(new MouseEvent('click'));
 
-    await instance.load({
+    await instance.load(DEFAULT_LANGUAGE, {
       fragment: window.router.fragment,
       query: window.router.query,
       match: [],
@@ -355,7 +357,7 @@ describe('MainLayout test', () => {
 
     instance['headerIconBtn']?.dispatchEvent(new MouseEvent('click'));
 
-    await instance.load({
+    await instance.load(DEFAULT_LANGUAGE, {
       fragment: window.router.fragment,
       query: window.router.query,
       match: [],

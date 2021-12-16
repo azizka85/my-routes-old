@@ -12,6 +12,8 @@ import { HistoryMock } from '../../mocks/history-mock';
 
 import { fetchGetMock } from '../../mocks/request/fetch-get-mock';
 
+import { DEFAULT_LANGUAGE } from '../../../globals';
+
 describe('HomePage test', () => {
   beforeEach(() => {
     const dom = new JSDOM();
@@ -133,7 +135,7 @@ describe('HomePage test', () => {
 
     await layoutInstance.mount();
 
-    await pageInstance.load({
+    await pageInstance.load(DEFAULT_LANGUAGE, {
       fragment: '',
       query: {},
       match: [],
@@ -163,7 +165,7 @@ describe('HomePage test', () => {
     expect(pageInstance['currScroll']).toEqual(100);
     expect(window.scrollY).toEqual(0);
 
-    await pageInstance.load({
+    await pageInstance.load(DEFAULT_LANGUAGE, {
       fragment: '',
       query: {},
       match: [],

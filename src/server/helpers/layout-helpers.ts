@@ -1,5 +1,6 @@
 import { Request } from "express";
 
+import { Langs, locales } from './locale-helpers';
 import { condition, toggleQueryParameter } from '../../helpers';
 
 import defaultLayout from "../templates/layouts/default-layout";
@@ -55,6 +56,7 @@ export function getLayoutHandlers(layouts: string[]) {
 }
 
 export function renderPage(
+  lang: Langs,
   version: string,  
   req: Request, 
   pageName: string,
@@ -68,7 +70,8 @@ export function renderPage(
     ...partials
   };
   helpers = {
-    ...helpers
+    ...helpers,
+    tr: locales[lang]
   };
 
   let viewName = pageName;

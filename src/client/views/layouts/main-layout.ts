@@ -159,7 +159,7 @@ export class MainLayout extends BaseLayout implements Page {
     await unmount(this.node);    
   } 
 
-  async load(page: router.Page, firstLoad: boolean) {    
+  async load(lang: string, page: router.Page, firstLoad: boolean) {    
     const navigation = page.query['main-layout-navigation'];    
 
     if(this.navIcon) {      

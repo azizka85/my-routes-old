@@ -2,27 +2,31 @@ import '../declarations';
 
 import express from 'express';
 
-import Handlebars from 'handlebars';
-
 import { 
+  DEFAULT_LANGUAGE,
   PAGE_ROOT
 } from '../../globals';
 
+import { trimSlashes } from '../../helpers';
+import { Langs } from '../helpers/locale-helpers';
 import { renderPage } from '../helpers/layout-helpers';
-
-import { version } from '../../../package.json';
 
 import signUpPage from '../templates/pages/sign-up-page';
 
 import authServiceComponent from '../templates/components/auth-service-component';
 
-const router = express.Router();
+import { version } from '../../../package.json';
+
+const router = express.Router({ mergeParams: true });
 
 router.get('', (req, res) => {
   try {
-    let data: any = {
+    const params = req.params as any;
+    const lang = trimSlashes(params[0] || DEFAULT_LANGUAGE) as Langs;
+
+    const data: any = {
       time: Date.now(),
-      PAGE_ROOT
+      rootLink: PAGE_ROOT + (params[0] ? `${lang}/` : '')
     };
   
     if(req.query.ajax && !req.query.init) {
@@ -30,6 +34,7 @@ router.get('', (req, res) => {
     } else {          
       res.send(
         renderPage(
+          lang,
           version,
           req,
           'sign-up-page',

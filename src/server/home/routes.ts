@@ -1,6 +1,7 @@
 import '../declarations';
 
 import { 
+  DEFAULT_LANGUAGE,
   PAGE_ROOT
 } from '../../globals';
 
@@ -10,15 +11,21 @@ import { getLayoutHandlers, renderPage, stringToArray } from '../helpers/layout-
 
 import homePage from '../templates/pages/home-page';
 
+import { trimSlashes } from '../../helpers';
+import { Langs } from '../helpers/locale-helpers';
+
 import { version } from '../../../package.json';
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.get('', (req, res) => {
   try {
-    let data: any = {
+    const params = req.params as any;
+    const lang = trimSlashes(params[0] || DEFAULT_LANGUAGE) as Langs;
+
+    const data: any = {
       time: Date.now(),
-      PAGE_ROOT
+      rootLink: PAGE_ROOT + (params[0] ? `${lang}/` : '')
     };
   
     if(req.query.ajax && !req.query.init) {
@@ -28,10 +35,11 @@ router.get('', (req, res) => {
         ? ['main-layout'] 
         : stringToArray(req.query.layouts as string);
   
-      const layoutHandlers = getLayoutHandlers(layouts);
+      const layoutHandlers = getLayoutHandlers(layouts);      
   
       res.send(
         renderPage(
+          lang,
           version,
           req,
           'home-page',

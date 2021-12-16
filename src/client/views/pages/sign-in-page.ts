@@ -1,3 +1,5 @@
+import * as router from '@azizka/router';
+
 import { Page } from '../view';
 
 import { MDCRipple } from '@material/ripple';
@@ -5,10 +7,32 @@ import { MDCTextField } from '@material/textfield';
 
 import { loadContent, mount, navigateHandler, unmount } from '../../helpers';
 
+import { AuthServiceComponent } from '../components/auth-service-component';
+
+import { DEFAULT_LANGUAGE } from '../../../globals';
+
 export class SignInPage implements Page {
   protected static page: SignInPage | null = null;
 
   protected node: HTMLElement | null = null;
+
+  protected titleElem: HTMLElement | null = null;
+
+  protected emailHelperElem: HTMLElement | null = null;
+
+  protected passwordInputElem: HTMLInputElement | null = null;
+  protected passwordLabelElem: HTMLElement | null = null;
+  protected passwordHelperElem: HTMLElement | null = null;
+
+  protected signUpBtn: HTMLElement | null = null;
+  protected signUpBtnLabel: HTMLElement | null = null;
+
+  protected signInBtnLabel: HTMLElement | null = null;
+
+  protected cancelBtn: HTMLElement | null = null;
+  protected cancelBtnLabel: HTMLElement | null = null;
+
+  protected authService: AuthServiceComponent | null = null;
 
   static get instance(): SignInPage {
     if(!SignInPage.page) {
@@ -28,16 +52,6 @@ export class SignInPage implements Page {
     this.node = content.querySelector('[data-page="signin-page"]') || null;
 
     if(this.node) {
-      const buttons = this.node.querySelectorAll('.mdc-button');
-
-      for(let button of buttons) {
-        const ripple = new MDCRipple(button);
-
-        if(button.hasAttribute('href')) {
-          ripple.listen('click', event => navigateHandler(event, ripple.root as HTMLElement));
-        }
-      }
-
       const textFields = this.node.querySelectorAll('.main-card__text-field');
 
       for(const textField of textFields) {
@@ -59,7 +73,43 @@ export class SignInPage implements Page {
           console.log(item[0] + ':', item[1]);          
         }
       });
+
+      this.titleElem = this.node.querySelector('[data-title="main"]') || null;
+
+      this.emailHelperElem = form?.querySelector('#email-helper') || null;
+
+      this.passwordInputElem = form?.querySelector('[name="password"]') || null;
+      this.passwordLabelElem = form?.querySelector('#password-label') || null;
+      this.passwordHelperElem = form?.querySelector('#password-helper') || null;
+
+      this.signUpBtn = form?.querySelector('[data-button="sign-up"]') || null;
+
+      if(this.signUpBtn) {
+        new MDCRipple(this.signUpBtn).listen('click', event => navigateHandler(event, this.signUpBtn as HTMLElement));
+
+        this.signUpBtnLabel = this.signUpBtn.querySelector('.mdc-button__label');
+      }
+
+      const signInBtn = form?.querySelector('[data-button="sign-in"]') || null;
+
+      if(signInBtn) {
+        new MDCRipple(signInBtn);
+
+        this.signInBtnLabel = signInBtn.querySelector('.mdc-button__label');
+      }
+
+      this.cancelBtn = form?.querySelector('[data-button="cancel"]') || null;
+
+      if(this.cancelBtn) {
+        new MDCRipple(this.cancelBtn).listen('click', event => navigateHandler(event, this.cancelBtn as HTMLElement));
+
+        this.cancelBtnLabel = this.cancelBtn.querySelector('.mdc-button__label');
+      }
     }
+
+    this.authService = new AuthServiceComponent();
+
+    await this.authService.init(this, firstTime);
     
     return content;
   }
@@ -70,5 +120,44 @@ export class SignInPage implements Page {
 
   async unmount() {
     await unmount(this.node);
+  }
+
+  async load?(lang: string , page: router.Page, firstLoad: boolean): Promise<void> {
+    if(this.titleElem) {
+      this.titleElem.textContent = window.tr('Sign In');
+    }
+
+    if(this.emailHelperElem) {
+      this.emailHelperElem.textContent = window.tr('Email required');
+    }
+
+    if(this.passwordInputElem) {
+      this.passwordInputElem.placeholder = window.tr('Password');
+    }
+
+    if(this.passwordLabelElem) {
+      this.passwordLabelElem.textContent = window.tr('Password');
+    }
+
+    if(this.passwordHelperElem) {
+      this.passwordHelperElem.textContent = window.tr('Password required');
+    }
+
+    if(this.signUpBtnLabel) {
+      this.signUpBtnLabel.textContent = window.tr('Sign Up');
+    }
+
+    if(this.signInBtnLabel) {
+      this.signInBtnLabel.textContent = window.tr('Sign In');
+    }
+
+    if(this.cancelBtnLabel) {
+      this.cancelBtnLabel.textContent = window.tr('Cancel');
+    }
+
+    this.signUpBtn?.setAttribute('href', (lang === DEFAULT_LANGUAGE ? '' : lang) + '/sign-up');
+    this.cancelBtn?.setAttribute('href', (lang === DEFAULT_LANGUAGE ? '' : lang) + '/');
+
+    await this.authService?.load?.(lang, page, firstLoad);
   }
 }

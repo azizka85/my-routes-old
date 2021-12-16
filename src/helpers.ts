@@ -1,3 +1,5 @@
+import { LANGUAGES } from './globals';
+
 export function condition(expect: boolean, trueValue: string, falseValue: string) {
   return expect ? trueValue : falseValue;
 }
@@ -55,4 +57,11 @@ export function toCamel(input: string) {
   const parts = input.split('-');
 
   return parts.map(item => capitalize(item)).join('');
+}
+
+export const localeRoute = `(${Object.keys(LANGUAGES).map(lang => `/${lang}`).join('|')})?`;
+export const clientLocaleRoute = `(${Object.keys(LANGUAGES).join('|')})?`;
+
+export function trimSlashes(path: string) {
+  return path.replace(/\/$/, '').replace(/^\//, '');
 }

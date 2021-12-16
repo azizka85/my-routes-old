@@ -1,0 +1,14 @@
+{
+  "values": {
+    "My Routes": "My Routes",
+    "Sign In": "Sign In",
+    "Sign Up": "Sign Up",
+    "Email required": "Email required",
+    "Name": "Name",
+    "Name required": "Name required",
+    "Password": "Password",    
+    "Password required": "Password required",
+    "Cancel": "Cancel",
+    "Or use the service": "Or use the service"
+  }
+}

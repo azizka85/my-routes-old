@@ -69,7 +69,7 @@ export class HomePage implements Page {
     await unmount(this.node);
   }
 
-  async load(page: router.Page, firstLoad: boolean) {
+  async load(lang: string, page: router.Page, firstLoad: boolean) {
     if(firstLoad) {
       window.layouts['main-layout']?.listen?.(ScrollEventType, (event) => {
         const data = (event as CustomEvent<ScrollEventData>).detail;
@@ -87,6 +87,6 @@ export class HomePage implements Page {
     window.layouts['main-layout']?.doAction?.(ScrollActionTo, {
       top: this.currScroll,
       noSmooth: true
-    });
+    });    
   }
 }
