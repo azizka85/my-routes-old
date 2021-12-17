@@ -24,7 +24,7 @@ export async function loadContent(
   if(firstTime || parent) {
     content = parent || document.body;
   } else {
-    let path = location.pathname + '?ajax=1&init=1';
+    let path = location.pathname + '?ajax=1&init=1&time=' + Date.now();
 
     const layoutsToLoad = [];
 

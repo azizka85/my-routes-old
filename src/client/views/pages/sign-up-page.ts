@@ -175,8 +175,8 @@ export class SignUpPage implements Page {
       this.cancelBtnLabel.textContent = window.tr('Cancel');
     }
 
-    this.signInBtn?.setAttribute('href', (lang === DEFAULT_LANGUAGE ? '' : lang) + '/sign-in');
-    this.cancelBtn?.setAttribute('href', (lang === DEFAULT_LANGUAGE ? '' : lang) + '/');
+    this.signInBtn?.setAttribute('href', (lang === DEFAULT_LANGUAGE ? '' : `/${lang}`) + '/sign-in');
+    this.cancelBtn?.setAttribute('href', (lang === DEFAULT_LANGUAGE ? '' : `/${lang}`) + '/');
 
     await this.authService?.load?.(lang, page, firstLoad);
   }

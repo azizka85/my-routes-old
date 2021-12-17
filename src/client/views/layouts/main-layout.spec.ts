@@ -11,7 +11,7 @@ import { MDCList } from '@material/list';
 import { LocationMock } from '../../mocks/location-mock';
 import { HistoryMock } from '../../mocks/history-mock';
 
-import { toggleQueryParameter, condition } from "../../../helpers";
+import { toggleQueryParameter } from "../../../helpers";
 
 import { DEFAULT_LANGUAGE } from '../../../globals';
 
@@ -122,7 +122,7 @@ describe('MainLayout test', () => {
             </div>
           </div>
         </header>
-        <aside class="drawer ${ condition(navigation, 'drawer--open', '') }">
+        <aside class="drawer ${ navigation ? 'drawer--open' : '' }">
           <div class="drawer__header">
             <a 
               data-button="header-navigation"
@@ -130,7 +130,7 @@ describe('MainLayout test', () => {
               href="?${ toggleQueryParameter(query, 'main-layout-navigation') }"
             >
               <span class="mdc-icon-button__ripple">
-                ${ condition(navigation, 'arrow_circle_left', 'arrow_circle_right') }
+                ${ navigation ? 'arrow_circle_left' : 'arrow_circle_right' }
               </span>        
             </a>
           </div>
@@ -264,7 +264,7 @@ describe('MainLayout test', () => {
             </div>
           </div>
         </header>
-        <aside class="drawer ${ condition(navigation, 'drawer--open', '') }">
+        <aside class="drawer ${ navigation ? 'drawer--open' : '' }">
           <div class="drawer__header">
             <a 
               data-button="header-navigation"
@@ -272,7 +272,7 @@ describe('MainLayout test', () => {
               href="?${ toggleQueryParameter(query, 'main-layout-navigation') }"
             >
               <span class="mdc-icon-button__ripple">
-                ${ condition(navigation, 'arrow_circle_left', 'arrow_circle_right') }
+                ${ navigation ? 'arrow_circle_left' : 'arrow_circle_right' }
               </span>        
             </a>
           </div>

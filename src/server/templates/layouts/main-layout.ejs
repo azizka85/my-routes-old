@@ -34,7 +34,7 @@
         <a 
           data-button="navigation"
           class="material-icons mdc-icon-button" 
-          href="?{{ toggleQueryParameter data.query 'main-layout-navigation' }}"
+          href="?<%= helpers.toggleQueryParameter(data.query, 'main-layout-navigation') %>"
         >
           <span class="mdc-icon-button__ripple"></span>
           menu
@@ -44,7 +44,7 @@
         <a 
           data-button="search"
           class="material-icons mdc-icon-button" 
-          href="?{{ toggleQueryParameter data.query 'main-layout-search' }}"
+          href="?<%= helpers.toggleQueryParameter(data.query, 'main-layout-search') %> "
         >
           <span class="mdc-icon-button__ripple"></span>
           filter_list
@@ -52,15 +52,15 @@
       </div>
     </div>
   </header>
-  <aside class="drawer {{ condition data.navigation 'drawer--open' '' }}">
+  <aside class="drawer <%= data.navigation ? 'drawer--open' : '' %> ">
     <div class="drawer__header">
       <a 
         data-button="header-navigation"
         class="material-icons mdc-icon-button" 
-        href="?{{ toggleQueryParameter data.query 'main-layout-navigation' }}"
+        href="?<%= helpers.toggleQueryParameter(data.query, 'main-layout-navigation') %> "
       >
         <span class="mdc-icon-button__ripple">
-          {{ condition data.navigation 'arrow_circle_left' 'arrow_circle_right' }}
+          <%= data.navigation ? 'arrow_circle_left' : 'arrow_circle_right'  %> 
         </span>        
       </a>
     </div>
@@ -85,6 +85,14 @@
     </div>
   </aside>
   <main class="main-content app-bar--fixed-adjust">
-    {{> (lookup data 'content') data=data.contentData }}
+    <% if(data.content) { %>
+      <%- 
+        partials[data.content]({ 
+          data: data.contentData, 
+          partials,  
+          helpers
+        }) 
+      %> 
+    <% } %>
   </main>
 </div>

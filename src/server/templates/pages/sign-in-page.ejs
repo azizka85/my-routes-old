@@ -1,41 +1,13 @@
-<div data-page="signup-page">
+<div data-page="signin-page">
   <div class="main-card mdc-card">
     <div class="mdc-card__content">
       <h6 
         data-title="main"
         class="main-card__title main-card--justify mdc-typography--headline6"
       >
-        {{ tr 'Sign Up' }}
+        <%= helpers.tr('Sign In') %> 
       </h6>
       <form method="post">
-        <label class="main-card__text-field mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
-          <input 
-            required 
-            placeholder="{{ tr 'Name' }}" 
-            type="text" 
-            name="name" 
-            class="mdc-text-field__input" 
-            aria-labelledby="name-label"
-            aria-controls="name-helper"
-            aria-describedby="name-helper"
-          >
-          <span class="mdc-notched-outline">
-            <span class="mdc-notched-outline__leading"></span>
-            <span class="mdc-notched-outline__notch">
-              <span class="mdc-floating-label" id="name-label">{{ tr 'Name' }}</span>
-            </span>
-            <span class="mdc-notched-outline__trailing"></span>
-          </span>          
-        </label>
-        <div class="mdc-text-field-helper-line main-card--justify">
-          <div 
-            class="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg" 
-            id="name-helper" 
-            aria-hidden="true"
-          >
-            {{ tr 'Name required' }}
-          </div>
-        </div>
         <label class="main-card__text-field mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
           <input 
             required 
@@ -61,13 +33,13 @@
             id="email-helper" 
             aria-hidden="true"
           >
-            {{ tr 'Email required' }}
+            <%= helpers.tr('Email required') %> 
           </div>
         </div>
         <label class="main-card__text-field mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
           <input 
             required 
-            placeholder="{{ tr 'Password' }}" 
+            placeholder="<%= helpers.tr('Password') %> " 
             type="password" 
             name="password" 
             class="mdc-text-field__input" 
@@ -78,7 +50,7 @@
           <span class="mdc-notched-outline">
             <span class="mdc-notched-outline__leading"></span>
             <span class="mdc-notched-outline__notch">
-              <span class="mdc-floating-label" id="password-label">{{ tr 'Password' }}</span>
+              <span class="mdc-floating-label" id="password-label"><%= helpers.tr('Password') %></span>
             </span>
             <span class="mdc-notched-outline__trailing"></span>
           </span>          
@@ -89,27 +61,33 @@
             id="password-helper" 
             aria-hidden="true"
           >
-            {{ tr 'Password required' }}
+            <%= helpers.tr('Password required') %> 
           </div>
         </div>
         <div class="main-card--justify" style="text-align: right;">
-          <a class="mdc-button" href="{{ data.rootLink }}sign-in" data-button="sign-in">
+          <a class="mdc-button" href="<%= data.rootLink %>sign-up" data-button="sign-up">
             <span class="mdc-button__ripple"></span>
-            <span class="mdc-button__label">{{ tr 'Sign In' }}</span>
+            <span class="mdc-button__label"><%= helpers.tr('Sign Up') %></span>
           </a>
         </div>
         <div class="main-card--justify" style="text-align: right;">
-          <button type="submit" class="approve-button mdc-button mdc-button--raised" data-button="sign-up">
+          <button type="submit" class="approve-button mdc-button mdc-button--raised" data-button="sign-in">
             <span class="mdc-button__ripple"></span>
-            <span class="mdc-button__label">{{ tr 'Sign Up' }}</span>
+            <span class="mdc-button__label"><%= helpers.tr('Sign In') %></span>
           </button>
-          <a class="cancel-button mdc-button mdc-button--raised" href="{{ data.rootLink }}" data-button="cancel">
+          <a class="cancel-button mdc-button mdc-button--raised" href="<%= data.rootLink %>" data-button="cancel">
             <span class="mdc-button__ripple"></span>
-            <span class="mdc-button__label">{{ tr 'Cancel' }}</span>
+            <span class="mdc-button__label"><%= helpers.tr('Cancel') %> </span>
           </a>
         </div>
       </form>
-      {{> auth-service-component data=data }}
+      <%- 
+        partials['auth-service-component']({
+          data,
+          partials,
+          helpers
+        }) 
+      %> 
     </div>
   </div>
 </div>
