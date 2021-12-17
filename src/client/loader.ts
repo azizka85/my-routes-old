@@ -104,6 +104,7 @@ export async function loadPage(
 
   window.tr = window.languages[lang];
 
+  document.documentElement.lang = lang;
   document.title = window.tr('My Routes');
 
   if(!(name in window.pages)) {       

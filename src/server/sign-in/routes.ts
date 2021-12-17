@@ -24,9 +24,10 @@ router.get('', (req, res) => {
     const params = req.params as any;
     const lang = trimSlashes(params[0] || DEFAULT_LANGUAGE) as Langs;
 
+    const rootLink = PAGE_ROOT + (params[0] ? `${lang}/` : '');
+
     const data: any = {
-      time: Date.now(),
-      rootLink: PAGE_ROOT + (params[0] ? `${lang}/` : '')
+      time: Date.now()
     };
   
     if(req.query.ajax && !req.query.init) {
@@ -35,6 +36,7 @@ router.get('', (req, res) => {
       res.send(
         renderPage(
           lang,
+          rootLink,
           version,
           req,
           'sign-in-page',
