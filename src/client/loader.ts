@@ -104,6 +104,8 @@ export async function loadPage(
 
   window.tr = window.languages[lang];
 
+  document.title = window.tr('My Routes');
+
   if(!(name in window.pages)) {       
     const module = await import(`./views/pages/${name}.js?time=${Date.now()}`) as any;
 
