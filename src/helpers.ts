@@ -59,8 +59,7 @@ export function toCamel(input: string) {
   return parts.map(item => capitalize(item)).join('');
 }
 
-export const localeRoute = `(${Object.keys(LANGUAGES).map(lang => `/${lang}`).join('|')})?`;
-export const clientLocaleRoute = `(${Object.keys(LANGUAGES).join('|')})?`;
+export const localeRoute = `(${Object.keys(LANGUAGES).join('|')})?`;
 
 export function trimSlashes(path: string) {
   return path.replace(/\/$/, '').replace(/^\//, '');

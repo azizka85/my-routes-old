@@ -12,7 +12,7 @@ export const port = parseInt(process.env.PORT || '3000');
 
 app.use(express.static('public'));
 
-app.use(localeRoute, homeRoutes);
+app.use(`/?${localeRoute}/`, homeRoutes);
 
-app.use(`${localeRoute}/sign-in`, signInRoutes);
-app.use(`${localeRoute}/sign-up`, signUpRoutes);
+app.use(`/?${localeRoute}/sign-in`, signInRoutes);
+app.use(`/?${localeRoute}/sign-up`, signUpRoutes);

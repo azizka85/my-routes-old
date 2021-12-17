@@ -7,7 +7,7 @@ import { Router } from '@azizka/router';
 import { LoaderPage } from './views/pages/loader-page';
 
 import { loadPage } from './loader';
-import { clientLocaleRoute, trimSlashes } from '../helpers';
+import { localeRoute, trimSlashes } from '../helpers';
 
 window.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
@@ -18,7 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const router = new Router({
       root: PAGE_ROOT,
       routes: [{
-        rule: `${clientLocaleRoute}/?`,
+        rule: `${localeRoute}/?`,
         async handler(page) {
           await loadPage(
             trimSlashes(page.match[0] || DEFAULT_LANGUAGE),
@@ -29,7 +29,7 @@ window.addEventListener('DOMContentLoaded', () => {
         },
         options: {}
       }, {
-        rule: `${clientLocaleRoute}/?sign-in`,
+        rule: `${localeRoute}/?sign-in`,
         async handler(page) {
           await loadPage(
             trimSlashes(page.match[0] || DEFAULT_LANGUAGE),
@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
         },
         options: {}
       }, {
-        rule: `${clientLocaleRoute}/?sign-up`,
+        rule: `${localeRoute}/?sign-up`,
         async handler(page) {
           await loadPage(
             trimSlashes(page.match[0] || DEFAULT_LANGUAGE),
