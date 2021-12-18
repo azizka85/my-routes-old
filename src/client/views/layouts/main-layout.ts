@@ -8,7 +8,7 @@ import { BaseLayout } from "./base-layout";
 import { MDCRipple } from '@material/ripple';
 import { MDCList } from '@material/list';
 
-import { toggleQueryParameter } from "../../../helpers";
+import { getQueryParameters, toggleQueryParameter } from "../../../helpers";
 import { mount, navigateHandler, unmount } from '../../helpers';
 
 import { ScrollActionTo, ScrollActionTop, ScrollEventData, ScrollEventType } from '../../types/scroll';
@@ -243,6 +243,13 @@ export class MainLayout extends BaseLayout implements Page {
       } else {
         item.classList.remove('mdc-list-item--activated');
       }
+
+      const path = (item.getAttribute('href') || '').split('?')[0];
+
+      item.setAttribute(
+        'href', 
+        `${path}?${getQueryParameters(page.query)}`
+      );
     });
   }
 
