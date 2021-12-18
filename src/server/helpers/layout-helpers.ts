@@ -1,8 +1,10 @@
 import { Request } from "express";
 import { TemplateFunction } from "ejs";
 
+import { LANGUAGES } from "../../globals";
+
 import { Langs, locales } from './locale-helpers';
-import { toggleQueryParameter } from '../../helpers';
+import { toggleQueryParameter, changeLangPath } from '../../helpers';
 
 import defaultLayout from "../templates/layouts/default-layout";
 import mainLayout from "../templates/layouts/main-layout";
@@ -73,6 +75,7 @@ export function renderPage(
   partials = {
     ...partials
   };
+
   helpers = {
     ...helpers,
     tr: locales[lang]
@@ -143,18 +146,21 @@ export function mainLayoutHandler(req: Request, input: LayoutHandlerInput): Layo
 
   const helpers = {
     ...input.helpers,
-    toggleQueryParameter
+    toggleQueryParameter,
+    changeLangPath
   };
 
   const navigation = req.query['main-layout-navigation'] === '1';
-  const search = req.query['main-layout-search'] === '1';
+  const search = req.query['main-layout-search'] === '1';  
 
   const data = {
     lang,
     rootLink,
     navigation,
     search,
+    url: req.originalUrl,
     query: req.query,
+    languages: LANGUAGES,
     content: input.viewName,
     contentData: input.data
   };

@@ -5,6 +5,7 @@
 @use '@material/animation/variables' as animation-variables;
 @use '../app-bar/variables' as app-bar-variables;
 @use '../variables' as global-variables;
+@use '../list/variables' as list-variables;
 @use './variables';
 
 .drawer {
@@ -43,6 +44,50 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+  }
+
+  &__lang-bar {    
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    height: list-variables.$line-height;
+    margin: variables.$lang-bar-margin;
+    padding: variables.$lang-bar-padding;
+    overflow: hidden;
+    cursor: pointer;
+
+    &__flag {
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-right: list-variables.$margin-right;
+    }
+
+    label {
+      cursor: pointer;
+
+      input {
+        width: 0;
+        height: 0;
+        position: absolute;        
+      }
+
+      .mdc-list {
+        @include theme.property(background-color, variables.$surface-fill-color);
+
+        position: absolute;
+        top: app-bar-variables.$row-height + list-variables.$line-height;        
+        z-index: app-bar-variables.$z-index + 3;
+        max-height: 0;
+        opacity: 0;
+        transition: max-height 200ms linear, opacity 200ms linear;
+        overflow: hidden;
+      }
+  
+      input:checked ~ .mdc-list {
+        max-height: 10rem;
+        opacity: 1;
+      }
+    }
   }
 }
 

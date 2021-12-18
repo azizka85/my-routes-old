@@ -65,7 +65,49 @@
       </a>
     </div>
     <div class="drawer__content">
-      <div class="mdc-list">
+      <div class="drawer__lang-bar">
+        <img 
+          src="<%= data.languages[data.lang].image %>" 
+          class="drawer__lang-bar__flag"
+          data-image="lang"
+        >
+        <label>
+          <input type="checkbox">
+          <span data-content="lang">
+            <%= data.languages[data.lang].label %>
+          </span> 
+          <div class="mdc-list" data-list="lang">
+            <a 
+              data-list-item="lang-kz"
+              class="mdc-list-item <%= data.lang === 'kz' ? 'mdc-list-item--activated' : '' %>" 
+              href="/<%= helpers.changeLangPath(data.url, 'kz') %>"
+            >
+              <span class="mdc-list-item__ripple"></span>
+              <img src="/images/flags/kz.svg" class="drawer__lang-bar__flag">
+              <span class="mdc-list-item__text"><%= data.languages['kz'].label %></span>
+            </a>
+            <a 
+              data-list-item="lang-ru"
+              class="mdc-list-item <%= data.lang === 'ru' ? 'mdc-list-item--activated' : '' %>" 
+              href="/<%= helpers.changeLangPath(data.url, 'ru') %>"
+            >
+              <span class="mdc-list-item__ripple"></span>
+              <img src="/images/flags/ru.svg" class="drawer__lang-bar__flag">
+              <span class="mdc-list-item__text"><%= data.languages['ru'].label %></span>
+            </a>
+            <a 
+              data-list-item="lang-en"
+              class="mdc-list-item <%= data.lang === 'en' ? 'mdc-list-item--activated' : '' %>" 
+              href="/<%= helpers.changeLangPath(data.url, 'en') %>"
+            >
+              <span class="mdc-list-item__ripple"></span>
+              <img src="/images/flags/en.svg" class="drawer__lang-bar__flag">
+              <span class="mdc-list-item__text"><%= data.languages['en'].label %></span>
+            </a>
+          </div>
+        </label>
+      </div>
+      <div class="mdc-list" data-list="main">
         <a class="mdc-list-item mdc-list-item--activated" href="#">
           <span class="mdc-list-item__ripple"></span>
           <i class="material-icons">inbox</i>

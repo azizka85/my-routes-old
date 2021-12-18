@@ -1,6 +1,7 @@
 import * as router from '@azizka/router';
 
-import { SCROLL_THRESHOLD } from "../../../globals";
+import { LANGUAGES, SCROLL_THRESHOLD } from "../../../globals";
+
 import { Page } from '../view';
 import { BaseLayout } from "./base-layout";
 
@@ -27,6 +28,10 @@ export class MainLayout extends BaseLayout implements Page {
   protected headerIconBtn: HTMLElement | null = null;
 
   protected list: MDCList | null = null;
+  protected langList: MDCList | null = null;
+
+  protected langElem: HTMLElement | null = null;
+  protected langImageElem: HTMLImageElement | null = null;
 
   protected searchPanel: HTMLElement | null = null;
   protected searchForm: HTMLFormElement | null = null;  
@@ -59,7 +64,7 @@ export class MainLayout extends BaseLayout implements Page {
       this.searchIcon = this.appBarElem?.querySelector('[data-button="search"]') || null;
       this.searchIcon?.addEventListener('click', event => navigateHandler(event, this.searchIcon as HTMLElement));      
 
-      this.headerIconBtn = this.node.querySelector('[data-button="header-navigation"]');
+      this.headerIconBtn = this.drawerElem?.querySelector('[data-button="header-navigation"]') || null;
 
       if(this.headerIconBtn) {
         this.headerIconElem = this.headerIconBtn.querySelector('.mdc-icon-button__ripple');
@@ -67,7 +72,37 @@ export class MainLayout extends BaseLayout implements Page {
         this.headerIconBtn.addEventListener('click', event => navigateHandler(event, this.headerIconBtn as HTMLElement));
       }
 
-      const listElem = this.node.querySelector('.mdc-list');
+      const drawerLangBar = this.drawerElem?.querySelector('.drawer__lang-bar');
+
+      drawerLangBar?.addEventListener(
+        'mouseenter',
+        () => this.drawerElem?.classList.add('drawer--hover')
+      );
+
+      const drawerLangCheckbox = drawerLangBar?.querySelector('input[type="checkbox"]') as HTMLInputElement; 
+      
+      this.langElem = drawerLangBar?.querySelector('[data-content="lang"]') || null;
+      this.langImageElem = drawerLangBar?.querySelector('[data-image="lang"]') || null;
+
+      const langListElem = drawerLangBar?.querySelector('[data-list="lang"]');
+
+      if(langListElem) {
+        this.langList = new MDCList(langListElem);
+
+        this.langList.listElements.forEach(item => {
+          item.addEventListener('click', event => {
+            navigateHandler(event, item as HTMLElement)
+
+            if(drawerLangCheckbox) {
+              drawerLangCheckbox.checked = false;
+            }
+          });
+
+          new MDCRipple(item);
+        });
+      }
+
+      const listElem = this.drawerElem?.querySelector('[data-list="main"]');
 
       if(listElem) {
         this.list = new MDCList(listElem);
@@ -193,6 +228,22 @@ export class MainLayout extends BaseLayout implements Page {
 
       this.drawerElem?.classList.remove('drawer--open');
     }
+
+    if(this.langElem) {
+      this.langElem.textContent = (LANGUAGES as any)[lang]?.label;
+    }
+
+    if(this.langImageElem) {
+      this.langImageElem.src = (LANGUAGES as any)[lang]?.image;
+    }
+
+    this.langList?.listElements.forEach(item => {
+      if(item.getAttribute('data-list-item') === `lang-${lang}`) {
+        item.classList.add('mdc-list-item--activated');
+      } else {
+        item.classList.remove('mdc-list-item--activated');
+      }
+    });
   }
 
   listen(type: string, listener: EventListenerOrEventListenerObject) {
