@@ -1,4 +1,4 @@
-@use '@material/feature-targeting/feature-targeting';
+@use '@material/elevation/mixins' as elevation-mixins;
 @use '@material/theme/theme';
 @use '@material/theme/theme-color';
 
@@ -60,7 +60,7 @@
       width: 1.5rem;
       height: 1.5rem;
       margin-right: list-variables.$margin-right;
-    }
+    }    
 
     label {
       cursor: pointer;
@@ -69,6 +69,21 @@
         width: 0;
         height: 0;
         position: absolute;        
+      }
+
+      .drawer__lang-bar__current {
+        display: flex;
+        align-items: center;
+  
+        .material-icons {
+          margin-left: list-variables.$margin-right;
+          transform: rotate(0deg);
+          transition: transform 200ms linear;
+        }
+      }
+      
+      input:checked ~ .drawer__lang-bar__current .material-icons {
+        transform: rotate(-180deg);
       }
 
       .mdc-list {
@@ -86,6 +101,8 @@
       input:checked ~ .mdc-list {
         max-height: 10rem;
         opacity: 1;
+        
+        @include elevation-mixins.elevation(4);
       }
     }
   }
@@ -98,6 +115,10 @@
     width: variables.$min-width;
     border-right-width: 1px;
     border-right-style: solid;  
+
+    &--hover:not(.drawer--open) {
+      @include elevation-mixins.elevation(4);
+    }
 
     &--open, &--hover {
       width: variables.$width;

@@ -1,3 +1,4 @@
+@use '@material/elevation/mixins' as elevation-mixins;
 @use '@material/theme/theme-color';
 @use '@material/icon-button/icon-button-theme';
 
@@ -62,13 +63,15 @@
     width: calc(100% - variables.$margin-min);
     z-index: app-bar-variables.$z-index + 1;
 
+    @include elevation-mixins.elevation(4);
+
     .search__icon-left, .search__icon-right {
       display: block;
     }
 
     .search__list {
       max-height: 100vh;
-      overflow-y: auto;
+      overflow-y: auto;      
     }
   }
 }

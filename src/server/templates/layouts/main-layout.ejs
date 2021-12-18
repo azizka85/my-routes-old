@@ -73,9 +73,12 @@
         >
         <label>
           <input type="checkbox">
-          <span data-content="lang">
-            <%= data.languages[data.lang].label %>
-          </span> 
+          <div class="drawer__lang-bar__current">            
+            <span data-content="lang">
+              <%= data.languages[data.lang].label %>            
+            </span> 
+            <i class="material-icons">arrow_circle_down</i>
+          </div>
           <div class="mdc-list" data-list="lang">
             <a 
               data-list-item="lang-kz"
