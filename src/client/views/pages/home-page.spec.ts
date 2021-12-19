@@ -58,35 +58,6 @@ describe('HomePage test', () => {
     expect(instance['currScroll']).toEqual(0);
   });
 
-  test('Should init from html', async () => {
-    document.body.innerHTML = `
-      <div data-page="home-page">            
-        <div>
-          Home page, time: {{ data.time }}
-        </div>
-        <button class="mdc-fab mdc-fab--exited" data-button="scroll-top">
-          <div class="mdc-fab__ripple"></div>
-          <span class="mdc-fab__icon material-icons">keyboard_arrow_up</span>
-        </button>    
-      </div>
-    `;
-
-    const instance = HomePage.instance;
-
-    await instance.init(null, true);
-
-    expect(instance['node']).toBeTruthy();
-    expect(instance['node']).toBeInstanceOf(HTMLElement);
-    expect(instance['node']?.getAttribute('data-page')).toEqual('home-page');
-
-    expect(instance['scrollTopBtn']).toBeTruthy();
-    expect(instance['scrollTopBtn']).toBeInstanceOf(MDCRipple);
-    expect(instance['scrollTopBtn']?.root.getAttribute('data-button')).toEqual('scroll-top');
-    expect(instance['scrollTopBtn']?.root.classList.contains('mdc-fab--exited')).toBeTruthy();
-
-    expect(instance['currScroll']).toEqual(0);
-  });
-
   test('Should load content via fetch content data', async () => {
     const layoutInstance = MainLayout.instance;
     const pageInstance = HomePage.instance;
@@ -110,30 +81,14 @@ describe('HomePage test', () => {
   });
 
   test('Handlers should work correctly', async () => {   
-    document.body.innerHTML = `
-      <div data-layout="main-layout">
-        <div data-page="home-page">            
-          <div>
-            Home page, time: {{ data.time }}
-          </div>
-          <button class="mdc-fab mdc-fab--exited" data-button="scroll-top">
-            <div class="mdc-fab__ripple"></div>
-            <span class="mdc-fab__icon material-icons">keyboard_arrow_up</span>
-          </button>    
-        </div>
-      </div>
-    `;
-
     const layoutInstance = MainLayout.instance;
     const pageInstance = HomePage.instance;
 
-    await pageInstance.init(null, true);
-    await layoutInstance.init(null, true);
+    const content = await pageInstance.init(null, false);
+    await layoutInstance.init(content, false);
 
     window.layouts['main-layout'] = layoutInstance;
     window.pages['home-page'] = pageInstance;
-
-    await layoutInstance.mount();
 
     await pageInstance.load(DEFAULT_LANGUAGE, {
       fragment: '',

@@ -11,7 +11,7 @@ import { MDCList } from '@material/list';
 import { LocationMock } from '../../mocks/location-mock';
 import { HistoryMock } from '../../mocks/history-mock';
 
-import { toggleQueryParameter } from "../../../helpers";
+import { getQueryParameters, toggleQueryParameter } from "../../../helpers";
 
 import { DEFAULT_LANGUAGE } from '../../../globals';
 
@@ -28,7 +28,10 @@ describe('MainLayout test', () => {
     location.search = '?main-layout-navigation=1&test=123';  
 
     global.HTMLElement = dom.window.HTMLElement;
+    global.HTMLImageElement = dom.window.HTMLImageElement;
+    global.HTMLAnchorElement = dom.window.HTMLAnchorElement;
     global.HTMLFormElement = dom.window.HTMLFormElement;
+    global.HTMLInputElement = dom.window.HTMLInputElement;
 
     global.Event = (document.defaultView as Window & typeof globalThis).Event;
     global.MouseEvent = (document.defaultView as Window & typeof globalThis).MouseEvent;
@@ -56,13 +59,20 @@ describe('MainLayout test', () => {
     expect(instance['headerIconBtn']).toBeFalsy();
 
     expect(instance['list']).toBeFalsy();
+    expect(instance['langList']).toBeFalsy();
 
+    expect(instance['langElem']).toBeFalsy();
+    expect(instance['langImageElem']).toBeFalsy();
+
+    expect(instance['searchPanel']).toBeFalsy();
     expect(instance['searchForm']).toBeFalsy();   
+    expect(instance['searchInput']).toBeFalsy();
   });
 
   test('Should init from html', async () => {
     const query = window.router.query;
 
+    let lang = 'ru';
     const navigation = query['main-layout-navigation'] ? true : false;
 
     document.body.innerHTML = `
@@ -70,7 +80,7 @@ describe('MainLayout test', () => {
         <header class="app-bar">
           <div class="app-bar__row">      
             <div class="app-bar__section app-bar__section--fill">
-              <div class="search">
+              <div class="search search--focus">
                 <form method="post">          
                   <input 
                     type="text" 
@@ -125,15 +135,48 @@ describe('MainLayout test', () => {
           <div class="drawer__header">
             <a 
               data-button="header-navigation"
-              class="material-icons mdc-icon-button" 
+              class="material-icons mdc-icon-button ${ navigation ? 'header-navigation--open' : '' }" 
               href="?${ toggleQueryParameter(query, 'main-layout-navigation') }"
             >
               <span class="mdc-icon-button__ripple">
-                ${ navigation ? 'arrow_circle_left' : 'arrow_circle_right' }
+                arrow_circle_right
               </span>        
             </a>
           </div>
           <div class="drawer__content">
+            <div class="drawer__lang-bar">
+              <img                 
+                class="drawer__lang-bar__flag"
+                data-image="lang"
+              >
+              <label>
+                <input type="checkbox">
+                <div class="drawer__lang-bar__current">            
+                  <span data-content="lang"></span> 
+                  <i class="material-icons">arrow_circle_down</i>
+                </div>
+                <div class="mdc-list" data-list="lang">
+                  <a 
+                    data-list-item="lang-kz"
+                    class="mdc-list-item ${ lang === 'kz' ? 'mdc-list-item--activated' : '' }" 
+                    href="/kz?${ getQueryParameters(query) }"
+                  >
+                    <span class="mdc-list-item__ripple"></span>
+                    <img src="/images/flags/kz.svg" class="drawer__lang-bar__flag">
+                    <span class="mdc-list-item__text"></span>
+                  </a>
+                  <a 
+                    data-list-item="lang-ru"
+                    class="mdc-list-item ${ lang === 'ru' ? 'mdc-list-item--activated' : '' }" 
+                    href="/ru?${ getQueryParameters(query) }"
+                  >
+                    <span class="mdc-list-item__ripple"></span>
+                    <img src="/images/flags/ru.svg" class="drawer__lang-bar__flag">
+                    <span class="mdc-list-item__text"></span>
+                  </a>                  
+                </div>
+              </label>
+            </div>          
             <div class="mdc-list" data-list="main">
               <a class="mdc-list-item mdc-list-item--activated" href="#">
                 <span class="mdc-list-item__ripple"></span>
@@ -144,12 +187,7 @@ describe('MainLayout test', () => {
                 <span class="mdc-list-item__ripple"></span>
                 <i class="material-icons">send</i>
                 <span class="mdc-list-item__text">Outgoing</span>
-              </a>
-              <a class="mdc-list-item" href="#">
-                <span class="mdc-list-item__ripple"></span>
-                <i class="material-icons">drafts</i>
-                <span class="mdc-list-item__text">Drafts</span>
-              </a>
+              </a>            
             </div>
           </div>
         </aside>
@@ -188,15 +226,45 @@ describe('MainLayout test', () => {
 
     expect(instance['headerIconBtn']).toBeTruthy();
     expect(instance['headerIconBtn']).toBeInstanceOf(HTMLElement);
+    expect(instance['headerIconBtn']?.classList.contains('header-navigation--open')).toBeTruthy();
     expect(instance['headerIconBtn']?.getAttribute('data-button')).toEqual('header-navigation');
     expect(instance['headerIconBtn']?.getAttribute('href')).toEqual(`?test=${query.test}`);
 
     expect(instance['list']).toBeTruthy();
     expect(instance['list']).toBeInstanceOf(MDCList);
-    expect(instance['list']?.listElements.length).toEqual(3);
+    expect(instance['list']?.listElements.length).toEqual(2);
+
+    expect(instance['langList']).toBeTruthy();
+    expect(instance['langList']).toBeInstanceOf(MDCList);
+    expect(instance['langList']?.listElements.length).toEqual(2);
+
+    expect(instance['langList']?.listElements[0]).toBeInstanceOf(HTMLAnchorElement);
+    expect(instance['langList']?.listElements[0].getAttribute('data-list-item')).toEqual('lang-kz');
+    expect(instance['langList']?.listElements[0].classList.contains('mdc-list-item--activated')).toBeFalsy();
+    expect(instance['langList']?.listElements[0].getAttribute('href')).toEqual('/kz?main-layout-navigation=1&test=123');
+
+    expect(instance['langList']?.listElements[1]).toBeInstanceOf(HTMLAnchorElement);
+    expect(instance['langList']?.listElements[1].getAttribute('data-list-item')).toEqual('lang-ru');
+    expect(instance['langList']?.listElements[1].classList.contains('mdc-list-item--activated')).toBeTruthy();
+    expect(instance['langList']?.listElements[1].getAttribute('href')).toEqual('/ru?main-layout-navigation=1&test=123');
+
+    expect(instance['langElem']).toBeTruthy();
+    expect(instance['langElem']).toBeInstanceOf(HTMLElement);
+    expect(instance['langElem']?.getAttribute('data-content')).toEqual('lang');
+
+    expect(instance['langImageElem']).toBeTruthy();
+    expect(instance['langImageElem']).toBeInstanceOf(HTMLImageElement);
+    expect(instance['langImageElem']?.getAttribute('data-image')).toEqual('lang');
+
+    expect(instance['searchPanel']).toBeTruthy();
+    expect(instance['searchPanel']).toBeInstanceOf(HTMLElement);
+    expect(instance['searchPanel']?.classList.contains('search--focus')).toBeTruthy();
 
     expect(instance['searchForm']).toBeTruthy();
     expect(instance['searchForm']).toBeInstanceOf(HTMLFormElement);
+
+    expect(instance['searchInput']).toBeTruthy();
+    expect(instance['searchInput']).toBeInstanceOf(HTMLInputElement);
   });
 
   test('Handlers should work correctly', async () => {        
@@ -272,6 +340,39 @@ describe('MainLayout test', () => {
             </a>
           </div>
           <div class="drawer__content">
+            <div class="drawer__lang-bar">
+              <img                 
+                class="drawer__lang-bar__flag"
+                data-image="lang"
+              >
+              <label>
+                <input type="checkbox">
+                <div class="drawer__lang-bar__current">            
+                  <span data-content="lang"></span> 
+                  <i class="material-icons">arrow_circle_down</i>
+                </div>
+                <div class="mdc-list" data-list="lang">
+                  <a 
+                    data-list-item="lang-kz"
+                    class="mdc-list-item" 
+                    href="/kz"
+                  >
+                    <span class="mdc-list-item__ripple"></span>
+                    <img src="/images/flags/kz.svg" class="drawer__lang-bar__flag">
+                    <span class="mdc-list-item__text"></span>
+                  </a>
+                  <a 
+                    data-list-item="lang-ru"
+                    class="mdc-list-item" 
+                    href="/ru"
+                  >
+                    <span class="mdc-list-item__ripple"></span>
+                    <img src="/images/flags/ru.svg" class="drawer__lang-bar__flag">
+                    <span class="mdc-list-item__text"></span>
+                  </a>                  
+                </div>
+              </label>
+            </div> 
             <div class="mdc-list" data-list="main">
               <a class="mdc-list-item mdc-list-item--activated" href="#">
                 <span class="mdc-list-item__ripple"></span>
@@ -334,12 +435,17 @@ describe('MainLayout test', () => {
     
     expect(instance['drawerElem']?.classList.contains('drawer--open')).toBeFalsy();
     expect(instance['navIcon']?.getAttribute('href')).toEqual(`?test=${query.test}&main-layout-navigation=1`);
-    expect(instance['headerIconBtn']?.getAttribute('href')).toEqual(`?test=${query.test}&main-layout-navigation=1`);
+    expect(instance['headerIconBtn']?.classList.contains('header-navigation--open')).toBeFalsy();
+    expect(instance['headerIconBtn']?.getAttribute('href')).toEqual(`?test=${query.test}&main-layout-navigation=1`);    
     expect(instance['searchIcon']?.getAttribute('href')).toEqual(`?test=${query.test}&main-layout-search=1`);
+    expect(instance['langList']?.listElements[0].classList.contains('mdc-list-item--activated')).toBeTruthy();
+    expect(instance['langList']?.listElements[0].getAttribute('href')).toEqual('/kz/?test=123');
+    expect(instance['langList']?.listElements[1].classList.contains('mdc-list-item--activated')).toBeFalsy();
+    expect(instance['langList']?.listElements[1].getAttribute('href')).toEqual('/ru/?test=123');
 
     instance['searchIcon']?.dispatchEvent(new MouseEvent('click'));
 
-    await instance.load(DEFAULT_LANGUAGE, {
+    await instance.load('ru', {
       fragment: window.router.fragment,
       query: window.router.query,
       match: [],
@@ -349,10 +455,14 @@ describe('MainLayout test', () => {
     expect(instance['navIcon']?.getAttribute('href')).toEqual(`?test=${query.test}&main-layout-search=1&main-layout-navigation=1`);
     expect(instance['headerIconBtn']?.getAttribute('href')).toEqual(`?test=${query.test}&main-layout-search=1&main-layout-navigation=1`);
     expect(instance['searchIcon']?.getAttribute('href')).toEqual(`?test=${query.test}`);
+    expect(instance['langList']?.listElements[0].classList.contains('mdc-list-item--activated')).toBeFalsy();
+    expect(instance['langList']?.listElements[0].getAttribute('href')).toEqual('/kz/?test=123&main-layout-search=1');
+    expect(instance['langList']?.listElements[1].classList.contains('mdc-list-item--activated')).toBeTruthy();
+    expect(instance['langList']?.listElements[1].getAttribute('href')).toEqual('/ru/?test=123&main-layout-search=1');
 
     instance['headerIconBtn']?.dispatchEvent(new MouseEvent('click'));
 
-    await instance.load(DEFAULT_LANGUAGE, {
+    await instance.load('en', {
       fragment: window.router.fragment,
       query: window.router.query,
       match: [],
@@ -361,8 +471,13 @@ describe('MainLayout test', () => {
 
     expect(instance['drawerElem']?.classList.contains('drawer--open')).toBeTruthy();
     expect(instance['navIcon']?.getAttribute('href')).toEqual(`?test=${query.test}&main-layout-search=1`);
+    expect(instance['headerIconBtn']?.classList.contains('header-navigation--open')).toBeTruthy();
     expect(instance['headerIconBtn']?.getAttribute('href')).toEqual(`?test=${query.test}&main-layout-search=1`);
     expect(instance['searchIcon']?.getAttribute('href')).toEqual(`?test=${query.test}&main-layout-navigation=1`);
+    expect(instance['langList']?.listElements[0].classList.contains('mdc-list-item--activated')).toBeFalsy();
+    expect(instance['langList']?.listElements[0].getAttribute('href')).toEqual('/kz/?test=123&main-layout-search=1&main-layout-navigation=1');
+    expect(instance['langList']?.listElements[1].classList.contains('mdc-list-item--activated')).toBeFalsy();
+    expect(instance['langList']?.listElements[1].getAttribute('href')).toEqual('/ru/?test=123&main-layout-search=1&main-layout-navigation=1');
 
     instance['list']?.listElements[0].dispatchEvent(new MouseEvent('mouseenter'));
 
@@ -371,6 +486,10 @@ describe('MainLayout test', () => {
     instance['drawerElem']?.dispatchEvent(new MouseEvent('mouseleave'));
 
     expect(instance['drawerElem']?.classList.contains('drawer--hover')).toBeFalsy();
+
+    instance['drawerElem']?.querySelector('.drawer__lang-bar')?.dispatchEvent(new MouseEvent('mouseenter'));
+
+    expect(instance['drawerElem']?.classList.contains('drawer--hover')).toBeTruthy();
 
     instance['searchInput']?.dispatchEvent(new FocusEvent('focus'));
 
