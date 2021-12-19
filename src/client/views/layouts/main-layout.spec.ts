@@ -53,7 +53,6 @@ describe('MainLayout test', () => {
     expect(instance['navIcon']).toBeFalsy();
     expect(instance['searchIcon']).toBeFalsy();
 
-    expect(instance['headerIconElem']).toBeFalsy();
     expect(instance['headerIconBtn']).toBeFalsy();
 
     expect(instance['list']).toBeFalsy();
@@ -135,7 +134,7 @@ describe('MainLayout test', () => {
             </a>
           </div>
           <div class="drawer__content">
-            <div class="mdc-list">
+            <div class="mdc-list" data-list="main">
               <a class="mdc-list-item mdc-list-item--activated" href="#">
                 <span class="mdc-list-item__ripple"></span>
                 <i class="material-icons">inbox</i>
@@ -186,10 +185,6 @@ describe('MainLayout test', () => {
     expect(instance['searchIcon']).toBeInstanceOf(HTMLElement);
     expect(instance['searchIcon']?.getAttribute('data-button')).toEqual('search');
     expect(instance['searchIcon']?.getAttribute('href')).toEqual(`?main-layout-navigation=1&test=${query.test}&main-layout-search=1`);
-
-    expect(instance['headerIconElem']).toBeTruthy();
-    expect(instance['headerIconElem']).toBeInstanceOf(HTMLElement);
-    expect(instance['headerIconElem']?.innerHTML).toContain('arrow_circle_left');
 
     expect(instance['headerIconBtn']).toBeTruthy();
     expect(instance['headerIconBtn']).toBeInstanceOf(HTMLElement);
@@ -277,7 +272,7 @@ describe('MainLayout test', () => {
             </a>
           </div>
           <div class="drawer__content">
-            <div class="mdc-list">
+            <div class="mdc-list" data-list="main">
               <a class="mdc-list-item mdc-list-item--activated" href="#">
                 <span class="mdc-list-item__ripple"></span>
                 <i class="material-icons">inbox</i>
