@@ -217,12 +217,11 @@ try {
     <div class="drawer__header">
       <a 
         data-button="header-navigation"
-        class="material-icons mdc-icon-button" 
+        class="material-icons mdc-icon-button <%= data.navigation ? 'header-navigation--open' : ''  %>" 
         href="?<%= helpers.toggleQueryParameter(data.query, 'main-layout-navigation') %> "
       >
-        <span class="mdc-icon-button__ripple">
-          <%= data.navigation ? 'arrow_circle_left' : 'arrow_circle_right'  %> 
-        </span>        
+        <span class="mdc-icon-button__ripple"></span>        
+        arrow_circle_right
       </a>
     </div>
     <div class="drawer__content">

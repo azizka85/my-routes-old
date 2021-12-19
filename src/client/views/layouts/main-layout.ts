@@ -24,7 +24,6 @@ export class MainLayout extends BaseLayout implements Page {
   protected navIcon: HTMLElement | null = null;
   protected searchIcon: HTMLElement | null = null;
 
-  protected headerIconElem: HTMLElement | null = null;
   protected headerIconBtn: HTMLElement | null = null;
 
   protected list: MDCList | null = null;
@@ -65,12 +64,7 @@ export class MainLayout extends BaseLayout implements Page {
       this.searchIcon?.addEventListener('click', event => navigateHandler(event, this.searchIcon as HTMLElement));      
 
       this.headerIconBtn = this.drawerElem?.querySelector('[data-button="header-navigation"]') || null;
-
-      if(this.headerIconBtn) {
-        this.headerIconElem = this.headerIconBtn.querySelector('.mdc-icon-button__ripple');
-
-        this.headerIconBtn.addEventListener('click', event => navigateHandler(event, this.headerIconBtn as HTMLElement));
-      }
+      this.headerIconBtn?.addEventListener('click', event => navigateHandler(event, this.headerIconBtn as HTMLElement));      
 
       const drawerLangBar = this.drawerElem?.querySelector('.drawer__lang-bar');
 
@@ -216,16 +210,10 @@ export class MainLayout extends BaseLayout implements Page {
     }
 
     if(navigation) {
-      if(this.headerIconElem) {
-        this.headerIconElem.innerHTML = 'arrow_circle_left';
-      }
-
+      this.headerIconBtn?.classList.add('header-navigation--open');
       this.drawerElem?.classList.add('drawer--open');
     } else {
-      if(this.headerIconElem) {
-        this.headerIconElem.innerHTML = 'arrow_circle_right';
-      }
-
+      this.headerIconBtn?.classList.remove('header-navigation--open');
       this.drawerElem?.classList.remove('drawer--open');
     }
 
