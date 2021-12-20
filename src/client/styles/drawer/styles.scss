@@ -49,7 +49,6 @@
   &__lang-bar {    
     display: flex;
     align-items: center;
-    flex-wrap: nowrap;
     height: list-variables.$line-height;
     margin: variables.$lang-bar-margin;
     padding: variables.$lang-bar-padding;
