@@ -64,6 +64,15 @@
       </a>
     </div>
     <div class="drawer__content">
+      <div class="drawer__account-bar">
+        <div class="drawer__account-bar__avatar">   
+          <i class="material-icons">person_outline</i>       
+        </div>
+        <div class="drawer__account-bar__actions">   
+          <br>
+          <a href="/<%= data.lang %>/sign-in" data-content="sign-in-up"><%= helpers.tr('Sign In/Up') %></a>
+        </div>
+      </div>
       <div class="drawer__lang-bar">
         <img 
           src="<%= data.languages[data.lang].image %>" 

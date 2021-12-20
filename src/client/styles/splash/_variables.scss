@@ -1,5 +1,7 @@
+@use '@material/theme/theme-color';
+
 // color
-$surface-fill-color: surface !default;
+$surface-fill-color: theme-color.prop-value(surface) !default;
 
 // z-index
 $back-z-index: -10 !default;

@@ -9,14 +9,12 @@
 @use './variables';
 
 .drawer {
-  z-index: (app-bar-variables.$z-index + 2);  
-
-  @include theme.property(background-color, variables.$surface-fill-color);
-  
+  z-index: (app-bar-variables.$z-index + 2);      
   position: fixed;
   top: 0;
   left: 0; 
   width: 0;
+  background-color: variables.$surface-fill-color;
   border-color: rgba(theme-color.prop-value(variables.$divider-color), variables.$divider-opacity);
   display: flex;
   flex-direction: column;
@@ -33,6 +31,34 @@
     width: 100%;
   }
 
+  &--open, &--hover {
+    .drawer__header {
+      color: theme-color.accessible-ink-color(primary);
+      background-color: variables.$account-fill-color;
+    }
+
+    .drawer__account-bar {
+      background-color: variables.$account-fill-color;
+
+      &__avatar {
+        width: variables.$avatar-size;
+        height: variables.$avatar-size;
+
+        .material-icons {
+          font-size: variables.$avatar-size;
+        }
+      }
+
+      &__actions {
+        max-height: variables.$account-actions-max-height;         
+        
+        a {
+          color: theme-color.accessible-ink-color(primary);
+        }
+      }
+    }    
+  }
+
   &__content {
     height: 100vh;
     overflow-y: auto;
@@ -44,6 +70,55 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    color: theme-color.accessible-ink-color(surface);
+    background-color: variables.$surface-fill-color;
+    transition: 
+      background-color 250ms animation-variables.$standard-curve-timing-function,
+      color 250ms animation-variables.$standard-curve-timing-function;
+  }
+
+  &__account-bar {
+    display: flex;
+    flex-direction: column;
+    margin: variables.$account-bar-margin;
+    padding: variables.$account-bar-padding;
+    overflow: hidden;
+    background-color: variables.$surface-fill-color;
+    transition: background-color 250ms animation-variables.$standard-curve-timing-function;
+    
+    &__avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: variables.$avatar-min-size;
+      height: variables.$avatar-min-size;
+      border-radius: 50%;      
+      background-color: variables.$surface-fill-color;
+      transition: 
+        width 250ms animation-variables.$standard-curve-timing-function,
+        height 250ms animation-variables.$standard-curve-timing-function;
+
+      .material-icons {
+        opacity: 0.3;
+        font-size: variables.$avatar-min-size;
+        transition: font-size 250ms animation-variables.$standard-curve-timing-function;
+      }
+    }
+    
+    &__actions {
+      display: flex;
+      flex-direction: column; 
+      max-height: 0;             
+      transition: max-height 250ms animation-variables.$standard-curve-timing-function;
+
+      a {
+        text-decoration: none;
+        font-weight: bold;
+        color: theme-color.accessible-ink-color(surface);
+        overflow: hidden;
+        transition: color 250ms animation-variables.$standard-curve-timing-function;
+      }
+    }
   }
 
   &__lang-bar {    
@@ -52,7 +127,6 @@
     height: list-variables.$line-height;
     margin: variables.$lang-bar-margin;
     padding: variables.$lang-bar-padding;
-    overflow: hidden;
     cursor: pointer;
 
     &__flag {
@@ -62,6 +136,7 @@
     }    
 
     label {
+      position: relative;
       cursor: pointer;
 
       input {
@@ -88,13 +163,12 @@
       }
 
       .mdc-list {
-        @include theme.property(background-color, variables.$surface-fill-color);
-
-        position: absolute;
-        top: app-bar-variables.$row-height + list-variables.$line-height;        
+        position: absolute;        
+        top: 2rem;
         z-index: app-bar-variables.$z-index + 3;
         max-height: 0;
         opacity: 0;
+        background-color: variables.$surface-fill-color;
         transition: max-height 200ms linear, opacity 200ms linear;
         overflow: hidden;
       }

@@ -11,6 +11,7 @@ import { MDCList } from '@material/list';
 import { LocationMock } from '../../mocks/location-mock';
 import { HistoryMock } from '../../mocks/history-mock';
 
+import { locales } from '../../../server/helpers/locale-helpers';
 import { getQueryParameters, toggleQueryParameter } from "../../../helpers";
 
 import { DEFAULT_LANGUAGE } from '../../../globals';
@@ -57,6 +58,8 @@ describe('MainLayout test', () => {
     expect(instance['searchIcon']).toBeFalsy();
 
     expect(instance['headerIconBtn']).toBeFalsy();
+
+    expect(instance['signInUpElem']).toBeFalsy();
 
     expect(instance['list']).toBeFalsy();
     expect(instance['langList']).toBeFalsy();
@@ -144,6 +147,15 @@ describe('MainLayout test', () => {
             </a>
           </div>
           <div class="drawer__content">
+            <div class="drawer__account-bar">
+              <div class="drawer__account-bar__avatar">   
+                <i class="material-icons">person_outline</i>       
+              </div>
+              <div class="drawer__account-bar__actions">   
+                <br>
+                <a href="/${lang}/sign-in" data-content="sign-in-up">Sign In/Up</a>
+              </div>
+            </div>
             <div class="drawer__lang-bar">
               <img                 
                 class="drawer__lang-bar__flag"
@@ -230,6 +242,12 @@ describe('MainLayout test', () => {
     expect(instance['headerIconBtn']?.getAttribute('data-button')).toEqual('header-navigation');
     expect(instance['headerIconBtn']?.getAttribute('href')).toEqual(`?test=${query.test}`);
 
+    expect(instance['signInUpElem']).toBeTruthy();
+    expect(instance['signInUpElem']).toBeInstanceOf(HTMLElement);
+    expect(instance['signInUpElem']?.getAttribute('data-content')).toEqual('sign-in-up');
+    expect(instance['signInUpElem']?.getAttribute('href')).toEqual(`/${lang}/sign-in`);
+    expect(instance['signInUpElem']?.textContent).toContain('Sign In/Up');
+
     expect(instance['list']).toBeTruthy();
     expect(instance['list']).toBeInstanceOf(MDCList);
     expect(instance['list']?.listElements.length).toEqual(2);
@@ -269,6 +287,8 @@ describe('MainLayout test', () => {
 
   test('Handlers should work correctly', async () => {        
     const query = window.router.query;
+
+    window.tr = locales[DEFAULT_LANGUAGE];
 
     const navigation = query['main-layout-navigation'] ? true : false;
 
@@ -340,6 +360,15 @@ describe('MainLayout test', () => {
             </a>
           </div>
           <div class="drawer__content">
+            <div class="drawer__account-bar">
+              <div class="drawer__account-bar__avatar">   
+                <i class="material-icons">person_outline</i>       
+              </div>
+              <div class="drawer__account-bar__actions">   
+                <br>
+                <a href="/en/sign-in" data-content="sign-in-up">Sign In/Up</a>
+              </div>
+            </div>
             <div class="drawer__lang-bar">
               <img                 
                 class="drawer__lang-bar__flag"
@@ -478,6 +507,18 @@ describe('MainLayout test', () => {
     expect(instance['langList']?.listElements[0].getAttribute('href')).toEqual('/kz/?test=123&main-layout-search=1&main-layout-navigation=1');
     expect(instance['langList']?.listElements[1].classList.contains('mdc-list-item--activated')).toBeFalsy();
     expect(instance['langList']?.listElements[1].getAttribute('href')).toEqual('/ru/?test=123&main-layout-search=1&main-layout-navigation=1');
+
+    instance['signInUpElem']?.dispatchEvent(new MouseEvent('click'));
+
+    expect(location.pathname).toEqual('/en/sign-in');
+
+    instance['langList']?.listElements[0].dispatchEvent(new MouseEvent('click'));
+
+    expect(location.pathname).toEqual('/kz');
+
+    instance['langList']?.listElements[1].dispatchEvent(new MouseEvent('click'));
+
+    expect(location.pathname).toEqual('/ru');
 
     instance['list']?.listElements[0].dispatchEvent(new MouseEvent('mouseenter'));
 
