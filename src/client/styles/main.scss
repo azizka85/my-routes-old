@@ -22,10 +22,6 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-[data-layout] {
-  display: flex;
-}
-
 [data-layout], [data-page] {
   opacity: 1;
   transition: opacity 250ms animation-variables.$standard-curve-timing-function;
