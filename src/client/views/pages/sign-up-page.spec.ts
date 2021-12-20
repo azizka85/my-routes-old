@@ -143,6 +143,10 @@ describe('SignUpPage test', () => {
     expect(pageInstance['cancelBtn']?.getAttribute('data-button')).toEqual('cancel');
     expect(pageInstance['cancelBtn']?.getAttribute('href')).toEqual('/ru/');
 
+    expect(pageInstance['cancelBtnLabel']).toBeTruthy();
+    expect(pageInstance['cancelBtnLabel']).toBeInstanceOf(HTMLElement);
+    expect(pageInstance['cancelBtnLabel']?.textContent).toContain(window.tr('Cancel'));
+
     expect(pageInstance['authService']).toBeTruthy();
   });
 });
