@@ -2,6 +2,8 @@ import '../../types/window';
 
 import { JSDOM } from "jsdom";
 
+import { MDCRipple } from '@material/ripple';
+
 import { DEFAULT_LANGUAGE } from '../../../globals';
 
 import { locales } from '../../../server/helpers/locale-helpers';
@@ -109,9 +111,9 @@ describe('SignInPage test', () => {
     expect(pageInstance['passwordHelperElem']?.textContent).toContain(window.tr('Password required'));
 
     expect(pageInstance['signUpBtn']).toBeTruthy();
-    expect(pageInstance['signUpBtn']).toBeInstanceOf(HTMLElement);
-    expect(pageInstance['signUpBtn']?.getAttribute('data-button')).toEqual('sign-up');
-    expect(pageInstance['signUpBtn']?.getAttribute('href')).toEqual('/ru/sign-up');
+    expect(pageInstance['signUpBtn']).toBeInstanceOf(MDCRipple);
+    expect(pageInstance['signUpBtn']?.root?.getAttribute('data-button')).toEqual('sign-up');
+    expect(pageInstance['signUpBtn']?.root?.getAttribute('href')).toEqual('/ru/sign-up');
 
     expect(pageInstance['signUpBtnLabel']).toBeTruthy();
     expect(pageInstance['signUpBtnLabel']).toBeInstanceOf(HTMLElement);
@@ -122,9 +124,9 @@ describe('SignInPage test', () => {
     expect(pageInstance['signInBtnLabel']?.textContent).toContain(window.tr('Sign In'));
 
     expect(pageInstance['cancelBtn']).toBeTruthy();
-    expect(pageInstance['cancelBtn']).toBeInstanceOf(HTMLElement);
-    expect(pageInstance['cancelBtn']?.getAttribute('data-button')).toEqual('cancel');
-    expect(pageInstance['cancelBtn']?.getAttribute('href')).toEqual('/ru/');
+    expect(pageInstance['cancelBtn']).toBeInstanceOf(MDCRipple);
+    expect(pageInstance['cancelBtn']?.root?.getAttribute('data-button')).toEqual('cancel');
+    expect(pageInstance['cancelBtn']?.root?.getAttribute('href')).toEqual('/ru/');
 
     expect(pageInstance['cancelBtnLabel']).toBeTruthy();
     expect(pageInstance['cancelBtnLabel']).toBeInstanceOf(HTMLElement);

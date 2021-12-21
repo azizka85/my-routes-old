@@ -429,6 +429,7 @@ describe('MainLayout test', () => {
     const instance = MainLayout.instance;
 
     await instance.init(null, false);
+    await instance.mount();
     
     const objWindow = window as any;
 
