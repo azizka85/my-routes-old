@@ -21,9 +21,12 @@
   flex-shrink: 0;
   box-sizing: border-box;
   height: 100vh;
-  overflow: hidden;  
   
   transition: width 250ms animation-variables.$standard-curve-timing-function;
+
+  &__content {
+    overflow: hidden;
+  }
 
   &--open {
     border-right-width: 1px;
