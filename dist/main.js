@@ -111,7 +111,7 @@ try {
 `;break;case R.modes.ESCAPED:this.source+="    ; __append(escapeFn("+au(a)+`))
 `;break;case R.modes.RAW:this.source+="    ; __append("+au(a)+`)
 `;break;case R.modes.COMMENT:break;case R.modes.LITERAL:this._addOutput(a);break}}else this._addOutput(a)}e.opts.compileDebug&&r&&(this.currentLine+=r,this.source+="    ; __line = "+this.currentLine+`
-`)}};k.escapeXML=Y.escapeXML;k.__express=k.renderFile;k.VERSION=h0;k.name=w0;typeof window!="undefined"&&(window.ejs=k)});var Zn=ie(ai());var ca="/";var ii={kz:{image:"/images/flags/kz.svg",label:"\u049A\u0430\u0437\u0430\u049B\u0448\u0430"},ru:{image:"/images/flags/ru.svg",label:"\u0420\u0443\u0441\u0441\u043A\u0438\u0439"},en:{image:"/images/flags/en.svg",label:"English"}},pa="kz";function Pl(a){let e=[];for(let i of Object.keys(a))e.push(`${i}=${a[i]}`);return e.join("&")}function o0(a,e,i){let t={...a};return t[e]=i,Pl(t)}function zl(a,e){let i={...a};return e in i?(delete i[e],Pl(i)):o0(i,e,"1")}var Ji=`(${Object.keys(ii).join("|")})?`;function Ie(a){return a.replace(/\/$/,"").replace(/^\//,"")}function Rl(a,e){a=Ie(a);let i=new RegExp(`^(${Object.keys(ii).join("|")})`);return a.search(i)>=0?a.replace(i,e):`${e}/${a}`}var fu=ie(ai());var c0={"My Routes":"My Routes","Sign In":"Sign In","Sign Up":"Sign Up","Sign In/Up":"Sign In/Up","Email required":"Email required",Name:"Name","Name required":"Name required",Password:"Password","Password required":"Password required",Cancel:"Cancel","Or use the service":"Or use the service"},Nl={values:c0};var p0={"My Routes":"\u041C\u043E\u0438 \u043F\u0443\u0442\u0438","Sign In":"\u0412\u043E\u0439\u0442\u0438","Sign Up":"\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F","Sign In/Up":"\u0412\u043E\u0439\u0442\u0438 \u0438\u043B\u0438 \u0417\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C\u0441\u044F","Email required":"\u041F\u043E\u043B\u0435 Email \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0437\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u044C",Name:"\u0418\u043C\u044F","Name required":"\u041F\u043E\u043B\u0435 \u0418\u043C\u044F \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0437\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u044C",Password:"\u041F\u0430\u0440\u043E\u043B\u044C","Password required":"\u041F\u043E\u043B\u0435 \u041F\u0430\u0440\u043E\u043B\u044C \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0437\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u044C",Cancel:"\u041E\u0442\u043C\u0435\u043D\u0430","Or use the service":"\u0418\u043B\u0438 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u0441\u0435\u0440\u0432\u0438\u0441"},Bl={values:p0};var l0={"My Routes":"\u041C\u0435\u043D\u0456\u04A3 \u0436\u043E\u043B\u0434\u0430\u0440\u044B\u043C","Sign In":"\u041A\u0456\u0440\u0443","Sign Up":"\u0422\u0456\u0440\u043A\u0435\u043B\u0443","Sign In/Up":"\u041A\u0456\u0440\u0443 \u043D\u0435\u043C\u0435\u0441\u0435 \u0422\u0456\u0440\u043A\u0435\u043B\u0443","Email required":"Email \u0442\u043E\u043B\u0442\u044B\u0440\u0443 \u043A\u0435\u0440\u0435\u043A",Name:"\u0410\u0442\u044B","Name required":"\u0410\u0442\u044B\u04A3\u0434\u044B \u0442\u043E\u043B\u0442\u044B\u0440\u0443 \u043A\u0435\u0440\u0435\u043A",Password:"\u041F\u0430\u0440\u043E\u043B\u044C","Password required":"\u041F\u0430\u0440\u043E\u043B\u044C\u0434\u044B \u0442\u043E\u043B\u0442\u044B\u0440\u0443 \u043A\u0435\u0440\u0435\u043A",Cancel:"\u0411\u043E\u043B\u0434\u044B\u0440\u043C\u0430\u0443","Or use the service":"\u041D\u0435\u043C\u0435\u0441\u0435 \u0441\u0435\u0440\u0432\u0438\u0441\u0442\u0456 \u049B\u043E\u043B\u0434\u0430\u04A3\u044B\u0437"},Ml={values:l0};var Ki=ie($l()),Gl={en:Ki.default.create(Nl),ru:Ki.default.create(Bl),kz:Ki.default.create(Ml)};var tu=ie(Pe());var iu=`<!DOCTYPE html>
+`)}};k.escapeXML=Y.escapeXML;k.__express=k.renderFile;k.VERSION=h0;k.name=w0;typeof window!="undefined"&&(window.ejs=k)});var Zn=ie(ai());var ca="/";var ii={kz:{image:"/images/flags/kz.svg",label:"\u049A\u0430\u0437\u0430\u049B\u0448\u0430"},ru:{image:"/images/flags/ru.svg",label:"\u0420\u0443\u0441\u0441\u043A\u0438\u0439"},en:{image:"/images/flags/en.svg",label:"English"}},pa="kz";function Pl(a){let e=[];for(let i of Object.keys(a))e.push(`${i}=${a[i]}`);return e.join("&")}function o0(a,e,i){let t={...a};return t[e]=i,Pl(t)}function zl(a,e){let i={...a};return e in i?(delete i[e],Pl(i)):o0(i,e,"1")}var Ji=`(${Object.keys(ii).join("|")})?`;function Ie(a){return a.replace(/\/$/,"").replace(/^\//,"")}function Rl(a,e){a=Ie(a);let i=new RegExp(`^(${Object.keys(ii).join("|")})`);return a.search(i)>=0?a.replace(i,e):`${e}/${a}`}var fu=ie(ai());var c0={"My Routes":"My Routes","Sign In":"Sign In","Sign Up":"Sign Up","Sign In/Up":"Sign In/Up","Email required":"Email required",Name:"Name","Name required":"Name required",Password:"Password","Password required":"Password required",Cancel:"Cancel","Or use the service":"Or use the service","Auth service":"Auth service"},Nl={values:c0};var p0={"My Routes":"\u041C\u043E\u0438 \u043F\u0443\u0442\u0438","Sign In":"\u0412\u043E\u0439\u0442\u0438","Sign Up":"\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F","Sign In/Up":"\u0412\u043E\u0439\u0442\u0438 \u0438\u043B\u0438 \u0417\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C\u0441\u044F","Email required":"\u041F\u043E\u043B\u0435 Email \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0437\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u044C",Name:"\u0418\u043C\u044F","Name required":"\u041F\u043E\u043B\u0435 \u0418\u043C\u044F \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0437\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u044C",Password:"\u041F\u0430\u0440\u043E\u043B\u044C","Password required":"\u041F\u043E\u043B\u0435 \u041F\u0430\u0440\u043E\u043B\u044C \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0437\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u044C",Cancel:"\u041E\u0442\u043C\u0435\u043D\u0430","Or use the service":"\u0418\u043B\u0438 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u0441\u0435\u0440\u0432\u0438\u0441","Auth service":"\u0421\u0435\u0440\u0432\u0438\u0441 \u0430\u0443\u0442\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438"},Bl={values:p0};var l0={"My Routes":"\u041C\u0435\u043D\u0456\u04A3 \u0436\u043E\u043B\u0434\u0430\u0440\u044B\u043C","Sign In":"\u041A\u0456\u0440\u0443","Sign Up":"\u0422\u0456\u0440\u043A\u0435\u043B\u0443","Sign In/Up":"\u041A\u0456\u0440\u0443 \u043D\u0435\u043C\u0435\u0441\u0435 \u0422\u0456\u0440\u043A\u0435\u043B\u0443","Email required":"Email \u0442\u043E\u043B\u0442\u044B\u0440\u0443 \u043A\u0435\u0440\u0435\u043A",Name:"\u0410\u0442\u044B","Name required":"\u0410\u0442\u044B\u04A3\u0434\u044B \u0442\u043E\u043B\u0442\u044B\u0440\u0443 \u043A\u0435\u0440\u0435\u043A",Password:"\u041F\u0430\u0440\u043E\u043B\u044C","Password required":"\u041F\u0430\u0440\u043E\u043B\u044C\u0434\u044B \u0442\u043E\u043B\u0442\u044B\u0440\u0443 \u043A\u0435\u0440\u0435\u043A",Cancel:"\u0411\u043E\u043B\u0434\u044B\u0440\u043C\u0430\u0443","Or use the service":"\u041D\u0435\u043C\u0435\u0441\u0435 \u0441\u0435\u0440\u0432\u0438\u0441\u0442\u0456 \u049B\u043E\u043B\u0434\u0430\u04A3\u044B\u0437","Auth service":"\u0410\u0443\u0442\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u044F \u0441\u0435\u0440\u0432\u0438\u0441\u0456"},Ml={values:l0};var Ki=ie($l()),Gl={en:Ki.default.create(Nl),ru:Ki.default.create(Bl),kz:Ki.default.create(Ml)};var tu=ie(Pe());var iu=`<!DOCTYPE html>
 <html lang="<%= data.lang %>">
 <head>
   <meta charset="UTF-8">
@@ -721,7 +721,12 @@ try {
   <%= helpers.tr('Or use the service') %>
 </h6>
 <div>
-  <a href="#" class="mdc-button" data-button="auth-service-google" title="Google">
+  <a 
+    href="https://habarlau.herokuapp.com/" 
+    class="mdc-button" 
+    data-button="auth-service-google" 
+    title="Google"
+  >
     <span class="mdc-button__ripple"></span>
     <svg class="main-card__service-icon" viewBox="0 0 16 16">
       <path 
@@ -735,6 +740,32 @@ try {
       />
     </svg>    
   </a>
+</div>
+<div class="mdc-dialog mdc-dialog--fullscreen">
+  <div class="mdc-dialog__container">
+    <div class="auth-service-dialog mdc-dialog__surface">
+      <div class="mdc-dialog__header">
+        <h2 class="mdc-dialog__title">
+          <%= helpers.tr('Auth service') %> 
+        </h2>
+        <button class="mdc-icon-button material-icons mdc-dialog__close"
+                data-mdc-dialog-action="close">
+          close
+        </button>
+      </div>
+      <iframe class="mdc-dialog__content">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Sed scelerisque metus dapibus, maximus massa pulvinar, commodo nunc.
+        Quisque vitae luctus lectus, ut tempus ipsum. Sed suscipit gravida scelerisque.
+        Aenean vulputate elementum est, quis consectetur orci consectetur ac.
+        Quisque accumsan vel nisi id dapibus. Suspendisse nec urna eu massa ornare rutrum.
+        Vivamus at nisi sit amet nulla pretium volutpat sit amet in justo. Donec mi metus,
+        interdum ac tincidunt at, vehicula vitae nisl. Morbi fermentum dapibus massa,
+        nec lobortis massa vestibulum eu.
+      </iframe>      
+    </div>
+  </div>
+  <div class="mdc-dialog__scrim"></div>
 </div>
 `;var et=wu.default.compile(yu);var _u=ku.default.Router({mergeParams:!0});_u.get("",(a,e)=>{try{let i=a.params,t=Ie(i[0]||pa),n=ca+(i[0]?`${t}/`:""),r={time:Date.now()};a.query.ajax&&!a.query.init?e.send(r):e.send(la(t,n,ua,a,"sign-in-page",bu,r,void 0,{"auth-service-component":et}))}finally{e.end()}});var Eu=_u;var Cu=ie(ai());var qu=ie(Pe());var ju=`<div data-page="signup-page">
   <div class="main-card mdc-card">

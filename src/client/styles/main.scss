@@ -8,6 +8,7 @@
 @use "@material/fab/mdc-fab";
 @use '@material/card/mdc-card';
 @use '@material/textfield/mdc-text-field';
+@use '@material/dialog/mdc-dialog';
 
 @use './list/styles.scss' as list-styles;
 @use './splash/styles.scss' as splash-styles;
@@ -82,6 +83,16 @@ body {
 .mdc-text-field--no-label {
   .mdc-notched-outline__notch {
     display: none;
+  }
+}
+
+.auth-service-dialog {
+  height: 100%;
+
+  .mdc-dialog__content {
+    border: 0;
+    padding: 0;
+    margin: 0;
   }
 }
 
