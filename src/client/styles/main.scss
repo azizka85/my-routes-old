@@ -60,6 +60,12 @@ body {
     width: 100%;            
   }
 
+  &__service-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: currentColor;
+  }
+
   .mdc-button + .mdc-button {
     margin-left: 0.25rem;
   }
