@@ -17,6 +17,10 @@ export class HomePage implements Page {
 
   protected scrollTopBtn: MDCRipple | null = null;
 
+  protected scrollTopBtnClickHandler: () => void;
+
+  protected windowScrollHandler: (event: Event) => void;
+
   protected currScroll = 0;
 
   static get instance(): HomePage {
@@ -25,6 +29,24 @@ export class HomePage implements Page {
     }
 
     return HomePage.page;
+  }
+
+  constructor() {
+    this.scrollTopBtnClickHandler = () => {
+      window.layouts['main-layout']?.performAction?.(ScrollActionTop, null);
+    };
+
+    this.windowScrollHandler = event => {
+      const data = (event as CustomEvent<ScrollEventData>).detail;
+
+      if(data.currScroll <= 0) {
+        this.scrollTopBtn?.root.classList.add('mdc-fab--exited');
+      } else {
+        this.scrollTopBtn?.root.classList.remove('mdc-fab--exited');
+      }
+
+      this.currScroll = data.currScroll;
+    };
   }
 
   get elem(): HTMLElement | null {
@@ -36,25 +58,11 @@ export class HomePage implements Page {
 
     this.node = content.querySelector('[data-page="home-page"]') || null;
 
-    if(this.node) {
-      const buttons = this.node.querySelectorAll('.mdc-button');      
-
-      for(let button of buttons) {
-        const ripple = new MDCRipple(button);        
-
-        if(button.hasAttribute('href')) {
-          ripple.listen('click', event => navigateHandler(event, ripple.root as HTMLElement));
-        }
-      }
-
+    if(this.node) {      
       const scrollTopBtnElem = this.node.querySelector('.mdc-fab');
 
       if(scrollTopBtnElem) {
-        this.scrollTopBtn = new MDCRipple(scrollTopBtnElem);
-
-        this.scrollTopBtn.listen('click', () => {
-          window.layouts['main-layout']?.performAction?.(ScrollActionTop, null);
-        });
+        this.scrollTopBtn = new MDCRipple(scrollTopBtnElem);        
       }
     }
     
@@ -62,28 +70,20 @@ export class HomePage implements Page {
   }
 
   async mount() {
+    this.scrollTopBtn?.listen('click', this.scrollTopBtnClickHandler);
+    window.layouts['main-layout']?.listen?.(ScrollEventType, this.windowScrollHandler);
+
     await mount(this.node);
   }
 
   async unmount() {
+    this.scrollTopBtn?.unlisten('click', this.scrollTopBtnClickHandler);
+    window.layouts['main-layout']?.unlisten?.(ScrollEventType, this.windowScrollHandler);
+
     await unmount(this.node);
   }
 
-  async load(lang: string, page: router.Page, firstLoad: boolean) {
-    if(firstLoad) {
-      window.layouts['main-layout']?.listen?.(ScrollEventType, (event) => {
-        const data = (event as CustomEvent<ScrollEventData>).detail;
-
-        if(data.currScroll <= 0) {
-          this.scrollTopBtn?.root.classList.add('mdc-fab--exited');
-        } else {
-          this.scrollTopBtn?.root.classList.remove('mdc-fab--exited');
-        }
-
-        this.currScroll = data.currScroll;
-      });
-    }
-
+  async load(lang: string, page: router.Page, firstLoad: boolean) {    
     window.layouts['main-layout']?.performAction?.(ScrollActionTo, {
       top: this.currScroll,
       noSmooth: true

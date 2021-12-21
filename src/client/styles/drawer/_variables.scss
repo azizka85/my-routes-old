@@ -8,13 +8,17 @@ $width: 18rem !default;
 $min-width: 3.5rem !default;
 $avatar-min-size: 2.5rem !default;
 $avatar-size: 4rem !default;
+$account-actions-max-height: 3rem !default;
 
 // padding & margin
 $lang-bar-margin: 0.5rem 0 -0.5rem !default;
 $lang-bar-padding: 0 1rem !default;
 $account-bar-margin: 0 0 -0.5rem !default;
 $account-bar-padding: 1.5rem 0.5rem !default;
-$account-actions-max-height: 3rem !default;
+$account-bar-action-margin-top: 1rem !default;
+
+// position
+$lang-list-top: 2rem;
 
 // opacity
 $divider-opacity: 0.12 !default;

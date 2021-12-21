@@ -112,6 +112,7 @@
       transition: max-height 250ms animation-variables.$standard-curve-timing-function;
 
       a {
+        padding-top: variables.$account-bar-action-margin-top;
         text-decoration: none;
         font-weight: bold;
         color: theme-color.accessible-ink-color(surface);
@@ -152,9 +153,24 @@
         align-items: center;
   
         .material-icons {
-          margin-left: list-variables.$margin-right;
+          margin-left: calc(list-variables.$margin-right/2);
           transform: rotate(0deg);
           transition: transform 200ms linear;
+        }
+
+        .mdc-circular-progress {
+          display: none;
+          margin-left: calc(list-variables.$margin-right/2);
+        }
+
+        &--loading {
+          .material-icons {
+            display: none;
+          }
+
+          .mdc-circular-progress {
+            display: block;
+          }
         }
       }
       
@@ -164,7 +180,7 @@
 
       .mdc-list {
         position: absolute;        
-        top: 2rem;
+        top: variables.$lang-list-top;
         z-index: app-bar-variables.$z-index + 3;
         max-height: 0;
         opacity: 0;

@@ -230,7 +230,6 @@ try {
           <i class="material-icons">person_outline</i>       
         </div>
         <div class="drawer__account-bar__actions">   
-          <br>
           <a href="/<%= data.lang %>/sign-in" data-content="sign-in-up"><%= helpers.tr('Sign In/Up') %></a>
         </div>
       </div>
@@ -247,6 +246,27 @@ try {
               <%= data.languages[data.lang].label %>            
             </span> 
             <i class="material-icons">arrow_circle_down</i>
+            <div class="mdc-circular-progress mdc-circular-progress--indeterminate" style="width:24px;height:24px;">              
+              <div class="mdc-circular-progress__indeterminate-container">
+                <div class="mdc-circular-progress__spinner-layer">
+                  <div class="mdc-circular-progress__circle-clipper mdc-circular-progress__circle-left">
+                    <svg class="mdc-circular-progress__indeterminate-circle-graphic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="8.75" stroke-dasharray="54.978" stroke-dashoffset="27.489" stroke-width="2.5"/>
+                    </svg>
+                  </div>
+                  <div class="mdc-circular-progress__gap-patch">
+                    <svg class="mdc-circular-progress__indeterminate-circle-graphic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="8.75" stroke-dasharray="54.978" stroke-dashoffset="27.489" stroke-width="2"/>
+                    </svg>
+                  </div>
+                  <div class="mdc-circular-progress__circle-clipper mdc-circular-progress__circle-right">
+                    <svg class="mdc-circular-progress__indeterminate-circle-graphic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="8.75" stroke-dasharray="54.978" stroke-dashoffset="27.489" stroke-width="2.5"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="mdc-list" data-list="lang">
             <a 
@@ -314,22 +334,7 @@ try {
   <button class="mdc-fab mdc-fab--exited" data-button="scroll-top">
     <div class="mdc-fab__ripple"></div>
     <span class="mdc-fab__icon material-icons">keyboard_arrow_up</span>
-  </button>   
-  <div>
-    <button class="mdc-button mdc-button--raised">
-      <span class="mdc-button__ripple"></span>
-      <span class="mdc-button__label">Home page</span>
-    </button>
-    <a class="mdc-button" href="<%= data.rootLink %>sign-in">
-      <span class="mdc-button__ripple"></span>
-      <span class="mdc-button__label">Sign In page</span>
-    </a> 
-    <a class="mdc-button" href="<%= data.rootLink %>sign-up">
-      <span class="mdc-button__ripple"></span>
-      <span class="mdc-button__label">Sign Up page</span>
-    </a> 
-  </div>
-  <br>
+  </button>     
   <div>
     Home page, time: <%= data.time %> 
   </div>

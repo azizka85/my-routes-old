@@ -28,15 +28,20 @@ export class SignUpPage implements Page {
   protected passwordLabelElem: HTMLElement | null = null;
   protected passwordHelperElem: HTMLElement | null = null;
 
-  protected signInBtn: HTMLElement | null = null;
+  protected signInBtn: MDCRipple | null = null;
   protected signInBtnLabel: HTMLElement | null = null;
 
   protected signUpBtnLabel: HTMLElement | null = null;
   
-  protected cancelBtn: HTMLElement | null = null;
+  protected cancelBtn: MDCRipple | null = null;
   protected cancelBtnLabel: HTMLElement | null = null;
 
   protected authService: AuthServiceComponent | null = null;
+
+  protected signInBtnClickHandler: (event: MouseEvent) => void;
+  protected cancelBtnClickHandler: (event: MouseEvent) => void;
+
+  protected formSubmitHandler: (event: SubmitEvent) => void;
 
   static get instance(): SignUpPage {
     if(!SignUpPage.page) {
@@ -44,6 +49,24 @@ export class SignUpPage implements Page {
     }
 
     return SignUpPage.page;
+  }
+
+  constructor() {
+    this.formSubmitHandler = event => {
+      event.preventDefault();
+
+      const form = this.node?.querySelector('.main-card form') as HTMLFormElement;
+      const data = new FormData(form as HTMLFormElement);
+
+      console.log('Form submited: ');          
+
+      for(let item of data.entries()) {
+        console.log(item[0] + ':', item[1]);          
+      }
+    };
+
+    this.signInBtnClickHandler = (event: MouseEvent) => navigateHandler(event, this.signInBtn?.root as HTMLElement);
+    this.cancelBtnClickHandler = (event: MouseEvent) => navigateHandler(event, this.cancelBtn?.root as HTMLElement);
   }
 
   get elem(): HTMLElement | null {
@@ -64,19 +87,7 @@ export class SignUpPage implements Page {
         new MDCTextField(textField);
       }
 
-      const form = this.node.querySelector('.main-card form');
-
-      form?.addEventListener('submit', event => {
-        event.preventDefault();
-
-        const data = new FormData(form as HTMLFormElement);
-
-        console.log('Form submited: ');          
-
-        for(let item of data.entries()) {
-          console.log(item[0] + ':', item[1]);          
-        }
-      });
+      const form = this.node.querySelector('.main-card form') as HTMLFormElement;      
 
       this.titleElem = this.node.querySelector('[data-title="main"]') || null;
 
@@ -90,12 +101,12 @@ export class SignUpPage implements Page {
       this.passwordLabelElem = form?.querySelector('#password-label') || null;
       this.passwordHelperElem = form?.querySelector('#password-helper') || null;
 
-      this.signInBtn = form?.querySelector('[data-button="sign-in"]') || null;
+      const signInBtnElem = form?.querySelector('[data-button="sign-in"]') || null;
 
-      if(this.signInBtn) {
-        new MDCRipple(this.signInBtn).listen('click', event => navigateHandler(event, this.signInBtn as HTMLElement));
+      if(signInBtnElem) {
+        this.signInBtn = new MDCRipple(signInBtnElem);
 
-        this.signInBtnLabel = this.signInBtn.querySelector('.mdc-button__label');
+        this.signInBtnLabel = signInBtnElem.querySelector('.mdc-button__label');
       }
 
       const signUpBtn = form?.querySelector('[data-button="sign-up"]');
@@ -106,12 +117,12 @@ export class SignUpPage implements Page {
         this.signUpBtnLabel = signUpBtn.querySelector('.mdc-button__label');
       }
 
-      this.cancelBtn = form?.querySelector('[data-button="cancel"]') || null;
+      const cancelBtnElem = form?.querySelector('[data-button="cancel"]') || null;
 
-      if(this.cancelBtn) {
-        new MDCRipple(this.cancelBtn).listen('click', event => navigateHandler(event, this.cancelBtn as HTMLElement));
+      if(cancelBtnElem) {
+        this.cancelBtn = new MDCRipple(cancelBtnElem);
 
-        this.cancelBtnLabel = this.cancelBtn.querySelector('.mdc-button__label');
+        this.cancelBtnLabel = cancelBtnElem.querySelector('.mdc-button__label');
       }
     }
 
@@ -123,10 +134,24 @@ export class SignUpPage implements Page {
   }
 
   async mount() {
+    const form = this.node?.querySelector('.main-card form') as HTMLFormElement;
+
+    form?.addEventListener('submit', this.formSubmitHandler);
+
+    this.signInBtn?.listen('click', this.signInBtnClickHandler);
+    this.cancelBtn?.listen('click', this.cancelBtnClickHandler);
+
     await mount(this.node);
   }
 
   async unmount() {
+    const form = this.node?.querySelector('.main-card form') as HTMLFormElement;
+
+    form?.removeEventListener('submit', this.formSubmitHandler);
+
+    this.signInBtn?.unlisten('click', this.signInBtnClickHandler);
+    this.cancelBtn?.unlisten('click', this.cancelBtnClickHandler);
+
     await unmount(this.node);
   }
 
@@ -175,8 +200,8 @@ export class SignUpPage implements Page {
       this.cancelBtnLabel.textContent = window.tr('Cancel');
     }
 
-    this.signInBtn?.setAttribute('href', (lang === DEFAULT_LANGUAGE ? '' : `/${lang}`) + '/sign-in');
-    this.cancelBtn?.setAttribute('href', (lang === DEFAULT_LANGUAGE ? '' : `/${lang}`) + '/');
+    this.signInBtn?.root?.setAttribute('href', (lang === DEFAULT_LANGUAGE ? '' : `/${lang}`) + '/sign-in');
+    this.cancelBtn?.root?.setAttribute('href', (lang === DEFAULT_LANGUAGE ? '' : `/${lang}`) + '/');
 
     await this.authService?.load?.(lang, page, firstLoad);
   }
