@@ -294,6 +294,8 @@ export class MainLayout extends BaseLayout implements Page {
 
     this.removeDrawerHoverClassHandler();
 
+    this.drawerElem?.classList.remove('drawer--open');
+
     await Promise.all([
       this.content?.unmount?.(),
       unmount(this.node)
