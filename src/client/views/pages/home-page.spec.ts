@@ -84,13 +84,16 @@ describe('HomePage test', () => {
     const layoutInstance = MainLayout.instance;
     const pageInstance = HomePage.instance;
 
-    window.layouts['main-layout'] = layoutInstance;
+    const content = await pageInstance.init(null, false);
+
     window.pages['home-page'] = pageInstance;
 
-    const content = await pageInstance.init(null, false);
     await layoutInstance.init(content, false);
+
+    window.layouts['main-layout'] = layoutInstance;    
+
     await layoutInstance.mount();
-    await pageInstance.mount();    
+    await pageInstance.mount();        
 
     await pageInstance.load(DEFAULT_LANGUAGE, {
       fragment: '',

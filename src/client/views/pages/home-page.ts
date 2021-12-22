@@ -6,7 +6,7 @@ import { Page } from "../view";
 
 import { MDCRipple } from '@material/ripple';
 
-import { loadContent, mount, navigateHandler, unmount } from '../../helpers';
+import { loadContent, mount, unmount } from '../../helpers';
 
 import { ScrollActionTo, ScrollActionTop, ScrollEventData, ScrollEventType } from '../../types/scroll';
 
