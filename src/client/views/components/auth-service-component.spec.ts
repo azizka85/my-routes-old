@@ -76,7 +76,7 @@ describe('SignInPage test', () => {
 		expect(component['dialog']).toBeInstanceOf(MDCDialog);
 
 		expect(component['dialogTitle']).toBeTruthy();
-		expect(component['dialogTitle']).toBeInstanceOf(HTMLElement);
+		expect(component['dialogTitle']).toBeInstanceOf(HTMLElement);		
 		
 		expect(component['dialogContent']).toBeTruthy();
 		expect(component['dialogContent']).toBeInstanceOf(HTMLIFrameElement);
@@ -127,6 +127,7 @@ describe('SignInPage test', () => {
 		component['googleBtn']?.root.dispatchEvent(new MouseEvent('click'));
 
 		expect(component['dialog']?.isOpen).toBeTruthy();
+		expect(component['dialogTitle']?.textContent).toContain(`Google - ${window.tr('Auth service')}`);
 		expect(component['dialogContent']?.src).toEqual('www.auth-service.com');		
 	});
 });
