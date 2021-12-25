@@ -17,4 +17,6 @@ export const LANGUAGES = {
   }
 };
 
+export const DIALOG_DATA_RECEIVED_EVENT_TYPE = 'dialog-data-received';
+
 export const DEFAULT_LANGUAGE = 'kz';
