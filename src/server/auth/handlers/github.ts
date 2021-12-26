@@ -2,11 +2,11 @@ import express from 'express';
 
 import fetch from 'node-fetch';
 
+import { Session } from '../../../data/session';
+import { User } from '../../../data/user';
+
 import { getQueryParameters } from '../../../helpers';
-
-import dialogReceiveDataHandler from '../../templates/handlers/dialog-receive-data-handler';
-
-import { DIALOG_DATA_RECEIVED_EVENT_TYPE } from '../../../globals';
+import { setAccessToken } from '../../helpers/auth-helpers';
 
 const githubAuthorizeUrl = 'https://github.com/login/oauth/authorize';
 const githubAccessTokenUrl = 'https://github.com/login/oauth/access_token';
@@ -16,17 +16,17 @@ export default {
   service(req: express.Request, res: express.Response) {
     const params = {
       client_id: process.env.GITHUB_CLIENT_ID
-    } as any;
+    } as any;    
 
-    if(req.query.ajax) {
-      params.state = 1;
+    if(req.query.lang) {
+      params.state = req.query.lang;
     }
 
     res.redirect(`${githubAuthorizeUrl}?${getQueryParameters(params)}`);
   },
 
   async callback(req: express.Request, res: express.Response) {
-    const ajax = req.query.state === '1';
+    const lang = req.query.state || '';
 
     const params = new URLSearchParams();
 
@@ -53,32 +53,24 @@ export default {
 
       const userData = await userResponse.json() as any;
 
-      const data = {
+      const data: User = {
         name: userData.name,
         email: userData.email,
-        photo: userData.avatar_url,
-        oauthApp: 'github'          
+        photo: userData.avatar_url,        
       };
 
       if(req.session) {
-        req.session.oauthApp = 'github';
-        req.session.accessToken = responseData.access_token;
-        req.session.tokenType = responseData.token_type;
-        req.session.scope = responseData.scope;
-        req.session.user = data;
+        setAccessToken(
+          req.session as Session,
+          'github',
+          responseData.access_token,
+          responseData.token_type,
+          responseData.scope,
+          data
+        );
       }      
 
-      if(ajax) {
-        res.send(
-          dialogReceiveDataHandler({
-            data: JSON.stringify(data),
-            DIALOG_DATA_RECEIVED_EVENT_TYPE
-          })
-        );
-      } else {
-        // res.redirect('/');
-        res.send(data);
-      }
+      res.redirect('/' + lang);
     } else {
       res.statusCode = 401;
       res.send(responseData);

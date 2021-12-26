@@ -141,10 +141,7 @@ export class SignUpPage implements Page {
     this.signInBtn?.listen('click', this.signInBtnClickHandler);
     this.cancelBtn?.listen('click', this.cancelBtnClickHandler);
 
-    await Promise.all([
-      this.authService?.mount(),
-      mount(this.node)
-    ]);
+    await mount(this.node);
   }
 
   async unmount() {
@@ -155,10 +152,7 @@ export class SignUpPage implements Page {
     this.signInBtn?.unlisten('click', this.signInBtnClickHandler);
     this.cancelBtn?.unlisten('click', this.cancelBtnClickHandler);
 
-    await Promise.all([
-      unmount(this.node),
-      this.authService?.unmount()
-    ]);
+    await unmount(this.node);
   }
 
   async load(lang: string , page: router.Page, firstLoad: boolean): Promise<void> {
@@ -209,6 +203,6 @@ export class SignUpPage implements Page {
     this.signInBtn?.root?.setAttribute('href', (lang === DEFAULT_LANGUAGE ? '' : `/${lang}`) + '/sign-in');
     this.cancelBtn?.root?.setAttribute('href', (lang === DEFAULT_LANGUAGE ? '' : `/${lang}`) + '/');
 
-    await this.authService?.load?.(lang, page, firstLoad);
+    await this.authService?.load(lang, page, firstLoad);
   }
 }

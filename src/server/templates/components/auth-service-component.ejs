@@ -6,7 +6,7 @@
 </h6>
 <div>
   <a 
-    href="https://habarlau.herokuapp.com/" 
+    href="/auth/service/github?lang=<%= data.lang %> " 
     class="mdc-button" 
     data-button="auth-service-google" 
     title="Google"
@@ -24,30 +24,4 @@
       />
     </svg>    
   </a>
-</div>
-<div class="mdc-dialog mdc-dialog--fullscreen">
-  <div class="mdc-dialog__container">
-    <div class="auth-service-dialog mdc-dialog__surface">
-      <div class="mdc-dialog__header">
-        <h2 class="mdc-dialog__title">
-          <%= helpers.tr('Auth service') %> 
-        </h2>
-        <button class="mdc-icon-button material-icons mdc-dialog__close"
-                data-mdc-dialog-action="close">
-          close
-        </button>
-      </div>
-      <iframe class="mdc-dialog__content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Sed scelerisque metus dapibus, maximus massa pulvinar, commodo nunc.
-        Quisque vitae luctus lectus, ut tempus ipsum. Sed suscipit gravida scelerisque.
-        Aenean vulputate elementum est, quis consectetur orci consectetur ac.
-        Quisque accumsan vel nisi id dapibus. Suspendisse nec urna eu massa ornare rutrum.
-        Vivamus at nisi sit amet nulla pretium volutpat sit amet in justo. Donec mi metus,
-        interdum ac tincidunt at, vehicula vitae nisl. Morbi fermentum dapibus massa,
-        nec lobortis massa vestibulum eu.
-      </iframe>      
-    </div>
-  </div>
-  <div class="mdc-dialog__scrim"></div>
 </div>

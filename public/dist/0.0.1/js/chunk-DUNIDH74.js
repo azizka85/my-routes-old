@@ -1,1 +1,0 @@
-var e="/",a=5,s={kz:{image:"/images/flags/kz.svg",label:"\u049A\u0430\u0437\u0430\u049B\u0448\u0430"},ru:{image:"/images/flags/ru.svg",label:"\u0420\u0443\u0441\u0441\u043A\u0438\u0439"},en:{image:"/images/flags/en.svg",label:"English"}};var g="kz";export{e as a,a as b,s as c,g as d};

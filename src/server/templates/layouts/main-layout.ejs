@@ -66,10 +66,28 @@
     <div class="drawer__content">
       <div class="drawer__account-bar">
         <div class="drawer__account-bar__avatar">   
-          <i class="material-icons">person_outline</i>       
+          <% if(data.user) { %>   
+            <img 
+              src="<%= data.user.photo %>" 
+              alt="<%= data.user.name %>"
+              class="drawer__account-bar__avatar__photo"
+            >
+          <% } else { %>     
+            <i class="material-icons">person_outline</i>
+          <% } %> 
         </div>
         <div class="drawer__account-bar__actions">   
-          <a href="/<%= data.lang %>/sign-in" data-content="sign-in-up"><%= helpers.tr('Sign In/Up') %></a>
+          <% if(data.user) { %>   
+            <a href="#"><%= data.user.name %></a>
+            <a 
+              href="/auth/sign-out?redirect=/<%= data.lang %>/sign-in" 
+              data-content="sign-out"
+            >
+              <%= helpers.tr('Sign Out') %>
+            </a>
+          <% } else { %>     
+            <a href="/<%= data.lang %>/sign-in" data-content="sign-in-up"><%= helpers.tr('Sign In/Up') %></a>
+          <% } %>           
         </div>
       </div>
       <div class="drawer__lang-bar">

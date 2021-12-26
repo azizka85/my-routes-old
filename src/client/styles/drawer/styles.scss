@@ -50,6 +50,11 @@
         .material-icons {
           font-size: variables.$avatar-size;
         }
+
+        &__photo {
+          width: variables.$avatar-size;
+          height: variables.$avatar-size;
+        }
       }
 
       &__actions {
@@ -105,6 +110,15 @@
         opacity: 0.3;
         font-size: variables.$avatar-min-size;
         transition: font-size 250ms animation-variables.$standard-curve-timing-function;
+      }
+
+      &__photo {
+        border-radius: 50%;
+        width: variables.$avatar-min-size;
+        height: variables.$avatar-min-size;
+        transition: 
+          width 250ms animation-variables.$standard-curve-timing-function,
+          height 250ms animation-variables.$standard-curve-timing-function;
       }
     }
     

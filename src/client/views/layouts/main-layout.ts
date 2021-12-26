@@ -27,6 +27,7 @@ export class MainLayout extends BaseLayout implements Page {
   protected headerIconBtn: HTMLElement | null = null;
 
   protected signInUpElem: HTMLElement | null = null;
+  protected signOutElem: HTMLElement | null = null;
 
   protected list: MDCList | null = null;
   protected langList: MDCList | null = null;
@@ -150,7 +151,8 @@ export class MainLayout extends BaseLayout implements Page {
       
       const drawerAccountBar = this.drawerElem?.querySelector('.drawer__account-bar');
 
-      this.signInUpElem = drawerAccountBar?.querySelector('[data-content="sign-in-up"]') || null;      
+      this.signInUpElem = drawerAccountBar?.querySelector('[data-content="sign-in-up"]') || null;   
+      this.signOutElem = drawerAccountBar?.querySelector('[data-content="sign-out"]') || null;   
 
       const drawerLangBar = this.drawerElem?.querySelector('.drawer__lang-bar');            
       
@@ -334,6 +336,14 @@ export class MainLayout extends BaseLayout implements Page {
     if(this.signInUpElem) {
       this.signInUpElem.textContent = window.tr('Sign In/Up');
       this.signInUpElem.setAttribute('href', (lang === DEFAULT_LANGUAGE ? '' : `/${lang}`) +  '/sign-in');
+    }
+
+    if(this.signOutElem) {
+      this.signOutElem.textContent = window.tr('Sign Out');
+
+      const langRoute = lang === DEFAULT_LANGUAGE ? '' : `/${lang}`;
+
+      this.signOutElem.setAttribute('href', `/auth/sign-out?redirect=${langRoute}/sign-in`);      
     }
 
     if(this.langElem) {
