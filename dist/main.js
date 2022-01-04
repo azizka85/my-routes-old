@@ -776,7 +776,7 @@ try {
 </h6>
 <div>
   <a 
-    href="/auth/service/github?lang=<%= data.lang %> " 
+    href="/auth/service/github?lang=<%= data.lang %>" 
     class="mdc-button" 
     data-button="auth-service-google" 
     title="Google"
